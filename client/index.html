@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+	
+	<script src = "js/general.js"></script>
+	<script src = "js/img.js"></script>
+	<script src = "js/ws.js"></script>
+	<script src = "js/sensors.js"></script>
+
+<body onload="on_load_page()">
+
+	<button type = "button" onclick="ws_connect()" id = "connect_button">Connect</button>
+	<br>	
+	<br>
+	<button type = "button" onclick="send_message_to_server()" id = "send_message_button">Send message</button>
+	<br>	
+	<br>
+	<button type = "button" onclick="load_image()" id = "head_camera_button">Head camera</button>
+	<button type = "button" onclick="load_image()" id = "left_arm_camera_button">Left arm camera</button>
+	<br>	
+	<br>
+	<p>Camera</p>
+	<img src="" height = "300" width = "400" id = "img_camera"></img>
+	<br>
+	<p>Orientation</p>
+	<svg width = "400" height = "300" id = "svg_device_orientation">
+		<circle id = "c_sensor_position" cx = "200" cy = "150" r = "10"></circle>
+	</svg>
+	
+	<br>
+
+</body>
+
+</html>
