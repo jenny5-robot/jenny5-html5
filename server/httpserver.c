@@ -41,9 +41,8 @@ static int connection_count = 0;
 int __tls_ssl_private_send_pending(int client_sock, struct TLSContext *context);
 
 static signed char is_little_endian = 1;
-//-------------------------------------------------------------------
-uint64_t htonll2(uint64_t a)
-{
+
+uint64_t htonll2(uint64_t a) {
 	if (is_little_endian)
 		a = ((a & 0x00000000000000FFULL) << 56) |
 		((a & 0x000000000000FF00ULL) << 40) |
@@ -55,7 +54,7 @@ uint64_t htonll2(uint64_t a)
 		((a & 0xFF00000000000000ULL) >> 56);
 	return a;
 }
-//-------------------------------------------------------------------
+
 static const char b64_table[] = {
 	'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
 	'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
@@ -66,9 +65,8 @@ static const char b64_table[] = {
 	'w', 'x', 'y', 'z', '0', '1', '2', '3',
 	'4', '5', '6', '7', '8', '9', '+', '/'
 };
-//-------------------------------------------------------------------
-char *b64_encode(const unsigned char *src, int len)
-{
+
+char *b64_encode(const unsigned char *src, int len) {
 	int i = 0;
 	int j = 0;
 	char *enc = NULL;
@@ -118,9 +116,8 @@ char *b64_encode(const unsigned char *src, int len)
 
 	return enc;
 }
-//-------------------------------------------------------------------
-int set_connection(int socket, SSL *server_ctx)
-{
+
+int set_connection(int socket, SSL *server_ctx) {
 	int i;
 	for (i = 0; i < MAX_CONNECTIONS; i++) {
 		if (!connections[i].socket) {
@@ -136,9 +133,8 @@ int set_connection(int socket, SSL *server_ctx)
 	}
 	return 0;
 }
-//-------------------------------------------------------------------
-int close_connection(int socket)
-{
+
+int close_connection(int socket) {
 	int i;
 	if (socket <= 0)
 		return 0;
@@ -166,12 +162,11 @@ int close_connection(int socket)
 	}
 	return 0;
 }
-//-------------------------------------------------------------------
+
 // very inefficient
 // it would be better to have multiple file descriptors per iteration (FD_SET(connection[x].socket ...)
 // or even better, use epoll/kqueue
-int data_pending(int socket, int t_out)
-{
+int data_pending(int socket, int t_out) {
 #ifdef _WIN32
 	struct timeval timeout;
 	timeout.tv_sec = 0;
@@ -198,9 +193,8 @@ int data_pending(int socket, int t_out)
 	return poll(ufds, 1, (int)t_out);
 #endif
 }
-//-------------------------------------------------------------------
-int parse_header(const char *buffer, int size, unsigned char *is_websocket, int *use_method, char *s_url, char *web_socket_key)
-{
+
+int parse_header(const char *buffer, int size, unsigned char *is_websocket, int *use_method, char *s_url, char *web_socket_key) {
 	char method[20];
 	char url[LINE_SIZE];
 	char header[LINE_SIZE];
@@ -289,9 +283,8 @@ int parse_header(const char *buffer, int size, unsigned char *is_websocket, int 
 	}
 	return 1;
 }
-//-------------------------------------------------------------------
-long WS_get_size(const char *buf, int size, int *type, int *masked, int *fin, int *offset)
-{
+
+long WS_get_size(const char *buf, int size, int *type, int *masked, int *fin, int *offset) {
 	*type = -1;
 	*offset = 0;
 	if (fin)
@@ -361,9 +354,8 @@ long WS_get_size(const char *buf, int size, int *type, int *masked, int *fin, in
 	}
 	return -1;
 }
-//-------------------------------------------------------------------
-int ws_send(struct HTTPConnection *connection, const char *buffer, int size)
-{
+
+int ws_send(struct HTTPConnection *connection, const char *buffer, int size) {
 	char *ws_buffer = (char *)malloc(size + 20);
 	if (!ws_buffer)
 		return 0;
@@ -402,15 +394,13 @@ int ws_send(struct HTTPConnection *connection, const char *buffer, int size)
 		free(ws_buffer);
 		return size + size_len + 1;
 }
-//-------------------------------------------------------------------
-void on_ws_data(struct HTTPConnection *connection, const char *buffer, int size)
-{
+
+void on_ws_data(struct HTTPConnection *connection, const char *buffer, int size) {
 	DEBUG_INFO("WS DATA: %s\n", buffer);
 	ws_send(connection, buffer, size);
 }
-//-------------------------------------------------------------------
-int on_data_received(struct HTTPConnection *connection, const char *buffer, int size)
-{
+
+int on_data_received(struct HTTPConnection *connection, const char *buffer, int size) {
 	char work_buffer[BUFFER_SIZE];
 	char pong[6];
 	int i;
@@ -445,10 +435,8 @@ int on_data_received(struct HTTPConnection *connection, const char *buffer, int 
 					for (i = 0; i < ws_size; i++)
 						work_buffer[i] = buffer[i + offset] ^ mask[i % 4];
 					work_buffer[i] = 0;
-					on_ws_data(connection, work_buffer, ws_size);
 				}
-				else
-					on_ws_data(connection, work_buffer, ws_size);
+				on_ws_data(connection, work_buffer, ws_size);
 				break;
 			case 0x08:
 				return 1;
@@ -504,21 +492,27 @@ int on_data_received(struct HTTPConnection *connection, const char *buffer, int 
 			FILE *f = fopen(full_path, "rb");
 			if (f) {
 				// DEBUG_INFO("GET %s\n", full_path);
-				char *msg = "HTTP/1.1 200 OK\r\nContent-type: text/html\r\nConnection: close\r\n\r\n";
-				int read_size;
-				do {
-					// must read less than 64k!! (maximum TLS packet size)
-					read_size = fread(work_buffer, 1, LINE_SIZE, f);
-					if (read_size > 0) {
-						if (SSL_write(connection->context, work_buffer, read_size) <= 0)
-							break;
-					}
-				} while (read_size > 0);
+				fseek(f, 0, SEEK_END);
+				int filesize = ftell(f);
+				fseek(f, 0, SEEK_SET);
+				char *msg = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Length: %i\r\nConnection: close\r\n\r\n";
+				int wsize = snprintf(work_buffer, sizeof(work_buffer), msg, filesize);
+				if (SSL_write(connection->context, work_buffer, wsize) == wsize) {
+					int read_size;
+					do {
+						// must read less than 64k!! (maximum TLS packet size)
+						read_size = fread(work_buffer, 1, LINE_SIZE, f);
+						if (read_size > 0) {
+							if (SSL_write(connection->context, work_buffer, read_size) <= 0)
+								break;
+						}
+					} while (read_size > 0);
+				}
 				fclose(f);
 			}
 			else {
 				DEBUG_INFO("%s not found\n", full_path);
-				char *msg = "HTTP/1.1 404 Not found\r\nContent-type: text/html\r\nConnection: close\r\n\r\nNot found";
+				char *msg = "HTTP/1.1 404 Not found\r\nContent-Type: text/html\r\nConnection: close\r\n\r\nNot found";
 				SSL_write(connection->context, msg, strlen(msg));
 			}
 		}
@@ -526,9 +520,8 @@ int on_data_received(struct HTTPConnection *connection, const char *buffer, int 
 	}
 	return 0;
 }
-//-------------------------------------------------------------------
-int iterate_socket(struct HTTPConnection *connection)
-{
+
+int iterate_socket(struct HTTPConnection *connection) {
 	// use low level api
 	char buffer[BUFFER_SIZE];
 	int size = recv(connection->socket, (char *)buffer, sizeof(buffer), 0);
@@ -559,9 +552,8 @@ int iterate_socket(struct HTTPConnection *connection)
 	}
 	return 1;
 }
-//-------------------------------------------------------------------
-int iterate_sockets()
-{
+
+int iterate_sockets() {
 	int socket_count = connection_count;
 	int iterations = 0;
 	int i;
@@ -581,9 +573,8 @@ int iterate_sockets()
 	}
 	return iterations;
 }
-//-------------------------------------------------------------------
-int main(int argc, char *argv[])
-{
+
+int main(int argc, char *argv[]) {
 	int socket_desc, client_sock, read_size;
 	socklen_t c;
 	struct sockaddr_in server, client;
@@ -633,8 +624,11 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "Error creating server context\n");
 		return -1;
 	}
-	SSL_CTX_use_certificate_file(server_ctx, "testcert/fullchain.pem", SSL_SERVER_RSA_CERT);
-	SSL_CTX_use_PrivateKey_file(server_ctx, "testcert/privkey.pem", SSL_SERVER_RSA_KEY);
+//	SSL_CTX_use_certificate_file(server_ctx, "testcert/fullchain.pem", SSL_SERVER_RSA_CERT);
+	//SSL_CTX_use_PrivateKey_file(server_ctx, "testcert/privkey.pem", SSL_SERVER_RSA_KEY);
+
+	SSL_CTX_use_certificate_file(server_ctx, "testcert/server.pem", SSL_SERVER_RSA_CERT);
+	SSL_CTX_use_PrivateKey_file(server_ctx, "testcert/server.key", SSL_SERVER_RSA_KEY);
 
 	if (!SSL_CTX_check_private_key(server_ctx)) {
 		fprintf(stderr, "Private key not loaded\n");
@@ -667,4 +661,3 @@ int main(int argc, char *argv[])
 	SSL_CTX_free(server_ctx);
 	return 0;
 }
-//-------------------------------------------------------------------
