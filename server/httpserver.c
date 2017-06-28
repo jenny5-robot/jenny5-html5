@@ -16,7 +16,7 @@
 #include "tlse.c"
 
 
-
+#include "process_command.h"
 
 
 #define port 443
@@ -294,6 +294,9 @@ int parse_header(const char *buffer, int size, unsigned char *is_websocket, int 
 			}
 		}
 	}
+	char *question_mark_ptr = strchr(s_url, '?');
+	if (question_mark_ptr)
+		s_url[question_mark_ptr - s_url] = 0;
 	return 1;
 }
 //--------------------------------------------------------------------
@@ -413,9 +416,20 @@ int ws_send(struct HTTPConnection *connection, const char *buffer, int size)
 void on_ws_data(struct HTTPConnection *connection, const char *buffer, int size) 
 {
 	DEBUG_INFO("WS DATA: %s\n", buffer);
-	//ws_send(connection, buffer, size);
-	if (size == 2)
-	  process_command(buffer[0], buffer[1]);
+	//	if (size == 2)
+	int result = process_command(buffer[0], buffer[1]);
+	if (result == E_OK) {
+		if (buffer[1] == CAPTURE_HEAD_CAMERA || buffer[1] == CAPTURE_LEFT_ARM_CAMERA) {
+			char tmp_buffer[2];
+			sprintf(tmp_buffer, "%d", E_OK);
+			ws_send(connection, tmp_buffer, 1);
+		}
+	}
+	else {
+		char tmp_buffer[2];
+		sprintf(tmp_buffer, "%d", result);
+		ws_send(connection, tmp_buffer, 1);
+	}
 }
 //--------------------------------------------------------------------
 int on_data_received(struct HTTPConnection *connection, const char *buffer, int size)
@@ -514,7 +528,7 @@ int on_data_received(struct HTTPConnection *connection, const char *buffer, int 
 				fseek(f, 0, SEEK_END);
 				int filesize = ftell(f);
 				fseek(f, 0, SEEK_SET);
-				char *msg = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Length: %i\r\nConnection: close\r\n\r\n";
+				char *msg = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Length: %i\r\nConnection: close\r\nCache-Control: max-age=0, no-cache\r\n\r\n";
 				int wsize = snprintf(work_buffer, sizeof(work_buffer), msg, filesize);
 				if (SSL_write(connection->context, work_buffer, wsize) == wsize) {
 					int read_size;
@@ -612,11 +626,9 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-
 	char message[1000];
 
-	memset(connections, 0, sizeof(connections));
-	
+	memset(connections, 0, sizeof(connections));	
 
 #ifdef _WIN32
 	WSADATA wsaData;
@@ -627,9 +639,12 @@ int main(int argc, char *argv[])
 
 	socket_desc = socket(AF_INET, SOCK_STREAM, 0);
 	if (socket_desc == -1) {
-		sprintf(message,"Could not create socket");
+		sprintf(message, "Could not create socket");
 		print_message(stdout, message);
+		print_message(f_log, message);
 		fclose(f_log);
+
+
 		return 0;
 	}
 
@@ -641,7 +656,10 @@ int main(int argc, char *argv[])
 	setsockopt(socket_desc, SOL_SOCKET, SO_REUSEADDR, (char *)&enable, sizeof(int));
 
 	if (bind(socket_desc, (struct sockaddr *)&server, sizeof(server)) < 0) {
-		perror("bind failed. Error");
+		sprintf(message, "bind failed. Error\n");
+		print_message(stdout, message);
+		print_message(f_log, message);
+
 		fclose(f_log);
 		return 1;
 	}
@@ -654,18 +672,24 @@ int main(int argc, char *argv[])
 
 	SSL *server_ctx = SSL_CTX_new(SSLv3_server_method());
 	if (!server_ctx) {
-		fprintf(stderr, "Error creating server context\n");
+		sprintf(message, "Error creating server context\n");
+		print_message(stdout, message);
+		print_message(f_log, message);
+
 		fclose(f_log);
+
 		return -1;
 	}
-//	SSL_CTX_use_certificate_file(server_ctx, "testcert/fullchain.pem", SSL_SERVER_RSA_CERT);
-	//SSL_CTX_use_PrivateKey_file(server_ctx, "testcert/privkey.pem", SSL_SERVER_RSA_KEY);
 
-	SSL_CTX_use_certificate_file(server_ctx, "testcert/server.pem", SSL_SERVER_RSA_CERT);
+	SSL_CTX_use_certificate_file(server_ctx, "testcert/server.cer", SSL_SERVER_RSA_CERT);
 	SSL_CTX_use_PrivateKey_file(server_ctx, "testcert/server.key", SSL_SERVER_RSA_KEY);
 
 	if (!SSL_CTX_check_private_key(server_ctx)) {
-		fprintf(stderr, "Private key not loaded\n");
+		sprintf(message, "Private key not loaded\n");
+		print_message(stdout, message);
+		print_message(f_log, message);
+
+		fclose(f_log);
 		return -2;
 	}
 
@@ -696,10 +720,6 @@ int main(int argc, char *argv[])
 		}
 	}
 	SSL_CTX_free(server_ctx);
-	fclose(f_log);
-
-	stop_robot();
-	disconnect_robot();
 
 
 	return 0;
