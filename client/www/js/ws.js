@@ -139,56 +139,56 @@ function send_body_motor_move()
 //--------------------------------------------------------------------
 function send_shoulder_motor_move()
 {
-	send_command_to_robot(1 << 7, LEG_MOVE_COMMAND);
+	send_command_to_robot(1 << 7, LEFT_ARM_UP_DOWN_COMMAND);
 	set_all_up();
 	document.getElementById("shoulder_button").style.fontWeight = "bold";
 }
 //--------------------------------------------------------------------
 function send_rotate_shoulder_motor_move()
 {
-	send_command_to_robot(1 << 7, LEG_MOVE_COMMAND);
+	send_command_to_robot(1 << 7, LEFT_ARM_ROTATE_COMMAND);
 	set_all_up();
 	document.getElementById("rotate_shoulder_button").style.fontWeight = "bold";
 }
 //--------------------------------------------------------------------
 function send_elbow_motor_move()
 {
-	send_command_to_robot(1 << 7, LEG_MOVE_COMMAND);
+	send_command_to_robot(1 << 7, LEFT_ARM_ELBOW_MOVE_COMMAND);
 	set_all_up();
 	document.getElementById("elbow_button").style.fontWeight = "bold";
 }
 //--------------------------------------------------------------------
 function send_forearm_motor_move()
 {
-	send_command_to_robot(1 << 7, LEG_MOVE_COMMAND);
+	send_command_to_robot(1 << 7, LEFT_ARM_FOREARM_MOVE_COMMAND);
 	set_all_up();
 	document.getElementById("forearm_button").style.fontWeight = "bold";
 }
 //--------------------------------------------------------------------
 function send_gripper_motor_move()
 {
-	send_command_to_robot(1 << 7, LEG_MOVE_COMMAND);
+	send_command_to_robot(1 << 7, LEFT_ARM_GRIPPER_MOVE_COMMAND);
 	set_all_up();
 	document.getElementById("gripper_button").style.fontWeight = "bold";
 }
 //--------------------------------------------------------------------
 function send_rotate_head()
 {
-	send_command_to_robot(1 << 7, LEG_MOVE_COMMAND);
+	send_command_to_robot(1 << 7, HEAD_ROTATE_COMMAND);
 	set_all_up();
 	document.getElementById("rotate_head_button").style.fontWeight = "bold";
 }
 //--------------------------------------------------------------------
 function send_track_head()
 {
-	send_command_to_robot(1 << 7, LEG_MOVE_COMMAND);
+	send_command_to_robot(1 << 7, FACE_TRACKING_COMMAND);
 	set_all_up();
 	document.getElementById("track_head_button").style.fontWeight = "bold";
 }
 //--------------------------------------------------------------------
 function send_follow_person()
 {
-	send_command_to_robot(1 << 7, LEG_MOVE_COMMAND);
+	send_command_to_robot(1 << 7, FOLLOW_PERSON_COMMAND);
 	set_all_up();
 	document.getElementById("follow_person_button").style.fontWeight = "bold";
 }
