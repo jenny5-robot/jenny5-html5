@@ -193,3 +193,9 @@ function send_follow_person()
 	document.getElementById("follow_person_button").style.fontWeight = "bold";
 }
 //--------------------------------------------------------------------
+function send_disable_power()
+{
+	send_command_to_robot(1 << 7, DISABLE_POWER_COMMAND);
+	send_pause_robot();
+}
+//--------------------------------------------------------------------
