@@ -19,6 +19,8 @@
 #include "process_command.h"
 
 
+#define SERVER_VERSION "2017.08.14.0"
+
 #define port 443
 #define MAX_CONNECTIONS         1024
 #define BUFFER_SIZE             0xFFFF
@@ -627,6 +629,11 @@ int main(int argc, char *argv[])
 	}
 
 	char message[1000];
+
+	sprintf(message, "Server version: %s\n", SERVER_VERSION);
+	print_message(stdout, message);
+	print_message(f_log, message);
+
 
 	memset(connections, 0, sizeof(connections));	
 
