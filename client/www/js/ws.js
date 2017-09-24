@@ -40,6 +40,7 @@ function ws_connect()
 	}
 	else{
 		websocket.close(1000, "normal shutdown");
+		on_speak_button_clicked();
 	}
 }
 //--------------------------------------------------------------------
@@ -60,6 +61,7 @@ function ws_on_error()
 function ws_on_close()
 {
 	document.getElementById("connect_button").innerText = "Connect";
+	on_speak_button_clicked();
 	set_all_up();
 	set_disable_state(true);
 }
@@ -137,18 +139,18 @@ function send_body_motor_move()
 	document.getElementById("body_button").style.fontWeight = "bold";	
 }
 //--------------------------------------------------------------------
-function send_shoulder_motor_move()
+function send_arm_motor_move()
 {
 	send_command_to_robot(1 << 7, LEFT_ARM_UP_DOWN_COMMAND);
 	set_all_up();
-	document.getElementById("shoulder_button").style.fontWeight = "bold";
+	document.getElementById("arm_button").style.fontWeight = "bold";
 }
 //--------------------------------------------------------------------
-function send_rotate_shoulder_motor_move()
+function send_shoulder_motor_move()
 {
 	send_command_to_robot(1 << 7, LEFT_ARM_ROTATE_COMMAND);
 	set_all_up();
-	document.getElementById("rotate_shoulder_button").style.fontWeight = "bold";
+	document.getElementById("shoulder_button").style.fontWeight = "bold";
 }
 //--------------------------------------------------------------------
 function send_elbow_motor_move()

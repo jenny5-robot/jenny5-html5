@@ -31,8 +31,8 @@ function set_disable_state(state)
 	document.getElementById("leg_button").disabled = state;
 
 	document.getElementById("body_button").disabled = state;
+	document.getElementById("arm_button").disabled = state;
 	document.getElementById("shoulder_button").disabled = state;
-	document.getElementById("rotate_shoulder_button").disabled = state;
 	document.getElementById("elbow_button").disabled = state;
 	document.getElementById("forearm_button").disabled = state;
 	document.getElementById("gripper_button").disabled = state;
@@ -44,7 +44,7 @@ function set_disable_state(state)
 
 	document.getElementById("capture_head_camera_button").disabled = state;
 	document.getElementById("capture_left_arm_camera_button").disabled = state;
-	
+	document.getElementById("speak_button").style.color = "";
 	document.getElementById("speak_button").disabled = state;
 }
 //----------------------------------------------------------------
@@ -59,8 +59,8 @@ function set_all_up()
 	document.getElementById("leg_button").style.fontWeight = "normal";	
 
 	document.getElementById("body_button").style.fontWeight = "normal";	
+	document.getElementById("arm_button").style.fontWeight = "normal";	
 	document.getElementById("shoulder_button").style.fontWeight = "normal";	
-	document.getElementById("rotate_shoulder_button").style.fontWeight = "normal";	
 	document.getElementById("elbow_button").style.fontWeight = "normal";	
 	document.getElementById("forearm_button").style.fontWeight = "normal";	
 	document.getElementById("gripper_button").style.fontWeight = "normal";	
