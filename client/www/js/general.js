@@ -44,11 +44,12 @@ function set_disable_state(state)
 
 	document.getElementById("capture_head_camera_button").disabled = state;
 	document.getElementById("capture_left_arm_camera_button").disabled = state;
+	
+	document.getElementById("speak_button").disabled = state;
 }
 //----------------------------------------------------------------
 function set_all_up()
 {
-	
 	document.getElementById("pause_robot_button").style.fontWeight = "normal";	
 		
 	document.getElementById("disable_power_button").style.fontWeight = "normal";	

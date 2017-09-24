@@ -31,7 +31,7 @@ function ws_connect()
 	
 	if (button_connect.innerText == "Connect"){
 		var addr = "wss://" + window.location.host;
-        websocket = new WebSocket(addr, "data");
+		websocket = new WebSocket(addr, "data");
 		websocket.onopen = ws_on_open;
 		websocket.onerror = ws_on_error;
 		websocket.onmessage = ws_on_message_received;
