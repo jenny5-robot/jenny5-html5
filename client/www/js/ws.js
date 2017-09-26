@@ -61,7 +61,7 @@ function ws_on_error()
 function ws_on_close()
 {
 	document.getElementById("connect_button").innerText = "Connect";
-	on_speak_button_clicked();
+	stop_speech()
 	set_all_up();
 	set_disable_state(true);
 }
@@ -88,10 +88,12 @@ function send_message_to_server()
 //--------------------------------------------------------------------
 function send_command_to_robot(bx, by)
 {
-	var command_to_robot = new Uint8Array(2);
-	command_to_robot[0] = bx;
-	command_to_robot[1] = by;//String.fromCharCode(bx, by);
-	websocket.send(command_to_robot);
+	if (websocket != null && websocket != undefined){
+		var command_to_robot = new Uint8Array(2);
+		command_to_robot[0] = bx;
+		command_to_robot[1] = by;//String.fromCharCode(bx, by);
+		websocket.send(command_to_robot);
+	}
 }
 //--------------------------------------------------------------------
 function send_pause_robot()

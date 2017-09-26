@@ -10,9 +10,11 @@ recognition.onnomatch = on_speech_no_match;
 recognition.onerror = on_speech_recognition_error;
 recognition.onspeechend = on_speech_end;
 recognition.onend = on_end;
+
 //----------------------------------------------------------------
 
 var speech_synth = window.speechSynthesis;
+var utterThis = new SpeechSynthesisUtterance();
 
 //----------------------------------------------------------------
 function on_speak_button_clicked()
@@ -30,102 +32,93 @@ function on_speak_button_clicked()
 	}
 }
 //----------------------------------------------------------------
+function stop_speech()
+{
+	document.getElementById("speak_button").style.color = "";
+	recognition.stop();
+}
+//----------------------------------------------------------------
 function on_speech_recognition_result(event)
 {
 	var last = event.results.length - 1;
+	if (last < 0)
+		return; // no word
+	
 	var text = event.results[last][0].transcript;
 	
 	switch (text){
 		case "stop":
-			var utterThis = new SpeechSynthesisUtterance("robot stopped");
-			speech_synth.speak(utterThis);
+			utterThis.text = "robot stopped";
 			send_pause_robot();
 		break;
 		case "navigate":
-			var utterThis = new SpeechSynthesisUtterance("navigate");
-			speech_synth.speak(utterThis);
+			utterThis.text = "navigate";
 			send_start_platform_navigate();
 		break;
 		case "rotate":
-			var utterThis = new SpeechSynthesisUtterance("platform rotate");
-			speech_synth.speak(utterThis);
+			utterThis.text = "platform rotate";
 			send_rotate_platform();
 			break;
 		case "disable":
-			var utterThis = new SpeechSynthesisUtterance("power disabled");
-			speech_synth.speak(utterThis);
+			utterThis.text = "power disabled";
 			send_disable_power();
 			break;
 		case "leg":
-			var utterThis = new SpeechSynthesisUtterance("leg move");
-			speech_synth.speak(utterThis);
+			utterThis.text = "leg move";
 			send_leg_move();
 			break;
 		case "head rotate":
-			var utterThis = new SpeechSynthesisUtterance("head rotate");
-			speech_synth.speak(utterThis);
+			utterThis.text = "head rotate";
 			send_rotate_head();
 			break;
 		case "picture":
-			var utterThis = new SpeechSynthesisUtterance("picture");
-			speech_synth.speak(utterThis);
+			utterThis.text = "picture";
 			send_capture_head_camera();
 			break;
 		case "body":
-			var utterThis = new SpeechSynthesisUtterance("body");
-			speech_synth.speak(utterThis);
+			utterThis.text = "body";
 			send_body_motor_move();
 			break;
 		case "arm":
-			var utterThis = new SpeechSynthesisUtterance("arm");
-			speech_synth.speak(utterThis);
+			utterThis.text = "arm";
 			send_arm_motor_move();
 			break;
 		case "shoulder":
-			var utterThis = new SpeechSynthesisUtterance("shoulder");
-			speech_synth.speak(utterThis);
+			utterThis.text = "shoulder";
 			send_shoulder_motor_move();
 			break;
 		case "elbow":
-			var utterThis = new SpeechSynthesisUtterance("elbow");
-			speech_synth.speak(utterThis);
+			utterThis.text = "elbow";
 			send_elbow_motor_move();
 			break;
 		case "forearm":
-			ar utterThis = new SpeechSynthesisUtterance("forearm");
-			speech_synth.speak(utterThis);
+			utterThis.text = "forearm";
 			send_forearm_motor_move();
 			break;
 		case "gripper":
-			var utterThis = new SpeechSynthesisUtterance("gripper");
-			speech_synth.speak(utterThis);
+			utterThis.text = "gripper";
 			send_gripper_motor_move();
 			break;			
 			
 		default:
-			var utterThis = new SpeechSynthesisUtterance("Not recognized. Please repeat!");
-			speech_synth.speak(utterThis);
+			utterThis.text = text + "not recognized.";
+			
 	}
-	
-	//recognition.start();
 }
 //----------------------------------------------------------------
 function on_speech_no_match(event) 
 {
-	var utterThis = new SpeechSynthesisUtterance("No match. Please repeat!");
-	speech_synth.speak(utterThis);
-	
-	recognition.start();
+
 }
 //----------------------------------------------------------------
 function on_speech_recognition_error(event) 
 {
-	var utterThis = new SpeechSynthesisUtterance("Error " + event.error);
-	speech_synth.speak(utterThis);
-	document.getElementById("speak_button").style.color = "";
-
-	//diagnostic.textContent = 'Error occurred in recognition: ' + event.error;
-  recognition.stop();
+	if (event.error != "no-speech"){
+		recognition.stop();
+		var local_utter = new SpeechSynthesisUtterance("Error " + event.error);
+		speech_synth.speak(local_utter);
+		document.getElementById("speak_button").style.color = "";
+	}
 }
 //----------------------------------------------------------------
 function on_speech_end()
@@ -139,7 +132,9 @@ function on_end()
 	var color = button_speak.style.color;
 	
 	if (color == "red"){
+		speech_synth.speak(utterThis);
 		recognition.start();
+		utterThis.text = "";
 	}
 }
 //----------------------------------------------------------------

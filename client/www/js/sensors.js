@@ -32,7 +32,7 @@ function on_device_orientation(event)
 					b[1] |= (1 << 6);
 				
 					send_command_to_robot(b[0], b[1]);
-					console.log(gamma + " " + beta + " " + b[0] + " " + b[1]);
+					//console.log(gamma + " " + beta + " " + b[0] + " " + b[1]);
 				
 					previous_gamma = gamma;
 					previous_beta = beta;
