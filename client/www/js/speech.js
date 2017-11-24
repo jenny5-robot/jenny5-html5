@@ -9,12 +9,13 @@ recognition.onresult = on_speech_recognition_result;
 recognition.onnomatch = on_speech_no_match;
 recognition.onerror = on_speech_recognition_error;
 recognition.onspeechend = on_speech_end;
-recognition.onend = on_end;
+recognition.onend = on_recognition_end;
 
 //----------------------------------------------------------------
 
 var speech_synth = window.speechSynthesis;
 var utterThis = new SpeechSynthesisUtterance();
+utterThis.onend = on_synthesis_end;
 
 //----------------------------------------------------------------
 function on_speak_button_clicked()
@@ -50,11 +51,11 @@ function on_speech_recognition_result(event)
 		case "stop":
 			utterThis.text = "robot stopped";
 			send_pause_robot();
-		break;
+			break;
 		case "navigate":
 			utterThis.text = "navigate";
 			send_start_platform_navigate();
-		break;
+			break;
 		case "rotate":
 			utterThis.text = "platform rotate";
 			send_rotate_platform();
@@ -67,7 +68,7 @@ function on_speech_recognition_result(event)
 			utterThis.text = "leg move";
 			send_leg_move();
 			break;
-		case "head rotate":
+		case "head":
 			utterThis.text = "head rotate";
 			send_rotate_head();
 			break;
@@ -98,10 +99,12 @@ function on_speech_recognition_result(event)
 		case "gripper":
 			utterThis.text = "gripper";
 			send_gripper_motor_move();
-			break;			
-			
+			break;
+		case "Hello":
+			utterThis.text = "Hello God!";			
+			break;
 		default:
-			utterThis.text = text + "not recognized.";
+			utterThis.text = "What is " + text + "?";
 			
 	}
 }
@@ -126,15 +129,23 @@ function on_speech_end()
 	recognition.stop();
 }
 //----------------------------------------------------------------
-function on_end()
+function on_recognition_end()
 {
 	var button_speak = document.getElementById("speak_button");
 	var color = button_speak.style.color;
 	
 	if (color == "red"){
 		speech_synth.speak(utterThis);
+	}
+}
+//----------------------------------------------------------------
+function on_synthesis_end()
+{
+	var button_speak = document.getElementById("speak_button");
+	var color = button_speak.style.color;
+
+	if (color == "red"){
 		recognition.start();
 		utterThis.text = "";
 	}
 }
-//----------------------------------------------------------------
