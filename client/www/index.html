@@ -17,38 +17,38 @@
 <p>
 	<button type = "button" onclick="ws_connect()" id = "connect_button">Connect</button>
 	<button type = "button" onclick="send_pause_robot()" id = "pause_robot_button">Pause</button>
-	<button type = "button" onclick="send_disable_power()" disabled = "true" id = "disable_power_button">Disable</button>
-	<button type = "button" onclick="on_speak_button_clicked()" disabled = "true" id = "speak_button">Speak</button>
-	2017.09.26.5
+	<button type = "button" onclick="send_disable_power()" disabled id = "disable_power_button">Disable</button>
+	<button type = "button" onclick="on_speak_button_clicked()" disabled id = "speak_button">Speak</button>
+	2017.11.24.0
 	</p>
 	<p>Platform
-	<button type = "button" onclick="send_start_platform_navigate()" disabled = "true" id = "navigate_platform_button">Navigate</button>
-	<button type = "button" onclick="send_rotate_platform()" disabled = "true" id = "rotate_platform_button">Rotate</button>
-	<button type = "button" onclick="send_leg_move()" disabled = "true" id = "leg_button">Leg</button>
+	<button type = "button" onclick="send_start_platform_navigate()" disabled id = "navigate_platform_button">Navigate</button>
+	<button type = "button" onclick="send_rotate_platform()" disabled id = "rotate_platform_button">Rotate</button>
+	<button type = "button" onclick="send_leg_move()" disabled id = "leg_button">Leg</button>
 	</p>	
 	<p>Left arm
-	<button type = "button" onclick="send_body_motor_move()" disabled = "true" id = "body_button">Body</button>
-	<button type = "button" onclick="send_arm_motor_move()" disabled = "true" id = "arm_button">Shoulder</button>
-	<button type = "button" onclick="send_shoulder_motor_move()" disabled = "true" id = "shoulder_button">Rotate</button>
-	<button type = "button" onclick="send_elbow_motor_move()" disabled = "true" id = "elbow_button">Elbow</button>
-	<button type = "button" onclick="send_forearm_motor_move()" disabled = "true" id = "forearm_button">Forearm</button>
-	<button type = "button" onclick="send_gripper_motor_move()" disabled = "true" id = "gripper_button">Gripper</button>
+	<button type = "button" onclick="send_body_motor_move()" disabled id = "body_button">Body</button>
+	<button type = "button" onclick="send_arm_motor_move()" disabled id = "arm_button">Arm</button>
+	<button type = "button" onclick="send_shoulder_motor_move()" disabled id = "shoulder_button">Shoulder</button>
+	<button type = "button" onclick="send_elbow_motor_move()" disabled id = "elbow_button">Elbow</button>
+	<button type = "button" onclick="send_forearm_motor_move()" disabled id = "forearm_button">Forearm</button>
+	<button type = "button" onclick="send_gripper_motor_move()" disabled id = "gripper_button">Gripper</button>
 	</p>
 
 	<p>Head
-	<button type = "button" onclick="send_rotate_head()" disabled = "true" id = "rotate_head_button">Rotate</button>
+	<button type = "button" onclick="send_rotate_head()" disabled id = "rotate_head_button">Rotate</button>
 	</p>
 	<p>Smart
-	<button type = "button" onclick="send_track_head()" disabled = "true" id = "track_head_button">Head track</button>
-	<button type = "button" onclick="send_follow_person()" disabled = "true" id = "follow_person_button">Follow person</button>
+	<button type = "button" onclick="send_track_head()" disabled id = "track_head_button">Head track</button>
+	<button type = "button" onclick="send_follow_person()" disabled id = "follow_person_button">Follow person</button>
 	</p>
 	<svg width = "400" height = "200" id = "svg_device_orientation">
 		<rect width="400" height="200" stroke-width = "1" stroke = "red" fill = "white" id = "sensor_bbox"/>
 		<circle id = "c_sensor_position" cx = "200" cy = "150" r = "10" fill = "red"></circle>
 	</svg>
 	<p>Camera
-	<button type = "button" onclick="send_capture_head_camera()" disabled = "true" id = "capture_head_camera_button">Head</button>
-	<button type = "button" onclick="send_capture_left_arm_camera()" disabled = "true" id = "capture_left_arm_camera_button">Left arm</button>
+	<button type = "button" onclick="send_capture_head_camera()" disabled id = "capture_head_camera_button">Head</button>
+	<button type = "button" onclick="send_capture_left_arm_camera()" disabled id = "capture_left_arm_camera_button">Left arm</button>
 	</p>
 	<img src = "" width = "352" height = "240" border = "1" id = "img_camera"></img>
 	<br>
