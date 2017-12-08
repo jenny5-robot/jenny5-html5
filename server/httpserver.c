@@ -19,7 +19,7 @@
 #include "process_command.h"
 
 
-#define SERVER_VERSION "2017.11.24.0"
+#define SERVER_VERSION "2017.12.08.1"
 
 #define port 443
 #define MAX_CONNECTIONS         1024
@@ -417,7 +417,7 @@ int ws_send(struct HTTPConnection *connection, const char *buffer, int size)
 //--------------------------------------------------------------------
 void on_ws_data(struct HTTPConnection *connection, const char *buffer, int size) 
 {
-	DEBUG_INFO("WS DATA: %s\n", buffer);
+	//DEBUG_INFO("WS DATA: %s\n", buffer);
 	//	if (size == 2)
 	int result = process_command(buffer[0], buffer[1]);
 	if (result == E_OK) {
@@ -447,7 +447,7 @@ int on_data_received(struct HTTPConnection *connection, const char *buffer, int 
 			int fin;
 			int offset = 0;
 			int ws_size = (int)WS_get_size(buffer, size, &type, &masked, &fin, &offset);
-			DEBUG_INFO("WS PACKET SIZE: %i\n", (int)ws_size);
+			//DEBUG_INFO("WS PACKET SIZE: %i\n", (int)ws_size);
 			if (ws_size < 0)
 				return 1;
 			switch (type) {
