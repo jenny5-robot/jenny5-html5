@@ -39,8 +39,9 @@ function ws_connect()
 		websocket.binaryType = "arraybuffer";
 	}
 	else{
+		send_command_to_robot(1 << 7, DISCONNECT_FROM_ROBOT);
+		
 		websocket.close(1000, "normal shutdown");
-		on_speak_button_clicked();
 	}
 }
 //--------------------------------------------------------------------
@@ -51,6 +52,8 @@ function ws_on_open()
 	
 	set_all_up();
 	document.getElementById("pause_robot_button").style.fontWeight = "bold";
+	
+	send_command_to_robot(1 << 7, CONNECT_TO_ROBOT);
 }
 //--------------------------------------------------------------------
 function ws_on_error() 
@@ -68,17 +71,18 @@ function ws_on_close()
 //--------------------------------------------------------------------
 function ws_on_message_received_parsed(e)
 {
-	alert(arrayBuffer);
+//	alert(arrayBuffer);
 }
 //--------------------------------------------------------------------
 function ws_on_message_received(evt) 
 {
-	var fileReader = new FileReader();
-	fileReader.onload = function() {arrayBuffer = this.result;};
-	fileReader.addEventListener("loadend", ws_on_message_received_parsed);
-	fileReader.readAsText(evt.data);
+//	var fileReader = new FileReader();
+//	fileReader.onload = function() {arrayBuffer = this.result;};
+//	fileReader.addEventListener("loadend", ws_on_message_received_parsed);
+//	fileReader.readAsArrayBuffer(evt.data);
 
-    console.log(evt.data);
+arrayBuffer = evt.data;
+//   console.log(evt.data);
 }
 //--------------------------------------------------------------------
 function send_message_to_server()
@@ -127,6 +131,7 @@ function send_rotate_platform()
 function send_capture_head_camera()
 {
 	send_command_to_robot(1 << 7, CAPTURE_HEAD_CAMERA);
+	send_pause_robot();
 }
 //--------------------------------------------------------------------
 function send_capture_left_arm_camera()
