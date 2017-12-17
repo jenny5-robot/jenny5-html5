@@ -23,6 +23,7 @@ var websocket;
 	const CAPTURE_HEAD_CAMERA = 17;
 	const CAPTURE_LEFT_ARM_CAMERA = 18;
 	const ERROR = 19;
+	const LEFT_ARM_WAVE_COMMAND = 20;
 	
 //--------------------------------------------------------------------
 function ws_connect()
@@ -179,6 +180,13 @@ function send_gripper_motor_move()
 	send_command_to_robot(1 << 7, LEFT_ARM_GRIPPER_MOVE_COMMAND);
 	set_all_up();
 	document.getElementById("gripper_button").style.fontWeight = "bold";
+}
+//--------------------------------------------------------------------
+function send_wave_left_arm()
+{
+	send_command_to_robot(1 << 7, LEFT_ARM_WAVE_COMMAND);
+	set_all_up();
+	document.getElementById("wave_left_arm_id").style.fontWeight = "bold";
 }
 //--------------------------------------------------------------------
 function send_rotate_head()

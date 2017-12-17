@@ -100,6 +100,10 @@ function on_speech_recognition_result(event)
 			utterThis.text = "gripper";
 			send_gripper_motor_move();
 			break;
+		case "wave hand":
+			utterThis.text = "waving hand";
+			send_wave_left_arm();
+			break;
 		case "Hello":
 			utterThis.text = "Hello God!";			
 			break;

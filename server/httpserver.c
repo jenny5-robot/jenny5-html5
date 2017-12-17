@@ -22,7 +22,7 @@
 #include "process_command.h"
 
 
-#define SERVER_VERSION "2017.12.16.0"
+#define SERVER_VERSION "2017.12.17.3"
 
 #define port 443
 #define MAX_CONNECTIONS         1024
@@ -615,7 +615,7 @@ int iterate_sockets()
 //--------------------------------------------------------------------
 int main(int argc, char *argv[]) 
 {
-	int socket_desc, client_sock, read_size;
+	int socket_desc, client_sock;// , read_size;
 	socklen_t c;
 	struct sockaddr_in server, client;
 
@@ -678,7 +678,7 @@ int main(int argc, char *argv[])
 
 	c = sizeof(struct sockaddr_in);
 
-	unsigned int size;
+//	unsigned int size;
 
 	SSL *server_ctx = SSL_CTX_new(SSLv3_server_method());
 	if (!server_ctx) {

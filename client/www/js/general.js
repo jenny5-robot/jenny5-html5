@@ -36,6 +36,7 @@ function set_disable_state(state)
 	document.getElementById("elbow_button").disabled = state;
 	document.getElementById("forearm_button").disabled = state;
 	document.getElementById("gripper_button").disabled = state;
+	document.getElementById("wave_left_arm_id").disabled = state;
 	
 	document.getElementById("rotate_head_button").disabled = state;
 
@@ -50,28 +51,29 @@ function set_disable_state(state)
 //----------------------------------------------------------------
 function set_all_up()
 {
-	document.getElementById("pause_robot_button").style.fontWeight = "normal";	
+	document.getElementById("pause_robot_button").style.fontWeight = "normal";
 		
-	document.getElementById("disable_power_button").style.fontWeight = "normal";	
+	document.getElementById("disable_power_button").style.fontWeight = "normal";
 
-	document.getElementById("navigate_platform_button").style.fontWeight = "normal";	
-	document.getElementById("rotate_platform_button").style.fontWeight = "normal";	
-	document.getElementById("leg_button").style.fontWeight = "normal";	
+	document.getElementById("navigate_platform_button").style.fontWeight = "normal";
+	document.getElementById("rotate_platform_button").style.fontWeight = "normal";
+	document.getElementById("leg_button").style.fontWeight = "normal";
 
-	document.getElementById("body_button").style.fontWeight = "normal";	
-	document.getElementById("arm_button").style.fontWeight = "normal";	
-	document.getElementById("shoulder_button").style.fontWeight = "normal";	
-	document.getElementById("elbow_button").style.fontWeight = "normal";	
-	document.getElementById("forearm_button").style.fontWeight = "normal";	
-	document.getElementById("gripper_button").style.fontWeight = "normal";	
+	document.getElementById("body_button").style.fontWeight = "normal";
+	document.getElementById("arm_button").style.fontWeight = "normal";
+	document.getElementById("shoulder_button").style.fontWeight = "normal";
+	document.getElementById("elbow_button").style.fontWeight = "normal";
+	document.getElementById("forearm_button").style.fontWeight = "normal";
+	document.getElementById("gripper_button").style.fontWeight = "normal";
+	document.getElementById("wave_left_arm_id").style.fontWeight = "normal";
 	
-	document.getElementById("rotate_head_button").style.fontWeight = "normal";	
+	document.getElementById("rotate_head_button").style.fontWeight = "normal";
 
-	document.getElementById("track_head_button").style.fontWeight = "normal";	
-	document.getElementById("follow_person_button").style.fontWeight = "normal";	
+	document.getElementById("track_head_button").style.fontWeight = "normal";
+	document.getElementById("follow_person_button").style.fontWeight = "normal";
 
-	document.getElementById("capture_head_camera_button").style.fontWeight = "normal";	
-	document.getElementById("capture_left_arm_camera_button").style.fontWeight = "normal";	
+	document.getElementById("capture_head_camera_button").style.fontWeight = "normal";
+	document.getElementById("capture_left_arm_camera_button").style.fontWeight = "normal";
 	
 }
 //----------------------------------------------------------------
