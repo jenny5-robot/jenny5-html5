@@ -22,7 +22,7 @@
 #include "process_command.h"
 
 
-#define SERVER_VERSION "2017.12.17.3"
+#define SERVER_VERSION "2017.12.17.4"
 
 #define port 443
 #define MAX_CONNECTIONS         1024
@@ -52,7 +52,7 @@ int __tls_ssl_private_send_pending(int client_sock, struct TLSContext *context);
 
 static signed char is_little_endian = 1;
 
-FILE *f_log;
+//FILE *f_log;
 //--------------------------------------------------------------------
 uint64_t htonll2(uint64_t a) 
 {
