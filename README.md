@@ -1,4 +1,4 @@
-# Jenny5 HTML5 server and controller
+# Jenny5 HTML5 client and websocket server
 
 Control Jenny 5 from any browser.
 
