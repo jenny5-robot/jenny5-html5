@@ -10,7 +10,7 @@ Also add all cpp files from the *src* folder of this repository:
 
 [https://github.com/jenny5-robot/jenny5-control-module](https://github.com/jenny5-robot/jenny5-control-module)
 
-Use the following flag for compilation: -DTLS_AMALGAMATION
+Use the following flag for compiling: -DTLS_AMALGAMATION
 
 On Windows add lws2_32 library to the project.
 
@@ -20,4 +20,4 @@ On Windows add lws2_32 library to the project.
 
 2. Open a browser and type the address of the PC running the server (with https).
 
-3. Enjoy
+3. Enjoy controlling the robot
