@@ -21,3 +21,7 @@ On Windows add lws2_32 library to the project.
 2. Open a browser and type the address of the PC running the server (with https).
 
 3. Enjoy controlling the robot
+
+## Screenshot
+
+![Jenny5 controller screenshot](https://github.com/jenny5-robot/jenny5-html5/blob/master/jenny5_controller_screenshot.png "Jenny 5 HTML5 controller screenshot")
