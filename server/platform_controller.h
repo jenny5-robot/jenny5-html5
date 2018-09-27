@@ -18,7 +18,7 @@
 #define Connected_to_platform_STR "Connected to platform\n"
 
 #define INITIAL_SPEED_PLATFORM 1200
-#define STEP_SPEED_PLATFORM 250
+#define STEP_SPEED_PLATFORM 300
 
 
 //------------------------------------------------------------------------------
