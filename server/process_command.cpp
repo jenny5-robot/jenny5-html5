@@ -96,29 +96,32 @@ int handle_navigate(char bx, char by)
 			m1 = platform_controller.move_left_motor(-INITIAL_SPEED_PLATFORM - (by - 32) * STEP_SPEED_PLATFORM, 1);
 		}
 		else
-			if (bx > 32) {
+			if (bx > 32) {// turn left
 				m2 = platform_controller.move_right_motor(-INITIAL_SPEED_PLATFORM - (by - 32) * STEP_SPEED_PLATFORM, 1);
 				m1 = platform_controller.move_left_motor(-INITIAL_SPEED_PLATFORM - (by - 32) * STEP_SPEED_PLATFORM - (bx - 32) * STEP_SPEED_PLATFORM * ROTATE_SPEED_FACTOR, 1);
 			}
-			else { // bx == 0
-				m1 = platform_controller.move_left_motor(0, 1);
-				m2 = platform_controller.move_right_motor(0, 1);
+			else { // bx == 32
+				//m1 = platform_controller.move_left_motor(0, 1);
+				//m2 = platform_controller.move_right_motor(0, 1);
+				m2 = platform_controller.move_right_motor(-INITIAL_SPEED_PLATFORM - (by - 32) * STEP_SPEED_PLATFORM, 1);
+				m1 = platform_controller.move_left_motor(-INITIAL_SPEED_PLATFORM - (by - 32) * STEP_SPEED_PLATFORM, 1);
+
 			}
 	}
 	else
 		if (by < 32) { // move forward
 			if (bx > 32) {// turn right
-				m2 = platform_controller.move_right_motor(INITIAL_SPEED_PLATFORM + (32 - by) * STEP_SPEED_PLATFORM + (32 - bx) * STEP_SPEED_PLATFORM * ROTATE_SPEED_FACTOR, 1);
-				m1 = platform_controller.move_left_motor(INITIAL_SPEED_PLATFORM + (32 - by) * STEP_SPEED_PLATFORM, 1);
+				m2 = platform_controller.move_left_motor(INITIAL_SPEED_PLATFORM + (32 - by) * STEP_SPEED_PLATFORM + (bx - 32) * STEP_SPEED_PLATFORM * ROTATE_SPEED_FACTOR, 1);
+				m1 = platform_controller.move_right_motor(INITIAL_SPEED_PLATFORM + (32 - by) * STEP_SPEED_PLATFORM, 1);
 			}
 			else
 				if (bx < 32) {// turn left
-					m2 = platform_controller.move_right_motor(INITIAL_SPEED_PLATFORM + (32 - by) * STEP_SPEED_PLATFORM, 1);
-					m1 = platform_controller.move_left_motor(INITIAL_SPEED_PLATFORM + (32 - by) * STEP_SPEED_PLATFORM + (bx - 32) * STEP_SPEED_PLATFORM * ROTATE_SPEED_FACTOR, 1);
+					m2 = platform_controller.move_left_motor(INITIAL_SPEED_PLATFORM + (32 - by) * STEP_SPEED_PLATFORM, 1);
+					m1 = platform_controller.move_right_motor(INITIAL_SPEED_PLATFORM + (32 - by) * STEP_SPEED_PLATFORM + (32 - bx) * STEP_SPEED_PLATFORM * ROTATE_SPEED_FACTOR, 1);
 				}
 				else {// bx == 32
-					m1 = platform_controller.move_left_motor(0, 1);
-					m2 = platform_controller.move_right_motor(0, 1);
+					m2 = platform_controller.move_left_motor(INITIAL_SPEED_PLATFORM + (32 - by) * STEP_SPEED_PLATFORM, 1);
+					m1 = platform_controller.move_right_motor(INITIAL_SPEED_PLATFORM + (32 - by) * STEP_SPEED_PLATFORM, 1);
 				}
 		}
 		else {
@@ -289,7 +292,7 @@ void disconnect_robot(void)
 	LIDAR_controller.disconnect();
 }
 //--------------------------------------------------------------------
-bool connect_and_setup_left_arm(FILE *f_log)
+bool connect_and_setup_left_arm(void)
 {
 	char error_string[1000];
 	int error_index;
@@ -394,7 +397,7 @@ int process_command(unsigned char bx, unsigned char by)
 				print_message(f_log, message);
 			}
 			// LEFT ARM CONNECT
-			connect_and_setup_left_arm(f_log);
+			connect_and_setup_left_arm();
 
 			// HEAD CONNECT
 			error_index = jenny5_head_controller.connect(HEAD_COM_PORT);
@@ -505,7 +508,7 @@ int process_command(unsigned char bx, unsigned char by)
 
 			// move first arm motor
 		case LEFT_ARM_BODY_LEFT_RIGHT_COMMAND:
-			connect_and_setup_left_arm(f_log);
+			connect_and_setup_left_arm();
 
 			stop_robot();
 			move_mode = LEFT_ARM_BODY_LEFT_RIGHT_MOVE_STATE;
@@ -515,7 +518,7 @@ int process_command(unsigned char bx, unsigned char by)
 			break;
 		case LEFT_ARM_UP_DOWN_COMMAND:
 			// move second arm motor
-			connect_and_setup_left_arm(f_log);
+			connect_and_setup_left_arm();
 
 			stop_robot();
 			move_mode = LEFT_ARM_UP_DOWN_MOVE_STATE;
@@ -525,7 +528,7 @@ int process_command(unsigned char bx, unsigned char by)
 			break;
 		case LEFT_ARM_ROTATE_COMMAND:
 			// move rotate motor
-			connect_and_setup_left_arm(f_log);
+			connect_and_setup_left_arm();
 
 			stop_robot();
 			move_mode = LEFT_ARM_ROTATE_STATE;
@@ -536,7 +539,7 @@ int process_command(unsigned char bx, unsigned char by)
 
 		case LEFT_ARM_ELBOW_MOVE_COMMAND:
 			// move elbow motor
-			connect_and_setup_left_arm(f_log);
+			connect_and_setup_left_arm();
 
 			stop_robot();
 			move_mode = LEFT_ARM_ELBOW_MOVE_STATE;
@@ -546,7 +549,7 @@ int process_command(unsigned char bx, unsigned char by)
 			break;
 		case LEFT_ARM_FOREARM_MOVE_COMMAND:
 			// move forearm motor
-			connect_and_setup_left_arm(f_log);
+			connect_and_setup_left_arm();
 
 			stop_robot();
 			move_mode = LEFT_ARM_FOREARM_MOVE_STATE;
@@ -557,7 +560,7 @@ int process_command(unsigned char bx, unsigned char by)
 		case LEFT_ARM_GRIPPER_MOVE_COMMAND:
 			// move gripper motor
 
-			connect_and_setup_left_arm(f_log);
+			connect_and_setup_left_arm();
 
 			stop_robot();
 			move_mode = LEFT_ARM_GRIPPER_MOVE_STATE;
@@ -594,7 +597,7 @@ int process_command(unsigned char bx, unsigned char by)
 
 			move_mode = FACE_TRACKING_STATE;
 
-			char error_string[1000];
+//			char error_string[1000];
 
 			if (!jenny5_head_controller.cam.open(HEAD_CAMERA_INDEX)) {	// link it to the device [0 = default cam] (USBcam is default 'cause I disabled the onbord one IRRELEVANT!)
 				print_message(stdout, "Couldn't open head's video camera!\n");
@@ -717,7 +720,7 @@ int process_command(unsigned char bx, unsigned char by)
 			// move gripper motor
 
 			stop_robot();
-			connect_and_setup_left_arm(f_log);
+			connect_and_setup_left_arm();
 
 			move_mode = WAVE_LEFT_ARM_STATE;
 			print_message(stdout, "WAVING LEFT ARM STATE\n");
