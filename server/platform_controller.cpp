@@ -63,7 +63,7 @@ bool t_platform_controller::move_left_motor(int16_t speed, uint32_t acceleration
 //------------------------------------------------------------------------
 bool t_platform_controller::move_right_motor(int16_t speed, uint32_t acceleration)
 {
-	return roboclaw_controller.drive_M2_with_signed_duty_and_acceleration(speed, acceleration);
+	return roboclaw_controller.drive_M2_with_signed_duty_and_acceleration(-speed, acceleration);
 }
 //------------------------------------------------------------------------
 int t_platform_controller::stop_motors(void)
