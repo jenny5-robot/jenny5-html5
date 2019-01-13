@@ -96,6 +96,10 @@ function on_speech_recognition_result(event)
 			utterThis.text = "forearm";
 			send_forearm_motor_move();
 			break;
+		case "wrist":
+			utterThis.text = "wrist";
+			send_wrist_motor_move();
+			break;
 		case "gripper":
 			utterThis.text = "gripper";
 			send_gripper_motor_move();
@@ -103,6 +107,10 @@ function on_speech_recognition_result(event)
 		case "wave hand":
 			utterThis.text = "waving hand";
 			send_wave_left_arm();
+			break;
+		case "read sensors":
+			utterThis.text = "read sensors";
+			send_read_sensors_left_arm();
 			break;
 		case "Hello":
 			utterThis.text = "Hello God!";			

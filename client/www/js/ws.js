@@ -15,15 +15,23 @@ var websocket;
     const LEFT_ARM_ROTATE_COMMAND = 9;
     const LEFT_ARM_ELBOW_MOVE_COMMAND = 10;
     const LEFT_ARM_FOREARM_MOVE_COMMAND = 11;
-    const LEFT_ARM_GRIPPER_MOVE_COMMAND = 12;
-    const HEAD_ROTATE_COMMAND = 13;
-    const FACE_TRACKING_COMMAND = 14;
-    const FOLLOW_PERSON_COMMAND = 15;
-    const DISABLE_POWER_COMMAND = 16;
-	const CAPTURE_HEAD_CAMERA = 17;
-	const CAPTURE_LEFT_ARM_CAMERA = 18;
-	const ERROR = 19;
-	const LEFT_ARM_WAVE_COMMAND = 20;
+    const LEFT_ARM_WRIST_MOVE_COMMAND = 12;
+	
+	const LEFT_ARM_GRIPPER_MOVE_COMMAND = 13;
+	const LEFT_ARM_READ_SENSORS_COMMAND = 14;
+	
+	const LEFT_ARM_WAVE_COMMAND = 21;
+	const DISABLE_POWER_COMMAND = 22;
+	
+    const HEAD_ROTATE_COMMAND = 31;
+    const FACE_TRACKING_COMMAND = 41;
+    const FOLLOW_PERSON_COMMAND = 42;
+
+	const CAPTURE_HEAD_CAMERA = 51;
+	const CAPTURE_LEFT_ARM_CAMERA = 52;
+	
+	const ERROR = 100;
+
 	
 //--------------------------------------------------------------------
 function ws_connect()
@@ -175,11 +183,11 @@ function send_forearm_motor_move()
 	document.getElementById("forearm_button").style.fontWeight = "bold";
 }
 //--------------------------------------------------------------------
-function send_gripper_motor_move()
+function send_wrist_motor_move()
 {
-	send_command_to_robot(1 << 7, LEFT_ARM_GRIPPER_MOVE_COMMAND);
+	send_command_to_robot(1 << 7, LEFT_ARM_WRIST_MOVE_COMMAND);
 	set_all_up();
-	document.getElementById("gripper_button").style.fontWeight = "bold";
+	document.getElementById("wrist_button").style.fontWeight = "bold";
 }
 //--------------------------------------------------------------------
 function send_wave_left_arm()
@@ -213,6 +221,12 @@ function send_follow_person()
 function send_disable_power()
 {
 	send_command_to_robot(1 << 7, DISABLE_POWER_COMMAND);
+	send_pause_robot();
+}
+//--------------------------------------------------------------------
+function send_read_sensors_left_arm()
+{
+	send_command_to_robot(1 << 7, LEFT_ARM_READ_SENSORS_COMMAND);
 	send_pause_robot();
 }
 //--------------------------------------------------------------------

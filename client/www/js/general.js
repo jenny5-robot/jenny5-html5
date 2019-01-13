@@ -35,8 +35,9 @@ function set_disable_state(state)
 	document.getElementById("shoulder_button").disabled = state;
 	document.getElementById("elbow_button").disabled = state;
 	document.getElementById("forearm_button").disabled = state;
-	document.getElementById("gripper_button").disabled = state;
-	document.getElementById("wave_left_arm_id").disabled = state;
+	document.getElementById("wrist_button").disabled = state;
+	document.getElementById("id_wave_left_arm").disabled = state;
+	document.getElementById("id_read_sensors_left_arm").disabled = state;
 	
 	document.getElementById("rotate_head_button").disabled = state;
 
@@ -64,8 +65,9 @@ function set_all_up()
 	document.getElementById("shoulder_button").style.fontWeight = "normal";
 	document.getElementById("elbow_button").style.fontWeight = "normal";
 	document.getElementById("forearm_button").style.fontWeight = "normal";
-	document.getElementById("gripper_button").style.fontWeight = "normal";
-	document.getElementById("wave_left_arm_id").style.fontWeight = "normal";
+	document.getElementById("wrist_button").style.fontWeight = "normal";
+	document.getElementById("id_wave_left_arm").style.fontWeight = "normal";
+	document.getElementById("id_read_sensors_left_arm").style.fontWeight = "normal";
 	
 	document.getElementById("rotate_head_button").style.fontWeight = "normal";
 
