@@ -165,13 +165,17 @@ bool t_head_controller::setup(char* error_string)
 	int head_vertical_motor_potentiometer_max[1] = { _head_vertical_motor_potentiometer_max };
 	int head_vertical_motor_potentiometer_home[1] = { _head_vertical_motor_potentiometer_home };
 	int head_vertical_motor_potentiometer_dir[1] = { 1 };
-
+/*
 	head_arduino_controller.send_attach_sensors_to_stepper_motor(HEAD_MOTOR_NECK,
-		1, potentiometer_index_head_horizontal_motor, head_horizontal_motor_potentiometer_min, head_horizontal_motor_potentiometer_max, head_horizontal_motor_potentiometer_home, head_horizontal_motor_potentiometer_dir,
-		0, NULL, 0, NULL, NULL);
-	head_arduino_controller.send_attach_sensors_to_stepper_motor(HEAD_MOTOR_FACE, 1, potentiometer_index_head_vertical_motor, head_vertical_motor_potentiometer_min, head_vertical_motor_potentiometer_max, head_vertical_motor_potentiometer_home, head_vertical_motor_potentiometer_dir,
+		1, potentiometer_index_head_horizontal_motor, head_horizontal_motor_potentiometer_min, 
+		head_horizontal_motor_potentiometer_max, head_horizontal_motor_potentiometer_home, 
+		head_horizontal_motor_potentiometer_dir,
 		0, NULL, 0, NULL, NULL);
 
+	head_arduino_controller.send_attach_sensors_to_stepper_motor(HEAD_MOTOR_FACE, 1, potentiometer_index_head_vertical_motor, head_vertical_motor_potentiometer_min, 
+		head_vertical_motor_potentiometer_max, head_vertical_motor_potentiometer_home, head_vertical_motor_potentiometer_dir,
+		0, NULL, 0, NULL, NULL);
+		*/
 	strcpy(error_string, "HEAD SETUP PERFECT\n");
 	return true;
 }

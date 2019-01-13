@@ -32,11 +32,11 @@ std::thread *follow_person_thread;
 
 #define ARM_dead_zone_length 12
 
-#define ARM_MOTOR_NUM_STEPS 2000
+#define ARM_MOTOR_NUM_STEPS 5000
 
 #define PLATFORM_COM_PORT 20
 #define LEG_COM_PORT 23
-#define LEFT_ARM_COM_PORT 5
+#define LEFT_ARM_COM_PORT 3
 #define HEAD_COM_PORT 4
 #define LIDAR_COM_PORT 22
 
@@ -51,11 +51,14 @@ std::thread *follow_person_thread;
 #define LEFT_ARM_ROTATE_STATE 6
 #define LEFT_ARM_ELBOW_MOVE_STATE 7
 #define LEFT_ARM_FOREARM_MOVE_STATE 8
-#define LEFT_ARM_GRIPPER_MOVE_STATE 9
-#define HEAD_ROTATE_STATE 10
-#define FACE_TRACKING_STATE 11
-#define FOLLOW_PERSON_STATE 12
-#define WAVE_LEFT_ARM_STATE 13
+#define LEFT_ARM_WRIST_MOVE_STATE 9
+#define LEFT_ARM_GRIPPER_MOVE_STATE 10
+
+#define HEAD_ROTATE_STATE 20
+
+#define FACE_TRACKING_STATE 31
+#define FOLLOW_PERSON_STATE 32
+#define WAVE_LEFT_ARM_STATE 33
 
 #define ROTATE_SPEED_FACTOR 1
 
@@ -229,14 +232,16 @@ void handle_left_arm_forearm_move(char bx, char by)
 //--------------------------------------------------------------------
 void handle_left_arm_gripper_move(char bx, char by)
 {
+	/*
 	// gripper
 	if (by < 32 - ARM_dead_zone_length / 2) // 
-		left_arm_controller.send_LEFT_ARM_GRIPPER_MOTOR_move(ARM_MOTOR_NUM_STEPS, (32 - by) * STEP_SPEED_ARM, 500);
+		left_arm_controller.send_LEFT_ARM_WRIST_MOTOR_move(ARM_MOTOR_NUM_STEPS, (32 - by) * STEP_SPEED_ARM, 500);
 	else
 		if (by > 32 + ARM_dead_zone_length / 2) // 
 			left_arm_controller.send_LEFT_ARM_GRIPPER_MOTOR_move(-ARM_MOTOR_NUM_STEPS, (by - 32) * STEP_SPEED_ARM, 500);
 		else// inside dead zone - stop
 			left_arm_controller.send_stop_motor(LEFT_ARM_GRIPPER_MOTOR);
+			*/
 }
 //--------------------------------------------------------------------
 void handle_head_rotate(char bx, char by)
@@ -567,6 +572,14 @@ int process_command(unsigned char bx, unsigned char by)
 			print_message(stdout, "LEFT_ARM_GRIPPER_MOVE_STATE\n");
 			print_message(f_log, "LEFT_ARM_GRIPPER_MOVE_STATE\n");
 
+			break;
+		case LEFT_ARM_READ_SENSORS_COMMAND:
+			connect_and_setup_left_arm();
+			left_arm_controller.send_get_sensors_value();
+		//	stop_robot();
+			//move_mode = LEFT_ARM_GRIPPER_MOVE_STATE;
+			//print_message(stdout, "LEFT_ARM_GRIPPER_MOVE_STATE\n");
+			//print_message(f_log, "LEFT_ARM_GRIPPER_MOVE_STATE\n");
 			break;
 		case HEAD_ROTATE_COMMAND:
 			// head rotate

@@ -20,38 +20,44 @@
 #define LEFT_ARM_SHOULDER_LEFT_RIGHT_MOTOR 2
 #define LEFT_ARM_ELBOW_MOTOR 3
 #define LEFT_ARM_FOREARM_MOTOR 4
-#define LEFT_ARM_GRIPPER_MOTOR 5
+#define LEFT_ARM_WRIST_MOTOR 5
 
-#define LEFT_ARM_BODY_POTENTIOMETER_INDEX 0
-#define LEFT_ARM_SHOULDER_UP_DOWN_POTENTIOMETER_INDEX 1
-#define LEFT_ARM_SHOULDER_LEFT_RIGHT_POTENTIOMETER_INDEX 2
-#define LEFT_ARM_ELBOW_POTENTIOMETER_INDEX 3
-#define LEFT_ARM_FOREARM_POTENTIOMETER_INDEX 4
+#define LEFT_ARM_BODY_AS5147_INDEX 0
+#define LEFT_ARM_SHOULDER_UP_DOWN_AS5147_INDEX 1
+#define LEFT_ARM_SHOULDER_LEFT_RIGHT_AS5147_INDEX 2
+#define LEFT_ARM_ELBOW_AS5147_INDEX 3
+#define LEFT_ARM_FOREARM_AS5147_INDEX 4
+#define LEFT_ARM_WRIST_AS5147_INDEX 5
+
 #define LEFT_ARM_GRIPPER_BUTTON_INDEX 0
 #define LEFT_ARM_GRIPPER_INFRARED_INDEX 0
 
 #define LEFT_ARM_GRIPPER_BUTTON_PIN 15
 
 // left arm
-#define _potentiometer_min_LEFT_ARM_BODY_MOTOR 380
-#define _potentiometer_max_LEFT_ARM_BODY_MOTOR 800
-#define _potentiometer_home_LEFT_ARM_BODY_MOTOR 640
+#define _AS5147_min_LEFT_ARM_BODY_MOTOR 180
+#define _AS5147_max_LEFT_ARM_BODY_MOTOR 320
+#define _AS5147_home_LEFT_ARM_BODY_MOTOR 250
 
-#define _potentiometer_min_LEFT_ARM_SHOULDER_UP_DOWN_MOTOR 270// up
-#define _potentiometer_max_LEFT_ARM_SHOULDER_UP_DOWN_MOTOR 850// down
-#define _potentiometer_home_LEFT_ARM_SHOULDER_UP_DOWN_MOTOR 830// 
+#define _AS5147_min_LEFT_ARM_SHOULDER_UP_DOWN_MOTOR 40// up
+#define _AS5147_max_LEFT_ARM_SHOULDER_UP_DOWN_MOTOR 220// down
+#define _AS5147_home_LEFT_ARM_SHOULDER_UP_DOWN_MOTOR 210// 
 
-#define _potentiometer_min_LEFT_ARM_SHOULDER_LEFT_RIGHT_MOTOR 250
-#define _potentiometer_max_LEFT_ARM_SHOULDER_LEFT_RIGHT_MOTOR 730
-#define _potentiometer_home_LEFT_ARM_SHOULDER_LEFT_RIGHT_MOTOR 260
+#define _AS5147_min_LEFT_ARM_SHOULDER_LEFT_RIGHT_MOTOR 230
+#define _AS5147_max_LEFT_ARM_SHOULDER_LEFT_RIGHT_MOTOR 100
+#define _AS5147_home_LEFT_ARM_SHOULDER_LEFT_RIGHT_MOTOR 300
 
-#define _potentiometer_min_LEFT_ARM_ELBOW_MOTOR 480
-#define _potentiometer_max_LEFT_ARM_ELBOW_MOTOR 940
-#define _potentiometer_home_LEFT_ARM_ELBOW_MOTOR 630
+#define _AS5147_min_LEFT_ARM_ELBOW_MOTOR 480
+#define _AS5147_max_LEFT_ARM_ELBOW_MOTOR 350
+#define _AS5147_home_LEFT_ARM_ELBOW_MOTOR 630
 
-#define _potentiometer_min_LEFT_ARM_FOREARM_MOTOR 230
-#define _potentiometer_max_LEFT_ARM_FOREARM_MOTOR 720
-#define _potentiometer_home_LEFT_ARM_FOREARM_MOTOR 440
+#define _AS5147_min_LEFT_ARM_FOREARM_MOTOR 230
+#define _AS5147_max_LEFT_ARM_FOREARM_MOTOR 720
+#define _AS5147_home_LEFT_ARM_FOREARM_MOTOR 440
+
+#define _AS5147_min_LEFT_ARM_WRIST_MOTOR 230
+#define _AS5147_max_LEFT_ARM_WRIST_MOTOR 720
+#define _AS5147_home_LEFT_ARM_WRIST_MOTOR 440
 
 #define LEFT_ARM_CAMERA_INDEX 1
 
@@ -64,8 +70,8 @@
 
 #define Connected_to_LEFT_ARM_STR "Connected to LEFT_ARM\n"
 
-#define ARM_DEFAULT_MOTOR_SPEED 400
-#define ARM_DEFAULT_MOTOR_ACCELERATION 200
+#define ARM_DEFAULT_MOTOR_SPEED 1250
+#define ARM_DEFAULT_MOTOR_ACCELERATION 1250
 
 //-------------------------------------------------------------------------------
 class t_left_arm_controller {
@@ -79,6 +85,9 @@ public:
 	bool is_connected(void);
 	void disconnect(void);
 	bool setup(char* error_string);
+	bool create_stepper_motors_controller(char* error_string);
+	bool create_as5147s_controller(char* error_string);
+	bool set_motor_speed_acceleration(int motor_index, int speed, int acceleration, char* error_string);
 
 	void send_get_arduino_firmware_version(void);
 
@@ -89,13 +98,14 @@ public:
 	void send_LEFT_ARM_SHOULDER_LEFT_RIGHT_MOTOR_home(void);
 	void send_LEFT_ARM_ELBOW_MOTOR_home(void);
 	void send_LEFT_ARM_FOREARM_MOTOR_home(void);
-	void send_LEFT_ARM_GRIPPER_MOTOR_home(void);
+	void send_LEFT_ARM_WRIST_MOTOR_home(void);
 
 	void send_LEFT_ARM_BODY_MOTOR_to_sensor_position(int new_position);
 	void send_LEFT_ARM_SHOULDER_UP_DOWN_MOTOR_to_sensor_position(int new_position);
 	void send_LEFT_ARM_SHOULDER_LEFT_RIGHT_MOTOR_to_sensor_position(int new_position);
 	void send_LEFT_ARM_ELBOW_MOTOR_to_sensor_position(int new_position);
 	void send_LEFT_ARM_FOREARM_MOTOR_to_sensor_position(int new_position);
+	void send_LEFT_ARM_WRIST_MOTOR_to_sensor_position(int new_position);
 	void send_LEFT_ARM_GRIPPER_MOTOR_start_open(void);
 	void send_LEFT_ARM_GRIPPER_MOTOR_stop_open(void);
 
@@ -104,7 +114,7 @@ public:
 	void send_LEFT_ARM_SHOULDER_LEFT_RIGHT_MOTOR_move(int num_steps, int speed, int accelleration);
 	void send_LEFT_ARM_ELBOW_MOTOR_move(int num_steps, int speed, int accelleration);
 	void send_LEFT_ARM_FOREARM_MOTOR_move(int num_steps, int speed, int accelleration);
-	void send_LEFT_ARM_GRIPPER_MOTOR_move(int num_steps, int speed, int accelleration);
+	void send_LEFT_ARM_WRIST_MOTOR_move(int num_steps, int speed, int accelleration);
 
 	void send_stop_motor(int motor_index);
 
@@ -114,6 +124,7 @@ public:
 	void send_stop_motors(void);
 
 	bool wave_hand(char *error_string);
+	bool read_all_sensors(char *error_string);
 
 	char *error_to_string(int error);
 };

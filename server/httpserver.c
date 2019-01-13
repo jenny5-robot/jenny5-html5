@@ -1,5 +1,4 @@
-// author: Eduard Suica
-// website: devronium.com
+// special thanks to the author of the websocket server: Eduard Suica, website: devronium.com
 
 // Compile on Windows: gcc httpserver.c -DTLS_AMALGAMATION -lws2_32 -o httpserver.exe
 // Other OSes: gcc httpserver.c -DTLS_AMALGAMATION -o httpserver
@@ -22,7 +21,7 @@
 #include "process_command.h"
 
 
-#define SERVER_VERSION "2017.12.17.4"
+#define SERVER_VERSION "2019.01.13.0"
 
 #define port 443
 #define MAX_CONNECTIONS         1024
