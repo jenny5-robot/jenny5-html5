@@ -98,7 +98,7 @@ bool t_lidar_controller::update_data(void)
 	bool at_least_one_new_LIDAR_distance = false;
 
 	while (arduino_controller.query_for_event(LIDAR_READ_EVENT, &motor_position, &distance)) {  // have we received the event from Serial ?
-		lidar_distances[motor_position] = distance;
+		lidar_distances[motor_position] = int(distance);
 		at_least_one_new_LIDAR_distance = true;
 	}
 	return at_least_one_new_LIDAR_distance;

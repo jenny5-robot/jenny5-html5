@@ -1,4 +1,4 @@
-// special thanks to the author of the websocket server: Eduard Suica, website: devronium.com
+// special thanks to Eduard Suica, the author of the websocket server, website: devronium.com
 
 // Compile on Windows: gcc httpserver.c -DTLS_AMALGAMATION -lws2_32 -o httpserver.exe
 // Other OSes: gcc httpserver.c -DTLS_AMALGAMATION -o httpserver

@@ -82,8 +82,8 @@ public:
 	void send_neck_to_sensor_position(int head_neck_new_position);
 	void send_face_to_sensor_position(int head_face_new_position);
 
-	void send_HEAD_MOTOR_NECK_move(int num_steps, int speed, int accelleration);
-	void send_HEAD_MOTOR_FACE_move(int num_steps, int speed, int accelleration);
+	void send_HEAD_MOTOR_NECK_move(int num_steps/*, int speed, int accelleration*/);
+	void send_HEAD_MOTOR_FACE_move(int num_steps/*, int speed, int accelleration*/);
 
 	void send_stop_motor(int motor_index);
 	void send_stop_motors(void);

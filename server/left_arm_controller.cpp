@@ -128,7 +128,7 @@ bool t_left_arm_controller::create_as5147s_controller(char* error_string)
 	return true;
 }
 //----------------------------------------------------------------
-bool t_left_arm_controller::set_motor_speed_acceleration(int motor_index, int speed, int acceleration, char* error_string)
+bool t_left_arm_controller::set_motor_speed_acceleration(int motor_index, int /*speed*/, int /*acceleration*/, char* error_string)
 {
 	arduino_controller.send_set_stepper_motor_speed_and_acceleration(motor_index, ARM_DEFAULT_MOTOR_SPEED, ARM_DEFAULT_MOTOR_ACCELERATION);
 
@@ -235,8 +235,8 @@ bool t_left_arm_controller::setup(char* error_string)
 	int AS5147_home_LEFT_ARM_WRIST_MOTOR[1] = { _AS5147_home_LEFT_ARM_WRIST_MOTOR };
 	int AS5147_dir_LEFT_ARM_WRIST_MOTOR[1] = { 1 };
 
-	int button_index_LEFT_ARM_GRIPPER_MOTOR[1] = { 0 };
-	int button_direction_LEFT_ARM_GRIPPER_MOTOR[1] = { 1 };
+//	int button_index_LEFT_ARM_GRIPPER_MOTOR[1] = { 0 };
+//	int button_direction_LEFT_ARM_GRIPPER_MOTOR[1] = { 1 };
 
 	arduino_controller.send_attach_sensors_to_stepper_motor(LEFT_ARM_BODY_MOTOR, 
 		0, NULL, NULL, NULL, NULL, NULL,
@@ -542,32 +542,32 @@ void t_left_arm_controller::send_LEFT_ARM_GRIPPER_MOTOR_stop_open(void)
 	//arduino_controller.send_move_stepper_motor(LEFT_ARM_GRIPPER_MOTOR, 0);
 }
 //----------------------------------------------------------------
-void t_left_arm_controller::send_LEFT_ARM_BODY_MOTOR_move(int num_steps, int speed, int accelleration)
+void t_left_arm_controller::send_LEFT_ARM_BODY_MOTOR_move(int num_steps/*, int speed, int accelleration*/)
 {
 	arduino_controller.send_move_stepper_motor(LEFT_ARM_BODY_MOTOR, num_steps);
 }
 //----------------------------------------------------------------
-void t_left_arm_controller::send_LEFT_ARM_SHOULDER_UP_DOWN_MOTOR_move(int num_steps, int speed, int accelleration)
+void t_left_arm_controller::send_LEFT_ARM_SHOULDER_UP_DOWN_MOTOR_move(int num_steps/*, int speed, int accelleration*/)
 {
 	arduino_controller.send_move_stepper_motor(LEFT_ARM_SHOULDER_UP_DOWN_MOTOR, num_steps);
 }
 //----------------------------------------------------------------
-void t_left_arm_controller::send_LEFT_ARM_SHOULDER_LEFT_RIGHT_MOTOR_move(int num_steps, int speed, int accelleration)
+void t_left_arm_controller::send_LEFT_ARM_SHOULDER_LEFT_RIGHT_MOTOR_move(int num_steps/*, int speed, int accelleration*/)
 {
 	arduino_controller.send_move_stepper_motor(LEFT_ARM_SHOULDER_LEFT_RIGHT_MOTOR, num_steps);
 }
 //----------------------------------------------------------------
-void t_left_arm_controller::send_LEFT_ARM_ELBOW_MOTOR_move(int num_steps, int speed, int accelleration)
+void t_left_arm_controller::send_LEFT_ARM_ELBOW_MOTOR_move(int num_steps/*, int speed, int accelleration*/)
 {
 	arduino_controller.send_move_stepper_motor(LEFT_ARM_ELBOW_MOTOR, num_steps);
 }
 //----------------------------------------------------------------
-void t_left_arm_controller::send_LEFT_ARM_FOREARM_MOTOR_move(int num_steps, int speed, int accelleration)
+void t_left_arm_controller::send_LEFT_ARM_FOREARM_MOTOR_move(int num_steps/*, int speed, int accelleration*/)
 {
 	arduino_controller.send_move_stepper_motor(LEFT_ARM_FOREARM_MOTOR, num_steps);
 }
 //----------------------------------------------------------------
-void t_left_arm_controller::send_LEFT_ARM_WRIST_MOTOR_move(int num_steps, int speed, int accelleration)
+void t_left_arm_controller::send_LEFT_ARM_WRIST_MOTOR_move(int num_steps /*, int speed, int accelleration*/)
 {
 	arduino_controller.send_move_stepper_motor(LEFT_ARM_WRIST_MOTOR, num_steps);
 }
@@ -600,12 +600,12 @@ char *t_left_arm_controller::error_to_string(int error)
 	return NULL;
 }
 //----------------------------------------------------------------
-bool t_left_arm_controller::read_all_sensors(char *error_string)
+bool t_left_arm_controller::read_all_sensors(char * /*error_string*/)
 {
 	return true;
 }
 //----------------------------------------------------------------
-bool t_left_arm_controller::wave_hand(char *error_string)
+bool t_left_arm_controller::wave_hand(char * /*error_string*/)
 {
 	/*
 	if (!home_all_motors(error_string))

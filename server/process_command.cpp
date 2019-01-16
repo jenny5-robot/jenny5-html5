@@ -139,7 +139,7 @@ int handle_navigate(char bx, char by)
 		return 0;
 }
 //--------------------------------------------------------------------
-int handle_platform_rotate(char bx, char by)
+int handle_platform_rotate(char bx, char /*by*/)
 {
 	bool m1, m2;
 
@@ -160,7 +160,7 @@ int handle_platform_rotate(char bx, char by)
 		}
 }
 //--------------------------------------------------------------------
-void handle_leg_move(char bx, char by)
+void handle_leg_move(char /*bx*/, char by)
 {
 	char dead_zone_length = 6;
 	if (by < 32 - dead_zone_length / 2) // contract
@@ -170,67 +170,67 @@ void handle_leg_move(char bx, char by)
 			leg_controller.expand_both((by - 32) * 1000, 1);
 }
 //--------------------------------------------------------------------
-void handle_left_arm_body_left_right_move(char bx, char by)
+void handle_left_arm_body_left_right_move(char bx, char /*by*/)
 {
 	// body left-right
 	if (bx < 32 - ARM_dead_zone_length / 2) // 
-		left_arm_controller.send_LEFT_ARM_BODY_MOTOR_move(ARM_MOTOR_NUM_STEPS, (32 - bx) * STEP_SPEED_ARM, 500);
+		left_arm_controller.send_LEFT_ARM_BODY_MOTOR_move(ARM_MOTOR_NUM_STEPS/*, (32 - bx) * STEP_SPEED_ARM, 500*/);
 	else
 		if (bx > 32 + ARM_dead_zone_length / 2) // 
-			left_arm_controller.send_LEFT_ARM_BODY_MOTOR_move(-ARM_MOTOR_NUM_STEPS, (bx - 32) * STEP_SPEED_ARM, 500);
+			left_arm_controller.send_LEFT_ARM_BODY_MOTOR_move(-ARM_MOTOR_NUM_STEPS/*, (bx - 32) * STEP_SPEED_ARM, 500*/);
 		else// inside dead zone - stop
 			left_arm_controller.send_stop_motor(LEFT_ARM_BODY_MOTOR);
 }
 //--------------------------------------------------------------------
-void handle_left_arm_up_down_move(char bx, char by)
+void handle_left_arm_up_down_move(char /*bx*/, char by)
 {
 	// shoulder up-down
 	if (by < 32 - ARM_dead_zone_length / 2) // 
-		left_arm_controller.send_LEFT_ARM_SHOULDER_UP_DOWN_MOTOR_move(-ARM_MOTOR_NUM_STEPS, (32 - by) * STEP_SPEED_ARM, 500);
+		left_arm_controller.send_LEFT_ARM_SHOULDER_UP_DOWN_MOTOR_move(-ARM_MOTOR_NUM_STEPS/*, (32 - by) * STEP_SPEED_ARM, 500*/);
 	else
 		if (by > 32 + ARM_dead_zone_length / 2) // 
-			left_arm_controller.send_LEFT_ARM_SHOULDER_UP_DOWN_MOTOR_move(ARM_MOTOR_NUM_STEPS, (by - 32) * STEP_SPEED_ARM, 500);
+			left_arm_controller.send_LEFT_ARM_SHOULDER_UP_DOWN_MOTOR_move(ARM_MOTOR_NUM_STEPS/*, (by - 32) * STEP_SPEED_ARM, 500*/);
 		else// inside dead zone - stop
 			left_arm_controller.send_stop_motor(LEFT_ARM_SHOULDER_UP_DOWN_MOTOR);
 }
 //--------------------------------------------------------------------
-void handle_left_arm_rotate_move(char bx, char by)
+void handle_left_arm_rotate_move(char bx, char /*by*/)
 {
 	// shoulder left-right
 	if (bx < 32 - ARM_dead_zone_length / 2) // 
-		left_arm_controller.send_LEFT_ARM_SHOULDER_LEFT_RIGHT_MOTOR_move(-ARM_MOTOR_NUM_STEPS, (32 - bx) * STEP_SPEED_ARM, 500);
+		left_arm_controller.send_LEFT_ARM_SHOULDER_LEFT_RIGHT_MOTOR_move(-ARM_MOTOR_NUM_STEPS/*, (32 - bx) * STEP_SPEED_ARM, 500*/);
 	else
 		if (bx > 32 + ARM_dead_zone_length / 2) // 
-			left_arm_controller.send_LEFT_ARM_SHOULDER_LEFT_RIGHT_MOTOR_move(ARM_MOTOR_NUM_STEPS, (bx - 32) * STEP_SPEED_ARM, 500);
+			left_arm_controller.send_LEFT_ARM_SHOULDER_LEFT_RIGHT_MOTOR_move(ARM_MOTOR_NUM_STEPS/*, (bx - 32) * STEP_SPEED_ARM, 500*/);
 		else// inside dead zone - stop
 			left_arm_controller.send_stop_motor(LEFT_ARM_SHOULDER_LEFT_RIGHT_MOTOR);
 }
 //--------------------------------------------------------------------
-void handle_left_arm_elbow_move(char bx, char by)
+void handle_left_arm_elbow_move(char /*bx*/, char by)
 {
 	// elbow up-down
 	if (by < 32 - ARM_dead_zone_length / 2) // 
-		left_arm_controller.send_LEFT_ARM_ELBOW_MOTOR_move(ARM_MOTOR_NUM_STEPS, (32 - by) * STEP_SPEED_ARM, 500);
+		left_arm_controller.send_LEFT_ARM_ELBOW_MOTOR_move(ARM_MOTOR_NUM_STEPS/*, (32 - by) * STEP_SPEED_ARM, 500*/);
 	else
 		if (by > 32 + ARM_dead_zone_length / 2) // 
-			left_arm_controller.send_LEFT_ARM_ELBOW_MOTOR_move(-ARM_MOTOR_NUM_STEPS, (by - 32) * STEP_SPEED_ARM, 500);
+			left_arm_controller.send_LEFT_ARM_ELBOW_MOTOR_move(-ARM_MOTOR_NUM_STEPS/*, (by - 32) * STEP_SPEED_ARM, 500*/);
 		else// inside dead zone - stop
 			left_arm_controller.send_stop_motor(LEFT_ARM_ELBOW_MOTOR);
 }
 //--------------------------------------------------------------------
-void handle_left_arm_forearm_move(char bx, char by)
+void handle_left_arm_forearm_move(char bx, char /*by*/)
 {
 	// forearm left-right
 	if (bx < 32 - ARM_dead_zone_length / 2) // 
-		left_arm_controller.send_LEFT_ARM_FOREARM_MOTOR_move(ARM_MOTOR_NUM_STEPS, (32 - bx) * STEP_SPEED_ARM, 500);
+		left_arm_controller.send_LEFT_ARM_FOREARM_MOTOR_move(ARM_MOTOR_NUM_STEPS/*, (32 - bx) * STEP_SPEED_ARM, 500*/);
 	else
 		if (bx > 32 + ARM_dead_zone_length / 2) // 
-			left_arm_controller.send_LEFT_ARM_FOREARM_MOTOR_move(-ARM_MOTOR_NUM_STEPS, (bx - 32) * STEP_SPEED_ARM, 500);
+			left_arm_controller.send_LEFT_ARM_FOREARM_MOTOR_move(-ARM_MOTOR_NUM_STEPS/*, (bx - 32) * STEP_SPEED_ARM, 500*/);
 		else// inside dead zone - sto
 			left_arm_controller.send_stop_motor(LEFT_ARM_FOREARM_MOTOR);
 }
 //--------------------------------------------------------------------
-void handle_left_arm_gripper_move(char bx, char by)
+void handle_left_arm_gripper_move(char /*bx*/, char /*by*/)
 {
 	/*
 	// gripper
@@ -248,19 +248,19 @@ void handle_head_rotate(char bx, char by)
 {
 	// head right left
 	if (bx > 32 + ARM_dead_zone_length / 2) // 
-		jenny5_head_controller.send_HEAD_MOTOR_NECK_move(ARM_MOTOR_NUM_STEPS, (bx - 32) * STEP_SPEED_ARM, 1);
+		jenny5_head_controller.send_HEAD_MOTOR_NECK_move(ARM_MOTOR_NUM_STEPS/*, (bx - 32) * STEP_SPEED_ARM, 1*/);
 	else
 		if (bx < 32 - ARM_dead_zone_length / 2) // 
-			jenny5_head_controller.send_HEAD_MOTOR_NECK_move(-ARM_MOTOR_NUM_STEPS, (32 - bx) * STEP_SPEED_ARM, 1);
+			jenny5_head_controller.send_HEAD_MOTOR_NECK_move(-ARM_MOTOR_NUM_STEPS/*, (32 - bx) * STEP_SPEED_ARM, 1*/);
 		else// inside dead zone - stop
 			jenny5_head_controller.send_stop_motor(HEAD_MOTOR_NECK);
 
 	// head up down
 	if (by < 32 - ARM_dead_zone_length / 2) // 
-		jenny5_head_controller.send_HEAD_MOTOR_FACE_move(ARM_MOTOR_NUM_STEPS, (32 - by) * STEP_SPEED_ARM, 1);
+		jenny5_head_controller.send_HEAD_MOTOR_FACE_move(ARM_MOTOR_NUM_STEPS/*, (32 - by) * STEP_SPEED_ARM, 1*/);
 	else
 		if (by > 32 + ARM_dead_zone_length / 2) // 
-			jenny5_head_controller.send_HEAD_MOTOR_FACE_move(-ARM_MOTOR_NUM_STEPS, (by - 32) * STEP_SPEED_ARM, 1);
+			jenny5_head_controller.send_HEAD_MOTOR_FACE_move(-ARM_MOTOR_NUM_STEPS/*, (by - 32) * STEP_SPEED_ARM, 1*/);
 		else// inside dead zone - stop
 			jenny5_head_controller.send_stop_motor(HEAD_MOTOR_FACE);
 }

@@ -62,7 +62,7 @@ int follow_person(t_head_controller *jenny5_head_controller, t_lidar_controller 
 	Mat head_cam_frame; // images used in the proces
 	Mat gray_frame;
 
-	double scale_factor = 0.5;
+//	double scale_factor;
 
 	bool active = true;
 	while (active){        // starting infinit loop
@@ -184,7 +184,7 @@ int follow_person(t_head_controller *jenny5_head_controller, t_lidar_controller 
 				// send a command to the module so that the face is in the center of the image
 				if (head_center.y < head_cam_frame.rows / 2 - CAM_PIXELS_TOLERANCE) {
 					tracking_data angle_offset = get_offset_angles(920, Point(head_center.x, head_center.y));
-					int num_steps_y = angle_offset.degrees_from_center_y / 1.8 * 27.0;
+					int num_steps_y = int(angle_offset.degrees_from_center_y / 1.8 * 27.0);
 
 					jenny5_head_controller->head_arduino_controller.send_move_stepper_motor(HEAD_MOTOR_FACE, num_steps_y);
 					jenny5_head_controller->head_arduino_controller.set_stepper_motor_state(HEAD_MOTOR_FACE, COMMAND_SENT);
@@ -196,7 +196,7 @@ int follow_person(t_head_controller *jenny5_head_controller, t_lidar_controller 
 				else
 					if (head_center.y > head_cam_frame.rows / 2 + CAM_PIXELS_TOLERANCE) {
 						tracking_data angle_offset = get_offset_angles(920, Point(head_center.x, head_center.y));
-						int num_steps_y = angle_offset.degrees_from_center_y / 1.8 * 27.0;
+						int num_steps_y = int(angle_offset.degrees_from_center_y / 1.8 * 27.0);
 
 						jenny5_head_controller->head_arduino_controller.send_move_stepper_motor(HEAD_MOTOR_FACE, num_steps_y);
 						jenny5_head_controller->head_arduino_controller.set_stepper_motor_state(HEAD_MOTOR_FACE, COMMAND_SENT);

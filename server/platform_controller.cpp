@@ -46,7 +46,7 @@ void t_platform_controller::disconnect(void)
 	roboclaw_controller.close_connection();
 }
 //------------------------------------------------------------------------
-bool t_platform_controller::setup(char* error_string)
+bool t_platform_controller::setup(char* /*error_string*/)
 {
 	return true;
 }
@@ -78,7 +78,7 @@ int t_platform_controller::stop_motors(void)
 	return 0;
 }
 //------------------------------------------------------------------------
-int t_platform_controller::rotate_left(uint16_t speed, uint32_t acceleration)
+int t_platform_controller::rotate_left(uint16_t speed, uint32_t /*acceleration*/)
 {
 	bool m1 = move_right_motor(speed, 1);
 	bool m2 = move_left_motor(-speed, 1);
@@ -90,7 +90,7 @@ int t_platform_controller::rotate_left(uint16_t speed, uint32_t acceleration)
 	return 0;
 }
 //------------------------------------------------------------------------
-int t_platform_controller::rotate_right(uint16_t speed, uint32_t acceleration)
+int t_platform_controller::rotate_right(uint16_t speed, uint32_t /*acceleration*/)
 {
 	bool m1 = move_right_motor(-speed, 1);
 	bool m2 = move_left_motor(speed, 1);

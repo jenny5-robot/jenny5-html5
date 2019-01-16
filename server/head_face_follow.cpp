@@ -82,7 +82,7 @@ int head_face_follow(t_head_controller *jenny5_head_controller, CascadeClassifie
 						 // send a command to the module so that the face is in the center of the image
 			if (head_center.x < cam_frame.cols / 2 - CAM_PIXELS_TOLERANCE) {
 				tracking_data angle_offset = get_offset_angles(920, Point(head_center.x, head_center.y));
-				int num_steps_x = angle_offset.degrees_from_center_x / 1.8 * HEAD_MOTOR_GEAR_REDUCTION;
+				int num_steps_x = int(angle_offset.degrees_from_center_x / 1.8 * HEAD_MOTOR_GEAR_REDUCTION);
 
 				jenny5_head_controller->head_arduino_controller.send_move_stepper_motor(HEAD_MOTOR_NECK, num_steps_x);
 				jenny5_head_controller->head_arduino_controller.set_stepper_motor_state(HEAD_MOTOR_NECK, COMMAND_SENT);
@@ -95,7 +95,7 @@ int head_face_follow(t_head_controller *jenny5_head_controller, CascadeClassifie
 			else
 				if (head_center.x > cam_frame.cols / 2 + CAM_PIXELS_TOLERANCE) {
 					tracking_data angle_offset = get_offset_angles(920, Point(head_center.x, head_center.y));
-					int num_steps_x = angle_offset.degrees_from_center_x / 1.8 * HEAD_MOTOR_GEAR_REDUCTION;
+					int num_steps_x = int(angle_offset.degrees_from_center_x / 1.8 * HEAD_MOTOR_GEAR_REDUCTION);
 
 					jenny5_head_controller->head_arduino_controller.send_move_stepper_motor(HEAD_MOTOR_NECK, num_steps_x);
 					jenny5_head_controller->head_arduino_controller.set_stepper_motor_state(HEAD_MOTOR_NECK, COMMAND_SENT);
@@ -114,7 +114,7 @@ int head_face_follow(t_head_controller *jenny5_head_controller, CascadeClassifie
 				// send a command to the module so that the face is in the center of the image
 				if (head_center.y < cam_frame.rows / 2 - CAM_PIXELS_TOLERANCE) {
 					tracking_data angle_offset = get_offset_angles(920, Point(head_center.x, head_center.y));
-					int num_steps_y = angle_offset.degrees_from_center_y / 1.8 * HEAD_MOTOR_GEAR_REDUCTION;
+					int num_steps_y = int(angle_offset.degrees_from_center_y / 1.8 * HEAD_MOTOR_GEAR_REDUCTION);
 
 					jenny5_head_controller->head_arduino_controller.send_move_stepper_motor(HEAD_MOTOR_FACE, num_steps_y);
 					jenny5_head_controller->head_arduino_controller.set_stepper_motor_state(HEAD_MOTOR_FACE, COMMAND_SENT);
@@ -126,7 +126,7 @@ int head_face_follow(t_head_controller *jenny5_head_controller, CascadeClassifie
 				else
 					if (head_center.y > cam_frame.rows / 2 + CAM_PIXELS_TOLERANCE) {
 						tracking_data angle_offset = get_offset_angles(920, Point(head_center.x, head_center.y));
-						int num_steps_y = angle_offset.degrees_from_center_y / 1.8 * HEAD_MOTOR_GEAR_REDUCTION;
+						int num_steps_y = int(angle_offset.degrees_from_center_y / 1.8 * HEAD_MOTOR_GEAR_REDUCTION);
 
 						jenny5_head_controller->head_arduino_controller.send_move_stepper_motor(HEAD_MOTOR_FACE, num_steps_y);
 						jenny5_head_controller->head_arduino_controller.set_stepper_motor_state(HEAD_MOTOR_FACE, COMMAND_SENT);

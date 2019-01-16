@@ -30,7 +30,7 @@ void create_and_init_lidar_image(Mat &lidar_image, int image_width, double lidar
 	//LIDAR
 	circle(lidar_image, center, 10, Scalar(0, 255, 0), 1, 8);
 	// robot
-	rectangle(lidar_image, Point(center.x - 175 * lidar_map_scale_factor, center.y), Point(center.x + lidar_map_scale_factor * 175, center.y + 600 * lidar_map_scale_factor), Scalar(0, 0, 255));
+	rectangle(lidar_image, Point(center.x - int(175 * lidar_map_scale_factor), center.y), Point(center.x + int(lidar_map_scale_factor * 175), center.y + int(600 * lidar_map_scale_factor)), Scalar(0, 0, 255));
 
 	char text[100];
 	sprintf(text, "scale = %.2lf", lidar_map_scale_factor);
@@ -106,7 +106,7 @@ int lidar_map(t_lidar_controller &LIDAR_controller, int lidar_com_port, f_log_ca
 	return 0;
 }
 //----------------------------------------------------------------
-void on_lidar_mouse_event(int event, int x, int y, int flags, void *userdata)
+void on_lidar_mouse_event(int event, int /*x*/, int /*y*/, int flags, void *userdata)
 {
 	if (event == cv::EVENT_MOUSEWHEEL) {
 		int delta = cv::getMouseWheelDelta(flags);
@@ -115,8 +115,8 @@ void on_lidar_mouse_event(int event, int x, int y, int flags, void *userdata)
 		cv::Point center(user_data->image_width / 2, user_data->image_width / 2);
 		for (int i = 0; i < LIDAR_NUM_STEPS; i++) {
 			cv::Point old_p;
-			old_p.x = -user_data->LIDAR_controller->lidar_distances[i] * user_data->lidar_map_scale_factor * sin(i / 100.0 * M_PI - M_PI / 2);
-			old_p.y = -user_data->LIDAR_controller->lidar_distances[i] * user_data->lidar_map_scale_factor * cos(i / 100.0 * M_PI - M_PI / 2);
+			old_p.x = int(-user_data->LIDAR_controller->lidar_distances[i] * user_data->lidar_map_scale_factor * sin(i / 100.0 * M_PI - M_PI / 2));
+			old_p.y = int(-user_data->LIDAR_controller->lidar_distances[i] * user_data->lidar_map_scale_factor * cos(i / 100.0 * M_PI - M_PI / 2));
 			cv::circle(*(user_data->lidar_image), center + old_p, 5, cv::Scalar(0, 0, 0), 1, 8);
 		}
 		char text[100];
@@ -126,7 +126,7 @@ void on_lidar_mouse_event(int event, int x, int y, int flags, void *userdata)
 
 		cv::putText(*(user_data->lidar_image), text, text_position, font_face, 1, cv::Scalar::all(0), 1, 8);
 		// delete the robot
-		cv::rectangle(*user_data->lidar_image, cv::Point(center.x - 175 * user_data->lidar_map_scale_factor, center.y), cv::Point(center.x + user_data->lidar_map_scale_factor * 175, center.y + 600 * user_data->lidar_map_scale_factor), cv::Scalar(0, 0, 0));
+		cv::rectangle(*user_data->lidar_image, cv::Point(center.x - int(175 * user_data->lidar_map_scale_factor), center.y), cv::Point(center.x + int(user_data->lidar_map_scale_factor * 175), center.y + int(600 * user_data->lidar_map_scale_factor)), cv::Scalar(0, 0, 0));
 
 
 		if (delta > 0)
@@ -141,13 +141,13 @@ void on_lidar_mouse_event(int event, int x, int y, int flags, void *userdata)
 		for (int i = 0; i < LIDAR_NUM_STEPS; i++) {
 			// draw the new point
 			Point new_p;
-			new_p.x = -user_data->LIDAR_controller->lidar_distances[i] * user_data->lidar_map_scale_factor * sin(i / 100.0 * M_PI - M_PI / 2);
-			new_p.y = -user_data->LIDAR_controller->lidar_distances[i] * user_data->lidar_map_scale_factor * cos(i / 100.0 * M_PI - M_PI / 2);
+			new_p.x = int(-user_data->LIDAR_controller->lidar_distances[i] * user_data->lidar_map_scale_factor * sin(i / 100.0 * M_PI - M_PI / 2));
+			new_p.y = int(-user_data->LIDAR_controller->lidar_distances[i] * user_data->lidar_map_scale_factor * cos(i / 100.0 * M_PI - M_PI / 2));
 			circle(*(user_data->lidar_image), center + new_p, 5, Scalar(0, 255, 0), 1, 8);
 		}
 
 		// robot
-		rectangle(*user_data->lidar_image, Point(center.x - 175 * user_data->lidar_map_scale_factor, center.y), Point(center.x + user_data->lidar_map_scale_factor * 175, center.y + 600 * user_data->lidar_map_scale_factor), Scalar(0, 255, 0));
+		rectangle(*user_data->lidar_image, Point(center.x - int(175 * user_data->lidar_map_scale_factor), center.y), Point(center.x + int(user_data->lidar_map_scale_factor * 175), center.y + int(600 * user_data->lidar_map_scale_factor)), Scalar(0, 255, 0));
 
 		sprintf(text, "scale = %.2lf", user_data->lidar_map_scale_factor);
 		cv::putText(*user_data->lidar_image, text, text_position, font_face, 1, Scalar::all(255), 1, 8);
@@ -165,15 +165,15 @@ bool update_lidar_image(t_lidar_controller &LIDAR_controller, Mat &lidar_image, 
 
 																						  // delete old distance
 		Point old_p;
-		old_p.x = -LIDAR_controller.lidar_distances[motor_position] * lidar_map_scale_factor * sin(motor_position / 100.0 * M_PI - M_PI / 2);
-		old_p.y = -LIDAR_controller.lidar_distances[motor_position] * lidar_map_scale_factor * cos(motor_position / 100.0 * M_PI - M_PI / 2);
+		old_p.x = int(-LIDAR_controller.lidar_distances[motor_position] * lidar_map_scale_factor * sin(motor_position / 100.0 * M_PI - M_PI / 2));
+		old_p.y = int(-LIDAR_controller.lidar_distances[motor_position] * lidar_map_scale_factor * cos(motor_position / 100.0 * M_PI - M_PI / 2));
 		circle(lidar_image, center + old_p, 5, Scalar(0, 0, 0), 1, 8);
 
 	// draw the new point
-		LIDAR_controller.lidar_distances[motor_position] = distance;
+		LIDAR_controller.lidar_distances[motor_position] = int(distance);
 		Point new_p;
-		new_p.x = -distance * lidar_map_scale_factor * sin(motor_position / 100.0 * M_PI - M_PI / 2);
-		new_p.y = -distance * lidar_map_scale_factor * cos(motor_position / 100.0 * M_PI - M_PI / 2);
+		new_p.x = int(-distance * lidar_map_scale_factor * sin(motor_position / 100.0 * M_PI - M_PI / 2));
+		new_p.y = int(-distance * lidar_map_scale_factor * cos(motor_position / 100.0 * M_PI - M_PI / 2));
 		circle(lidar_image, center + new_p, 5, Scalar(0, 255, 0), 1, 8);
 		at_least_one_new_LIDAR_distance = true;
 		if (to_log) {

@@ -150,7 +150,7 @@ bool t_head_controller::setup(char* error_string)
 			return false;
 		}
 	}
-
+/*
 	int potentiometer_index_head_horizontal_motor[1] = { 0 };
 	int potentiometer_index_head_vertical_motor[1] = { 1 };
 
@@ -165,7 +165,7 @@ bool t_head_controller::setup(char* error_string)
 	int head_vertical_motor_potentiometer_max[1] = { _head_vertical_motor_potentiometer_max };
 	int head_vertical_motor_potentiometer_home[1] = { _head_vertical_motor_potentiometer_home };
 	int head_vertical_motor_potentiometer_dir[1] = { 1 };
-/*
+
 	head_arduino_controller.send_attach_sensors_to_stepper_motor(HEAD_MOTOR_NECK,
 		1, potentiometer_index_head_horizontal_motor, head_horizontal_motor_potentiometer_min, 
 		head_horizontal_motor_potentiometer_max, head_horizontal_motor_potentiometer_home, 
@@ -281,12 +281,12 @@ char *t_head_controller::error_to_string(int error)
 	return NULL;
 }
 //----------------------------------------------------------------
-void t_head_controller::send_HEAD_MOTOR_NECK_move(int num_steps, int speed, int accelleration)
+void t_head_controller::send_HEAD_MOTOR_NECK_move(int num_steps/*, int speed, int accelleration*/)
 {
 	head_arduino_controller.send_move_stepper_motor(HEAD_MOTOR_NECK, num_steps);
 }
 //----------------------------------------------------------------
-void t_head_controller::send_HEAD_MOTOR_FACE_move(int num_steps, int speed, int accelleration)
+void t_head_controller::send_HEAD_MOTOR_FACE_move(int num_steps/*, int speed, int accelleration*/)
 {
 	head_arduino_controller.send_move_stepper_motor(HEAD_MOTOR_FACE, num_steps);
 }

@@ -46,7 +46,7 @@ void t_leg_controller::disconnect(void)
 	roboclaw_controller.close_connection();
 }
 //------------------------------------------------------------------------
-bool t_leg_controller::setup(char* error_string)
+bool t_leg_controller::setup(char* /*error_string*/)
 {
 	return true;
 }
