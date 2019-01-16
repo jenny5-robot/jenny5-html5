@@ -564,7 +564,7 @@ int iterate_socket(struct HTTPConnection *connection)
 	int size = recv(connection->socket, (char *)buffer, sizeof(buffer), 0);
 	if (size > 0) {
 		if (tls_consume_stream(connection->context, (const unsigned char *)buffer, size, tls_default_verify) >= 0) {
-			if (__tls_ssl_private_send_pending(connection->socket, connection->context) < 0)
+			if (_tls_ssl_private_send_pending(connection->socket, connection->context) < 0)
 				size = -1;
 		}
 		else
