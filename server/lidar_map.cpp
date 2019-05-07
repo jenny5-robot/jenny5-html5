@@ -39,7 +39,7 @@ void create_and_init_lidar_image(Mat &lidar_image, int image_width, double lidar
 	cv::putText(lidar_image, text, text_position, font_face, 1, Scalar::all(255), 1, 8);
 }
 //----------------------------------------------------------------
-int lidar_map(t_lidar_controller &LIDAR_controller, int lidar_com_port, f_log_callback to_log)
+int lidar_map(t_lidar_controller &LIDAR_controller, const char* lidar_com_port, f_log_callback to_log)
 {
 	// setup
 	char error_string[1000];

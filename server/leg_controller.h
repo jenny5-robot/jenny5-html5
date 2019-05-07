@@ -17,6 +17,8 @@
 
 #include "roboclaw_controller.h"
 
+#define STEP_SPEED_LEG 1000
+
 class t_leg_controller {
 public:
 	t_roboclaw_controller roboclaw_controller;
@@ -24,7 +26,7 @@ public:
 	t_leg_controller();
 	~t_leg_controller();
 
-	int connect(int LEG_COM_PORT);
+	int connect(const char* port);
 	bool is_connected(void);
 	void disconnect(void);
 	bool setup(char* error_string);

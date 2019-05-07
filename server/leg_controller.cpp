@@ -24,9 +24,9 @@ t_leg_controller::~t_leg_controller()
 	roboclaw_controller.close_connection();
 }
 //------------------------------------------------------------------------
-int t_leg_controller::connect(int PLATFORM_COM_PORT)
+int t_leg_controller::connect(const char* port)
 {
-	if (!roboclaw_controller.connect(PLATFORM_COM_PORT - 1, 115200)) {
+	if (!roboclaw_controller.connect(port, 115200)) {
 		return CANNOT_CONNECT_TO_JENNY5_LEG;
 	}
 

@@ -18,11 +18,11 @@ t_head_controller::t_head_controller(void)
 
 }
 //--------------------------------------------------------
-int t_head_controller::connect(int HEAD_COM_PORT)
+int t_head_controller::connect(const char* port)
 {
 	//-------------- START INITIALIZATION ------------------------------
 
-	if (!head_arduino_controller.connect(HEAD_COM_PORT - 1, 115200)) { // real - 1
+	if (!head_arduino_controller.connect(port, 115200)) { 
 		return CANNOT_CONNECT_TO_JENNY5_HEAD_ERROR;
 	}
 

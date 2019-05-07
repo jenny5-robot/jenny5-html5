@@ -23,44 +23,12 @@
 #include "head_face_follow.h"
 #include "lidar_controller.h"
 #include "follow_person.h"
+#include "settings.h"
 
 cv::CascadeClassifier face_classifier;
 std::thread *face_tracking_thread;
 std::thread *follow_person_thread;
 
-#define STEP_SPEED_ARM 10
-
-#define ARM_dead_zone_length 12
-
-#define ARM_MOTOR_NUM_STEPS 5000
-
-#define PLATFORM_COM_PORT 20
-#define LEG_COM_PORT 23
-#define LEFT_ARM_COM_PORT 3
-#define HEAD_COM_PORT 4
-#define LIDAR_COM_PORT 22
-
-
-
-#define PAUSED_STATE 0
-#define PLATFORM_NAVIGATE_STATE 1
-#define PLATFORM_ROTATE_STATE 2
-#define LEG_MOVE_STATE 3
-#define LEFT_ARM_BODY_LEFT_RIGHT_MOVE_STATE 4
-#define LEFT_ARM_UP_DOWN_MOVE_STATE 5
-#define LEFT_ARM_ROTATE_STATE 6
-#define LEFT_ARM_ELBOW_MOVE_STATE 7
-#define LEFT_ARM_FOREARM_MOVE_STATE 8
-#define LEFT_ARM_WRIST_MOVE_STATE 9
-#define LEFT_ARM_GRIPPER_MOVE_STATE 10
-
-#define HEAD_ROTATE_STATE 20
-
-#define FACE_TRACKING_STATE 31
-#define FOLLOW_PERSON_STATE 32
-#define WAVE_LEFT_ARM_STATE 33
-
-#define ROTATE_SPEED_FACTOR 1
 
 int robot_stopped;
 int disconnected;
@@ -164,10 +132,10 @@ void handle_leg_move(char /*bx*/, char by)
 {
 	char dead_zone_length = 6;
 	if (by < 32 - dead_zone_length / 2) // contract
-		leg_controller.contract_both((32 - by) * 1000, 1);
+		leg_controller.contract_both((32 - by) * STEP_SPEED_LEG, 1);
 	else
 		if (by > 32 + dead_zone_length / 2) // expand
-			leg_controller.expand_both((by - 32) * 1000, 1);
+			leg_controller.expand_both((by - 32) * STEP_SPEED_LEG, 1);
 }
 //--------------------------------------------------------------------
 void handle_left_arm_body_left_right_move(char bx, char /*by*/)
@@ -230,6 +198,18 @@ void handle_left_arm_forearm_move(char bx, char /*by*/)
 			left_arm_controller.send_stop_motor(LEFT_ARM_FOREARM_MOTOR);
 }
 //--------------------------------------------------------------------
+void handle_left_arm_wrist_move(char /*bx*/, char by)
+{
+	// wrist
+	if (by < 32 - ARM_dead_zone_length / 2) // 
+		left_arm_controller.send_LEFT_ARM_WRIST_MOTOR_move(ARM_MOTOR_NUM_STEPS/*, (32 - by) * STEP_SPEED_ARM, 500*/);
+	else
+		if (by > 32 + ARM_dead_zone_length / 2) // 
+			left_arm_controller.send_LEFT_ARM_WRIST_MOTOR_move(-ARM_MOTOR_NUM_STEPS/*, (by - 32) * STEP_SPEED_ARM, 500*/);
+		else// inside dead zone - stop
+			left_arm_controller.send_stop_motor(LEFT_ARM_WRIST_MOTOR);
+}
+//--------------------------------------------------------------------
 void handle_left_arm_gripper_move(char /*bx*/, char /*by*/)
 {
 	/*
@@ -283,7 +263,8 @@ void stop_robot(void)
 
 	platform_controller.stop_motors();
 	leg_controller.stop_motors();
-	left_arm_controller.send_stop_motors();
+	char error_string[1000];
+	left_arm_controller.stop_motors(error_string);
 	jenny5_head_controller.send_stop_motors();
 
 }
@@ -562,6 +543,16 @@ int process_command(unsigned char bx, unsigned char by)
 			print_message(f_log, "LEFT_ARM_FOREARM_MOVE_STATE\n");
 
 			break;
+		case LEFT_ARM_WRIST_MOVE_COMMAND:
+			// move wrist motor
+			connect_and_setup_left_arm();
+
+			stop_robot();
+			move_mode = LEFT_ARM_WRIST_MOVE_STATE;
+			print_message(stdout, "LEFT_ARM_WRIST_MOVE_STATE\n");
+			print_message(f_log, "LEFT_ARM_WRIST_MOVE_STATE\n");
+
+			break;
 		case LEFT_ARM_GRIPPER_MOVE_COMMAND:
 			// move gripper motor
 
@@ -575,7 +566,7 @@ int process_command(unsigned char bx, unsigned char by)
 			break;
 		case LEFT_ARM_READ_SENSORS_COMMAND:
 			connect_and_setup_left_arm();
-			left_arm_controller.send_get_sensors_value();
+			left_arm_controller.read_all_sensors();
 		//	stop_robot();
 			//move_mode = LEFT_ARM_GRIPPER_MOVE_STATE;
 			//print_message(stdout, "LEFT_ARM_GRIPPER_MOVE_STATE\n");
@@ -854,6 +845,12 @@ int process_command(unsigned char bx, unsigned char by)
 		case LEFT_ARM_FOREARM_MOVE_STATE:
 			if (left_arm_controller.is_connected()) {
 				handle_left_arm_forearm_move(sensor_bx, sensor_by);
+			}
+			break;
+
+		case LEFT_ARM_WRIST_MOVE_STATE:
+			if (left_arm_controller.is_connected()) {
+				handle_left_arm_wrist_move(sensor_bx, sensor_by);
 			}
 			break;
 

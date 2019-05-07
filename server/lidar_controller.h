@@ -30,7 +30,7 @@ struct t_lidar_controller {
 	void disconnect(void);
 	bool is_connected(void);
 
-	int connect(int lidar_com_port);
+	int connect(const char* port);
 	bool setup(char* error_string);
 	bool update_data(void);
 

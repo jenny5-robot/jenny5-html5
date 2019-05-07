@@ -164,7 +164,7 @@ int head_face_follow(t_head_controller *jenny5_head_controller, CascadeClassifie
 			if (jenny5_head_controller->head_arduino_controller.query_for_event(SONAR_EVENT, 0, &distance)) { // have we received the event from Serial ?
 				jenny5_head_controller->head_arduino_controller.set_sonar_state(0, COMMAND_DONE);
 				char tmp_s[100];
-				sprintf(tmp_s, "distance = %Id cm\n", distance);
+				sprintf(tmp_s, "distance = %x cm\n", distance);
 				to_log(tmp_s);
 			}
 		}

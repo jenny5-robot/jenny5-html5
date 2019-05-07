@@ -17,11 +17,11 @@ t_lidar_controller::t_lidar_controller(void)
 
 }
 //----------------------------------------------------------------
-int t_lidar_controller::connect(int lidar_com_port)
+int t_lidar_controller::connect(const char* port)
 {
 	//-------------- START INITIALIZATION ------------------------------
 
-	if (!arduino_controller.connect(lidar_com_port - 1, 115200)) { // real number - 1
+	if (!arduino_controller.connect(port, 115200)) { // real number - 1
 		//sprintf(error_string, "Error attaching to Jenny 5' LIDAR!\n");
 		return CANNOT_CONNECT_TO_JENNY5_LIDAR_ERROR;
 	}

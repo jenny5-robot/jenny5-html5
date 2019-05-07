@@ -24,14 +24,14 @@ t_platform_controller::~t_platform_controller()
 	roboclaw_controller.close_connection();
 }
 //------------------------------------------------------------------------
-int t_platform_controller::connect(int PLATFORM_COM_PORT)
+int t_platform_controller::connect(const char* port)
 {
-	if (!roboclaw_controller.connect(PLATFORM_COM_PORT - 1, 115200)) {
+	if (!roboclaw_controller.connect(port, 115200)) {
 		return CANNOT_CONNECT_TO_JENNY5_PLATFORM;
 	}
 
-	roboclaw_controller.set_M1_max_current_limit(1000);// max 10 Amps
-	roboclaw_controller.set_M2_max_current_limit(1000);// max 10 Amps
+	roboclaw_controller.set_M1_max_current_limit(800);// max 8 Amps
+	roboclaw_controller.set_M2_max_current_limit(800);// max 8 Amps
 
 	return E_OK;
 }
@@ -58,18 +58,18 @@ void t_platform_controller::send_get_roboclaw_firmware_version(void)
 //------------------------------------------------------------------------
 bool t_platform_controller::move_left_motor(int16_t speed, uint32_t acceleration)
 {
-	return roboclaw_controller.drive_M1_with_signed_duty_and_acceleration(-speed, acceleration);
+	return roboclaw_controller.drive_M2_with_signed_duty_and_acceleration(-speed, acceleration);
 }
 //------------------------------------------------------------------------
 bool t_platform_controller::move_right_motor(int16_t speed, uint32_t acceleration)
 {
-	return roboclaw_controller.drive_M2_with_signed_duty_and_acceleration(-speed, acceleration);
+	return roboclaw_controller.drive_M1_with_signed_duty_and_acceleration(-speed, acceleration);
 }
 //------------------------------------------------------------------------
 int t_platform_controller::stop_motors(void)
 {
-	bool m1 = roboclaw_controller.drive_M1_with_signed_duty_and_acceleration(0, 1);
-	bool m2 = roboclaw_controller.drive_M2_with_signed_duty_and_acceleration(0, 1);
+	bool m1 = roboclaw_controller.drive_M2_with_signed_duty_and_acceleration(0, 1);
+	bool m2 = roboclaw_controller.drive_M1_with_signed_duty_and_acceleration(0, 1);
 
 	if (!m1)
 		return 1;

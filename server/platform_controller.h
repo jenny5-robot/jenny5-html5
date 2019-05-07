@@ -18,7 +18,9 @@
 #define Connected_to_platform_STR "Connected to platform\n"
 
 #define INITIAL_SPEED_PLATFORM 1200
-#define STEP_SPEED_PLATFORM 300
+#define STEP_SPEED_PLATFORM 700
+
+#define ROTATE_SPEED_FACTOR 1
 
 
 //------------------------------------------------------------------------------
@@ -29,7 +31,7 @@ public:
 	t_platform_controller();
 	~t_platform_controller();
 
-	int connect(int PLATFORM_COM_PORT);
+	int connect(const char* port);
 	bool is_connected(void);
 	void disconnect(void);
 	bool setup(char* error_string);

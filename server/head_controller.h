@@ -67,7 +67,7 @@ public:
 	t_jenny5_arduino_controller head_arduino_controller;
 	t_head_controller();
 
-	int connect(int HEAD_COM_PORT);
+	int connect(const char* port);
 	bool is_connected(void);
 	void disconnect(void);
 	bool setup(char* error_string);
