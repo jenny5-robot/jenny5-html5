@@ -38,7 +38,7 @@
 #include <windows.h>
 #include <wincrypt.h>
 #ifndef strcasecmp
-    #define strcasecmp stricmp
+    #define strcasecmp _stricmp
 #endif
 #else
 // hton* and ntoh* functions

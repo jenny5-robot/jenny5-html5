@@ -39,13 +39,13 @@ int head_face_follow(t_head_controller *jenny5_head_controller, CascadeClassifie
 
 		jenny5_head_controller->cam >> cam_frame; // put captured-image frame in frame
 
-		cvtColor(cam_frame, gray_frame, CV_BGR2GRAY); // convert to gray and equalize
+		cvtColor(cam_frame, gray_frame, COLOR_BGR2GRAY); // convert to gray and equalize
 		equalizeHist(gray_frame, gray_frame);
 
 		std::vector<Rect> faces;// create an array to store the faces found
 
 								// find and store the faces
-		face_classifier->detectMultiScale(gray_frame, faces, 1.1, 3, CV_HAAR_FIND_BIGGEST_OBJECT | CV_HAAR_SCALE_IMAGE, Size(50, 50));
+		face_classifier->detectMultiScale(gray_frame, faces, 1.1, 3, /*HAAR_FIND_BIGGEST_OBJECT | HAAR_SCALE_IMAGE*/0, Size(50, 50));
 
 		t_CENTER_POINT head_center;
 
@@ -55,7 +55,7 @@ int head_face_follow(t_head_controller *jenny5_head_controller, CascadeClassifie
 			Point p1(head_center.x - head_center.range, head_center.y - head_center.range);
 			Point p2(head_center.x + head_center.range, head_center.y + head_center.range);
 			// draw an outline for the faces
-			rectangle(cam_frame, p1, p2, cvScalar(0, 255, 0, 0), 1, 8, 0);
+			rectangle(cam_frame, p1, p2, Scalar(0, 255, 0, 0), 1, 8, 0);
 		}
 		else {
 			Sleep(DOES_NOTHING_SLEEP); // no face found
@@ -164,7 +164,7 @@ int head_face_follow(t_head_controller *jenny5_head_controller, CascadeClassifie
 			if (jenny5_head_controller->head_arduino_controller.query_for_event(SONAR_EVENT, 0, &distance)) { // have we received the event from Serial ?
 				jenny5_head_controller->head_arduino_controller.set_sonar_state(0, COMMAND_DONE);
 				char tmp_s[100];
-				sprintf(tmp_s, "distance = %x cm\n", distance);
+				sprintf(tmp_s, "distance = %Ix cm\n", distance);
 				to_log(tmp_s);
 			}
 		}

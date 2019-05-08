@@ -46,6 +46,8 @@ extern "C" {
 #endif
 	int process_command(unsigned char bx, unsigned char by);
 	void print_message(FILE *f, char* message);
+	void print_const_message(FILE* f, const char* message);
+
 	void current_time_to_string(char *str_result);
 	void stop_robot(void);
 	void disconnect_robot(void);

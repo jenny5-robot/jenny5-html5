@@ -131,7 +131,7 @@ public:
 	bool wave_hand(char *error_string);
 	bool read_all_sensors(/*char *error_string*/void);
 
-	char *error_to_string(int error);
+	const char *error_to_string(int error);
 };
 //-------------------------------------------------------------------------------
 extern t_left_arm_controller left_arm_controller;

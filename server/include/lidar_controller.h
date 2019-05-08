@@ -34,7 +34,7 @@ struct t_lidar_controller {
 	bool setup(char* error_string);
 	bool update_data(void);
 
-	char *error_to_string(int error);
+	const char *error_to_string(int error);
 };
 
 extern t_lidar_controller LIDAR_controller;

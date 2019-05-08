@@ -522,7 +522,7 @@ int on_data_received(struct HTTPConnection *connection, const char *buffer, int 
 			return 0;
 		}
 		else {
-			char *path_mask = "c:/jenny5/jenny5-html5/client/www/%s";
+			char *path_mask = "c:/jenny5/jenny5-html5/client/%s";
 			char full_path[LINE_SIZE];
 			full_path[0] = 0;
 			snprintf(full_path, sizeof(full_path), path_mask, url);
@@ -690,8 +690,8 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
-	SSL_CTX_use_certificate_file(server_ctx, "c:/jenny5/jenny5-html5/client/testcert/server.cer", SSL_SERVER_RSA_CERT);
-	SSL_CTX_use_PrivateKey_file(server_ctx,  "c:/jenny5/jenny5-html5/client/testcert/server.key", SSL_SERVER_RSA_KEY);
+	SSL_CTX_use_certificate_file(server_ctx, "c:/jenny5/jenny5-html5/server/certificates/server.cer", SSL_SERVER_RSA_CERT);
+	SSL_CTX_use_PrivateKey_file(server_ctx,  "c:/jenny5/jenny5-html5/server/certificates/server.key", SSL_SERVER_RSA_KEY);
 
 	if (!SSL_CTX_check_private_key(server_ctx)) {
 		sprintf(message, "Private key not loaded\n");

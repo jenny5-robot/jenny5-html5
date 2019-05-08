@@ -85,13 +85,13 @@ int follow_person(t_head_controller *jenny5_head_controller, t_lidar_controller 
 		}
 		jenny5_head_controller->cam >> head_cam_frame; // put captured-image frame in frame
 
-		cvtColor(head_cam_frame, gray_frame, CV_BGR2GRAY); // convert to gray and equalize
+		cvtColor(head_cam_frame, gray_frame, COLOR_BGR2GRAY); // convert to gray and equalize
 		equalizeHist(gray_frame, gray_frame);
 
 		std::vector<Rect> faces;// create an array to store the found faces
 
 								// find and store the faces
-		face_classifier->detectMultiScale(gray_frame, faces, 1.1, 3, CV_HAAR_FIND_BIGGEST_OBJECT | CV_HAAR_SCALE_IMAGE, Size(30, 30));
+		face_classifier->detectMultiScale(gray_frame, faces, 1.1, 3, /*CV_HAAR_FIND_BIGGEST_OBJECT | CV_HAAR_SCALE_IMAGE*/0, Size(30, 30));
 
 		t_CENTER_POINT head_center;
 
@@ -101,7 +101,7 @@ int follow_person(t_head_controller *jenny5_head_controller, t_lidar_controller 
 			Point p1(head_center.x - head_center.range, head_center.y - head_center.range);
 			Point p2(head_center.x + head_center.range, head_center.y + head_center.range);
 			// draw an outline for the faces
-			rectangle(head_cam_frame, p1, p2, cvScalar(0, 255, 0, 0), 1, 8, 0);
+			rectangle(head_cam_frame, p1, p2, Scalar(0, 255, 0, 0), 1, 8, 0);
 		}
 		else {
 			Sleep(DOES_NOTHING_SLEEP); // no face found

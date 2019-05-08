@@ -92,13 +92,13 @@ public:
 	bool home_all_motors(char* error_string);
 	void send_disable_motors(void);
 
-	char *error_to_string(int error);
+	const char *error_to_string(int error);
 
 	bool open_camera(void);
 	void release_camera(void);
-	int capture_camera_and_save_to_disk(char *file_name);
+	int capture_camera_and_save_to_disk(const char *file_name);
 
-	int capture_camera_save_to_disk_and_release(char *file_name);
+	int capture_camera_save_to_disk_and_release(const char *file_name);
 };
 
 extern t_head_controller jenny5_head_controller;

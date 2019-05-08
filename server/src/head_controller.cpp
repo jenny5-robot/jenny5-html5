@@ -10,6 +10,8 @@
 #include "head_controller.h"
 #include "jenny5_defs.h"
 
+using namespace cv;
+
 t_head_controller jenny5_head_controller;
 
 //--------------------------------------------------------
@@ -268,7 +270,7 @@ void t_head_controller::send_disable_motors(void)
 	head_arduino_controller.send_disable_stepper_motor(HEAD_MOTOR_FACE);
 }
 //----------------------------------------------------------------
-char *t_head_controller::error_to_string(int error)
+const char *t_head_controller::error_to_string(int error)
 {
 	switch (error) {
 	case E_OK:
@@ -317,14 +319,14 @@ void t_head_controller::release_camera(void)
 		cam.release();
 }
 //----------------------------------------------------------------
-int t_head_controller::capture_camera_and_save_to_disk(char *file_name)
+int t_head_controller::capture_camera_and_save_to_disk(const char *file_name)
 {
 	if (!cam.isOpened())
 		if (!cam.open(HEAD_CAMERA_INDEX))
 			return CANNOT_CONNECT_TO_HEAD_CAMERA_ERROR;
 		else {
-			cam.set(CV_CAP_PROP_FRAME_WIDTH, 352);
-			cam.set(CV_CAP_PROP_FRAME_HEIGHT, 240);
+			cam.set(CAP_PROP_FRAME_WIDTH, 352);
+			cam.set(CAP_PROP_FRAME_HEIGHT, 240);
 		}
 
 	cv::Mat image;
@@ -335,14 +337,14 @@ int t_head_controller::capture_camera_and_save_to_disk(char *file_name)
 	return E_OK;
 }
 //----------------------------------------------------------------
-int t_head_controller::capture_camera_save_to_disk_and_release(char *file_name)
+int t_head_controller::capture_camera_save_to_disk_and_release(const char *file_name)
 {
 	if (!cam.isOpened()) 
 		if (!cam.open(HEAD_CAMERA_INDEX))
 			return CANNOT_CONNECT_TO_HEAD_CAMERA_ERROR;
 		else {
-			cam.set(CV_CAP_PROP_FRAME_WIDTH, 352);
-			cam.set(CV_CAP_PROP_FRAME_HEIGHT, 240);
+			cam.set(CAP_PROP_FRAME_WIDTH, 352);
+			cam.set(CAP_PROP_FRAME_HEIGHT, 240);
 		}
 
 	cv::Mat image;

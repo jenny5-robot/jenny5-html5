@@ -9,7 +9,7 @@
 
 #define PLATFORM_COM_PORT "COM6"
 #define LEG_COM_PORT "COM23"
-#define LEFT_ARM_COM_PORT "COM3"
+#define LEFT_ARM_COM_PORT "COM7"
 #define HEAD_COM_PORT "COM4"
 #define LIDAR_COM_PORT "COM22"
 

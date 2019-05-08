@@ -54,7 +54,8 @@ struct t_CENTER_POINT
 
 bool get_biggest_face(std::vector<cv::Rect> faces, t_CENTER_POINT &center);
 
-typedef void (*f_log_callback)(char*);
+//typedef void (*f_log_callback)(char*);
+typedef void (*f_log_callback)(const char*);
 typedef bool (*f_stop_callback)(void);
 typedef void (*f_show_image_callback)(char* window_name, cv::Mat &image);
 

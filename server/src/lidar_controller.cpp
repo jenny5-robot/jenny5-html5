@@ -114,7 +114,7 @@ bool t_lidar_controller::is_connected(void)
 	return arduino_controller.is_open();
 }
 //----------------------------------------------------------------
-char *t_lidar_controller::error_to_string(int error)
+const char *t_lidar_controller::error_to_string(int error)
 {
 	switch (error) {
 	case E_OK:

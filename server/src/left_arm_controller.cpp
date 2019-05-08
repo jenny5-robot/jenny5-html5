@@ -261,7 +261,7 @@ bool t_left_arm_controller::setup(char* error_string)
 	int AS5147_min_LEFT_ARM_ELBOW_MOTOR[1] = { _AS5147_min_LEFT_ARM_ELBOW_MOTOR };
 	int AS5147_max_LEFT_ARM_ELBOW_MOTOR[1] = { _AS5147_max_LEFT_ARM_ELBOW_MOTOR };
 	int AS5147_home_LEFT_ARM_ELBOW_MOTOR[1] = { _AS5147_home_LEFT_ARM_ELBOW_MOTOR };
-	int AS5147_dir_LEFT_ARM_ELBOW_MOTOR[1] = { -1 };
+	int AS5147_dir_LEFT_ARM_ELBOW_MOTOR[1] = { 1 };
 
 	int AS5147_min_LEFT_ARM_FOREARM_MOTOR[1] = { _AS5147_min_LEFT_ARM_FOREARM_MOTOR };
 	int AS5147_max_LEFT_ARM_FOREARM_MOTOR[1] = { _AS5147_max_LEFT_ARM_FOREARM_MOTOR };
@@ -606,7 +606,7 @@ void t_left_arm_controller::send_stop_motor(int motor_index)
 	arduino_controller.send_stop_stepper_motor(motor_index);
 }
 //----------------------------------------------------------------
-char *t_left_arm_controller::error_to_string(int error)
+const char *t_left_arm_controller::error_to_string(int error)
 {
 	switch (error) {
 	case E_OK:

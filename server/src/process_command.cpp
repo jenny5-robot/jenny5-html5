@@ -285,8 +285,8 @@ bool connect_and_setup_left_arm(void)
 
 	if (!left_arm_controller.is_connected()) {
 		error_index = left_arm_controller.connect(LEFT_ARM_COM_PORT);
-		print_message(stdout, left_arm_controller.error_to_string(error_index));
-		print_message(f_log, left_arm_controller.error_to_string(error_index));
+		print_const_message(stdout, left_arm_controller.error_to_string(error_index));
+		print_const_message(f_log, left_arm_controller.error_to_string(error_index));
 		if (error_index == E_OK) {
 
 			if (!left_arm_controller.setup(error_string)) {
@@ -335,6 +335,16 @@ void print_message(FILE *f, char* message)
 	fflush(f);
 }
 //--------------------------------------------------------------------
+void print_const_message(FILE* f, const char* message)
+{
+	char log_time[1000];
+	current_time_to_string(log_time);
+	strcat(log_time, ":");
+	fprintf(f, log_time);
+	fprintf(f, message);
+	fflush(f);
+}
+//--------------------------------------------------------------------
 void to_log(char* str)
 {
 	print_message(stdout, str);
@@ -364,8 +374,8 @@ int process_command(unsigned char bx, unsigned char by)
 		case CONNECT_TO_ROBOT:
 			// PLATFORM CONNECT
 			if (platform_controller.connect(PLATFORM_COM_PORT) != E_OK) {
-				print_message(stdout, CANNOT_CONNECT_TO_JENNY5_PLATFORM_STR);
-				print_message(f_log, CANNOT_CONNECT_TO_JENNY5_PLATFORM_STR);
+				print_const_message(stdout, CANNOT_CONNECT_TO_JENNY5_PLATFORM_STR);
+				print_const_message(f_log, CANNOT_CONNECT_TO_JENNY5_PLATFORM_STR);
 			}
 			else {
 				sprintf(message, "Connected to platform!\n");
@@ -374,8 +384,8 @@ int process_command(unsigned char bx, unsigned char by)
 			}
 			// LEG CONNECT
 			if (leg_controller.connect(LEG_COM_PORT) != E_OK) {
-				print_message(stdout, CANNOT_CONNECT_TO_JENNY5_LEG_STR);
-				print_message(f_log, CANNOT_CONNECT_TO_JENNY5_LEG_STR);
+				print_const_message(stdout, CANNOT_CONNECT_TO_JENNY5_LEG_STR);
+				print_const_message(f_log, CANNOT_CONNECT_TO_JENNY5_LEG_STR);
 			}
 			else {
 				sprintf(message, "Connected to leg!\n");
@@ -387,8 +397,8 @@ int process_command(unsigned char bx, unsigned char by)
 
 			// HEAD CONNECT
 			error_index = jenny5_head_controller.connect(HEAD_COM_PORT);
-			print_message(stdout, jenny5_head_controller.error_to_string(error_index));
-			print_message(f_log, jenny5_head_controller.error_to_string(error_index));
+			print_const_message(stdout, jenny5_head_controller.error_to_string(error_index));
+			print_const_message(f_log, jenny5_head_controller.error_to_string(error_index));
 			if (error_index == E_OK) {
 
 				if (!jenny5_head_controller.setup(error_string)) {
@@ -398,8 +408,8 @@ int process_command(unsigned char bx, unsigned char by)
 			}
 
 			move_mode = PAUSED_STATE;
-			print_message(stdout, "PAUSED STATE\n");
-			print_message(f_log, "PAUSED STATE\n");
+			print_const_message(stdout, "PAUSED STATE\n");
+			print_const_message(f_log, "PAUSED STATE\n");
 			face_tracking_thread = NULL;
 			follow_person_thread = NULL;
 			break;
@@ -420,8 +430,8 @@ int process_command(unsigned char bx, unsigned char by)
 			stop_robot();
 
 			move_mode = PAUSED_STATE;
-			print_message(stdout, "PAUSED STATE\n");
-			print_message(f_log, "PAUSED STATE\n");
+			print_const_message(stdout, "PAUSED STATE\n");
+			print_const_message(f_log, "PAUSED STATE\n");
 
 			break;
 		case POWER_DISABLE_COMMAND:
@@ -430,15 +440,15 @@ int process_command(unsigned char bx, unsigned char by)
 			left_arm_controller.send_disable_motors();
 
 			move_mode = PAUSED_STATE;
-			print_message(stdout, "PAUSED STATE & DISABLE POWER\n");
-			print_message(f_log, "PAUSED STATE & DISABLE POWER\n");
+			print_const_message(stdout, "PAUSED STATE & DISABLE POWER\n");
+			print_const_message(f_log, "PAUSED STATE & DISABLE POWER\n");
 			break;
 		case LEG_MOVE_COMMAND:
 			// leg up
 			if (!leg_controller.is_connected()) { // not connected; try to connect now
 				if (leg_controller.connect(LEG_COM_PORT) != E_OK) {
-					print_message(stdout, CANNOT_CONNECT_TO_JENNY5_LEG_STR);
-					print_message(f_log, CANNOT_CONNECT_TO_JENNY5_LEG_STR);
+					print_const_message(stdout, CANNOT_CONNECT_TO_JENNY5_LEG_STR);
+					print_const_message(f_log, CANNOT_CONNECT_TO_JENNY5_LEG_STR);
 				}
 				else {
 					sprintf(message, "Connected to leg!\n");
@@ -448,16 +458,16 @@ int process_command(unsigned char bx, unsigned char by)
 			}
 			stop_robot();
 			move_mode = LEG_MOVE_STATE;
-			print_message(stdout, "LEG MOVE STATE\n");
-			print_message(f_log, "LEG MOVE STATE\n");
+			print_const_message(stdout, "LEG MOVE STATE\n");
+			print_const_message(f_log, "LEG MOVE STATE\n");
 
 			break;
 		case ROTATE_COMMAND:
 			// rotate
 			if (!platform_controller.is_connected()) { // not connected ; try to connect now
 				if (platform_controller.connect(PLATFORM_COM_PORT) != E_OK) {
-					print_message(stdout, CANNOT_CONNECT_TO_JENNY5_PLATFORM_STR);
-					print_message(f_log, CANNOT_CONNECT_TO_JENNY5_PLATFORM_STR);
+					print_const_message(stdout, CANNOT_CONNECT_TO_JENNY5_PLATFORM_STR);
+					print_const_message(f_log, CANNOT_CONNECT_TO_JENNY5_PLATFORM_STR);
 				}
 				else {
 					sprintf(message, "Connected to platform!\n");
@@ -468,16 +478,16 @@ int process_command(unsigned char bx, unsigned char by)
 
 			stop_robot();
 			move_mode = PLATFORM_ROTATE_STATE;
-			print_message(stdout, "ROTATE PLATFORM STATE\n");
-			print_message(f_log, "ROTATE PLATFORM STATE\n");
+			print_const_message(stdout, "ROTATE PLATFORM STATE\n");
+			print_const_message(f_log, "ROTATE PLATFORM STATE\n");
 
 			break;
 		case NAVIGATE_COMMAND:
 			// navigate
 			if (!platform_controller.is_connected()) { // not connected ; try to connect now
 				if (platform_controller.connect(PLATFORM_COM_PORT) != E_OK) {
-					print_message(stdout, CANNOT_CONNECT_TO_JENNY5_PLATFORM_STR);
-					print_message(f_log, CANNOT_CONNECT_TO_JENNY5_PLATFORM_STR);
+					print_const_message(stdout, CANNOT_CONNECT_TO_JENNY5_PLATFORM_STR);
+					print_const_message(f_log, CANNOT_CONNECT_TO_JENNY5_PLATFORM_STR);
 				}
 				else {
 					sprintf(message, "Connected to platform!\n");
@@ -487,8 +497,8 @@ int process_command(unsigned char bx, unsigned char by)
 			}
 			stop_robot();
 			move_mode = PLATFORM_NAVIGATE_STATE;
-			print_message(stdout, "PLATFORM_NAVIGATE STATE\n");
-			print_message(f_log, "PLATFORM_NAVIGATE STATE\n");
+			print_const_message(stdout, "PLATFORM_NAVIGATE STATE\n");
+			print_const_message(f_log, "PLATFORM_NAVIGATE STATE\n");
 
 			break;
 
@@ -498,8 +508,8 @@ int process_command(unsigned char bx, unsigned char by)
 
 			stop_robot();
 			move_mode = LEFT_ARM_BODY_LEFT_RIGHT_MOVE_STATE;
-			print_message(stdout, "LEFT_ARM_BODY_LEFT_RIGHT_MOVE_STATE\n");
-			print_message(f_log, "LEFT_ARM_BODY_LEFT_RIGHT_MOVE_STATE\n");
+			print_const_message(stdout, "LEFT_ARM_BODY_LEFT_RIGHT_MOVE_STATE\n");
+			print_const_message(f_log, "LEFT_ARM_BODY_LEFT_RIGHT_MOVE_STATE\n");
 
 			break;
 		case LEFT_ARM_UP_DOWN_COMMAND:
@@ -508,8 +518,8 @@ int process_command(unsigned char bx, unsigned char by)
 
 			stop_robot();
 			move_mode = LEFT_ARM_UP_DOWN_MOVE_STATE;
-			print_message(stdout, "LEFT_ARM_UP_DOWN_MOVE_STATE\n");
-			print_message(f_log, "LEFT_ARM_UP_DOWN_MOVE_STATE\n");
+			print_const_message(stdout, "LEFT_ARM_UP_DOWN_MOVE_STATE\n");
+			print_const_message(f_log, "LEFT_ARM_UP_DOWN_MOVE_STATE\n");
 
 			break;
 		case LEFT_ARM_ROTATE_COMMAND:
@@ -518,8 +528,8 @@ int process_command(unsigned char bx, unsigned char by)
 
 			stop_robot();
 			move_mode = LEFT_ARM_ROTATE_STATE;
-			print_message(stdout, "LEFT_ARM_ROTATE_STATE\n");
-			print_message(f_log, "LEFT_ARM_ROTATE_STATE\n");
+			print_const_message(stdout, "LEFT_ARM_ROTATE_STATE\n");
+			print_const_message(f_log, "LEFT_ARM_ROTATE_STATE\n");
 
 			break;
 
@@ -529,8 +539,8 @@ int process_command(unsigned char bx, unsigned char by)
 
 			stop_robot();
 			move_mode = LEFT_ARM_ELBOW_MOVE_STATE;
-			print_message(stdout, "LEFT_ARM_ELBOW_MOVE_STATE\n");
-			print_message(f_log, "LEFT_ARM_ELBOW_MOVE_STATE\n");
+			print_const_message(stdout, "LEFT_ARM_ELBOW_MOVE_STATE\n");
+			print_const_message(f_log, "LEFT_ARM_ELBOW_MOVE_STATE\n");
 
 			break;
 		case LEFT_ARM_FOREARM_MOVE_COMMAND:
@@ -539,8 +549,8 @@ int process_command(unsigned char bx, unsigned char by)
 
 			stop_robot();
 			move_mode = LEFT_ARM_FOREARM_MOVE_STATE;
-			print_message(stdout, "LEFT_ARM_FOREARM_MOVE_STATE\n");
-			print_message(f_log, "LEFT_ARM_FOREARM_MOVE_STATE\n");
+			print_const_message(stdout, "LEFT_ARM_FOREARM_MOVE_STATE\n");
+			print_const_message(f_log, "LEFT_ARM_FOREARM_MOVE_STATE\n");
 
 			break;
 		case LEFT_ARM_WRIST_MOVE_COMMAND:
@@ -549,8 +559,8 @@ int process_command(unsigned char bx, unsigned char by)
 
 			stop_robot();
 			move_mode = LEFT_ARM_WRIST_MOVE_STATE;
-			print_message(stdout, "LEFT_ARM_WRIST_MOVE_STATE\n");
-			print_message(f_log, "LEFT_ARM_WRIST_MOVE_STATE\n");
+			print_const_message(stdout, "LEFT_ARM_WRIST_MOVE_STATE\n");
+			print_const_message(f_log, "LEFT_ARM_WRIST_MOVE_STATE\n");
 
 			break;
 		case LEFT_ARM_GRIPPER_MOVE_COMMAND:
@@ -560,8 +570,8 @@ int process_command(unsigned char bx, unsigned char by)
 
 			stop_robot();
 			move_mode = LEFT_ARM_GRIPPER_MOVE_STATE;
-			print_message(stdout, "LEFT_ARM_GRIPPER_MOVE_STATE\n");
-			print_message(f_log, "LEFT_ARM_GRIPPER_MOVE_STATE\n");
+			print_const_message(stdout, "LEFT_ARM_GRIPPER_MOVE_STATE\n");
+			print_const_message(f_log, "LEFT_ARM_GRIPPER_MOVE_STATE\n");
 
 			break;
 		case LEFT_ARM_READ_SENSORS_COMMAND:
@@ -578,8 +588,8 @@ int process_command(unsigned char bx, unsigned char by)
 			if (!jenny5_head_controller.is_connected()) {
 				// not connected; try to connect now
 				error_index = jenny5_head_controller.connect(HEAD_COM_PORT);
-				print_message(stdout, jenny5_head_controller.error_to_string(error_index));
-				print_message(f_log, jenny5_head_controller.error_to_string(error_index));
+				print_const_message(stdout, jenny5_head_controller.error_to_string(error_index));
+				print_const_message(f_log, jenny5_head_controller.error_to_string(error_index));
 				if (error_index == E_OK) {
 					if (!jenny5_head_controller.setup(error_string)) {
 						print_message(stdout, error_string);
@@ -590,8 +600,8 @@ int process_command(unsigned char bx, unsigned char by)
 
 			stop_robot();
 			move_mode = HEAD_ROTATE_STATE;
-			print_message(stdout, "HEAD_ROTATE_STATE\n");
-			print_message(f_log, "HEAD_ROTATE_STATE\n");
+			print_const_message(stdout, "HEAD_ROTATE_STATE\n");
+			print_const_message(f_log, "HEAD_ROTATE_STATE\n");
 
 			break;
 		case FACE_TRACKING_COMMAND:
@@ -604,13 +614,13 @@ int process_command(unsigned char bx, unsigned char by)
 //			char error_string[1000];
 
 			if (!jenny5_head_controller.cam.open(HEAD_CAMERA_INDEX)) {	// link it to the device [0 = default cam] (USBcam is default 'cause I disabled the onbord one IRRELEVANT!)
-				print_message(stdout, "Couldn't open head's video camera!\n");
-				print_message(f_log, "Couldn't open head's video camera!\n");
+				print_const_message(stdout, "Couldn't open head's video camera!\n");
+				print_const_message(f_log, "Couldn't open head's video camera!\n");
 				move_mode = PAUSED_STATE;
 			}
 			else {
-				print_message(stdout, "Head camera connection succceded.\n");
-				print_message(f_log, "Head camera connection succceded.\n");
+				print_const_message(stdout, "Head camera connection succceded.\n");
+				print_const_message(f_log, "Head camera connection succceded.\n");
 			}
 			// initialization
 
@@ -620,8 +630,8 @@ int process_command(unsigned char bx, unsigned char by)
 				move_mode = PAUSED_STATE;
 			}
 			else {
-				print_message(stdout, "Face classifier initialization succceded.\n");
-				print_message(f_log, "Face classifier initialization succceded.\n");
+				print_const_message(stdout, "Face classifier initialization succceded.\n");
+				print_const_message(f_log, "Face classifier initialization succceded.\n");
 			}
 			//  home
 			if (!jenny5_head_controller.home_all_motors(error_string)) {
@@ -630,17 +640,17 @@ int process_command(unsigned char bx, unsigned char by)
 				move_mode = PAUSED_STATE;
 			}
 			else {
-				print_message(stdout, "Head home succceded.\n");
-				print_message(f_log, "Head home succceded.\n");
+				print_const_message(stdout, "Head home succceded.\n");
+				print_const_message(f_log, "Head home succceded.\n");
 			}
 			// run the face tracking
 			if (move_mode == FACE_TRACKING_STATE) {
 				robot_stopped = false;
 				//cv::namedWindow("Head camera", cv::WINDOW_AUTOSIZE); // window to display the results
-				print_message(stdout, "FACE_TRACKING_STATE\n");
-				print_message(f_log, "FACE_TRACKING_STATE\n");
+				print_const_message(stdout, "FACE_TRACKING_STATE\n");
+				print_const_message(f_log, "FACE_TRACKING_STATE\n");
 
-				face_tracking_thread = new std::thread(head_face_follow, &jenny5_head_controller, &face_classifier, to_log, stop_function, (char*)NULL);
+//				face_tracking_thread = new std::thread(head_face_follow, &jenny5_head_controller, &face_classifier, to_log, stop_function, (char*)NULL);
 			}
 
 			break;
@@ -651,13 +661,13 @@ int process_command(unsigned char bx, unsigned char by)
 			move_mode = FOLLOW_PERSON_STATE;
 
 			if (!jenny5_head_controller.cam.open(HEAD_CAMERA_INDEX)) {	// link it to the device [0 = default cam] (USBcam is default 'cause I disabled the onbord one IRRELEVANT!)
-				print_message(stdout, "Couldn't open head's video camera!\n");
-				print_message(f_log, "Couldn't open head's video camera!\n");
+				print_const_message(stdout, "Couldn't open head's video camera!\n");
+				print_const_message(f_log, "Couldn't open head's video camera!\n");
 				move_mode = PAUSED_STATE;
 			}
 			else {
-				print_message(stdout, "Head camera connection succceded.\n");
-				print_message(f_log, "Head camera connection succceded.\n");
+				print_const_message(stdout, "Head camera connection succceded.\n");
+				print_const_message(f_log, "Head camera connection succceded.\n");
 			}
 			// initialization
 
@@ -667,8 +677,8 @@ int process_command(unsigned char bx, unsigned char by)
 				move_mode = PAUSED_STATE;
 			}
 			else {
-				print_message(stdout, "Face classifier initialization succceded.\n");
-				print_message(f_log, "Face classifier initialization succceded.\n");
+				print_const_message(stdout, "Face classifier initialization succceded.\n");
+				print_const_message(f_log, "Face classifier initialization succceded.\n");
 			}
 			//  home
 			if (!jenny5_head_controller.home_all_motors(error_string)) {
@@ -677,14 +687,14 @@ int process_command(unsigned char bx, unsigned char by)
 				move_mode = PAUSED_STATE;
 			}
 			else {
-				print_message(stdout, "Head home succceded.\n");
-				print_message(f_log, "Head home succceded.\n");
+				print_const_message(stdout, "Head home succceded.\n");
+				print_const_message(f_log, "Head home succceded.\n");
 			}
 
 			if (!LIDAR_controller.is_connected()) {
 				error_index = LIDAR_controller.connect(LIDAR_COM_PORT);
-				print_message(stdout, LIDAR_controller.error_to_string(error_index));
-				print_message(f_log, LIDAR_controller.error_to_string(error_index));
+				print_const_message(stdout, LIDAR_controller.error_to_string(error_index));
+				print_const_message(f_log, LIDAR_controller.error_to_string(error_index));
 				if (error_index != E_OK) {
 					move_mode = PAUSED_STATE;
 				}
@@ -696,17 +706,17 @@ int process_command(unsigned char bx, unsigned char by)
 					move_mode = PAUSED_STATE;
 				}
 				else {
-					print_message(stdout, "Setup LIDAR OK.\n");
-					print_message(f_log, "Setup LIDAR OK.\n");
+					print_const_message(stdout, "Setup LIDAR OK.\n");
+					print_const_message(f_log, "Setup LIDAR OK.\n");
 				}
 			}
 			// run the follow person algorithm
 			if (move_mode == FOLLOW_PERSON_STATE) {
 				robot_stopped = false;
-				print_message(stdout, "FOLLOW_PERSON_STATE\n");
-				print_message(f_log, "FOLLOW_PERSON_STATE\n");
+				print_const_message(stdout, "FOLLOW_PERSON_STATE\n");
+				print_const_message(f_log, "FOLLOW_PERSON_STATE\n");
 
-				follow_person_thread = new std::thread(follow_person, &jenny5_head_controller, &LIDAR_controller, &platform_controller, &face_classifier, to_log, stop_function, (char*)NULL, (char*)NULL);
+//				follow_person_thread = new std::thread(follow_person, &jenny5_head_controller, &LIDAR_controller, &platform_controller, &face_classifier, to_log, stop_function, (char*)NULL, (char*)NULL);
 			}
 
 			break;
@@ -727,16 +737,16 @@ int process_command(unsigned char bx, unsigned char by)
 			connect_and_setup_left_arm();
 
 			move_mode = WAVE_LEFT_ARM_STATE;
-			print_message(stdout, "WAVING LEFT ARM STATE\n");
-			print_message(f_log, "WAVING LEFT ARM STATE\n");
+			print_const_message(stdout, "WAVING LEFT ARM STATE\n");
+			print_const_message(f_log, "WAVING LEFT ARM STATE\n");
 
 			if (!left_arm_controller.wave_hand(error_string)){
 				print_message(stdout, error_string);
 				print_message(f_log, error_string);
 			}
 
-			print_message(stdout, "WAVING LEFT ARM DONE\n");
-			print_message(f_log, "WAVING LEFT ARM DONE\n");
+			print_const_message(stdout, "WAVING LEFT ARM DONE\n");
+			print_const_message(f_log, "WAVING LEFT ARM DONE\n");
 
 			break;
 
