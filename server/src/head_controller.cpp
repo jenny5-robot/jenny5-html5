@@ -78,7 +78,7 @@ bool t_head_controller::setup(char* error_string)
 	int head_sonars_trig_pins[1] = { 10 };
 	int head_sonars_echo_pins[1] = { 11 };
 
-	head_arduino_controller.send_create_sonars(1, head_sonars_trig_pins, head_sonars_echo_pins);
+	head_arduino_controller.send_create_ultrasonics(1, head_sonars_trig_pins, head_sonars_echo_pins);
 
 	int head_potentiometer_pins[2] = { 0, 1 };
 	head_arduino_controller.send_create_potentiometers(2, head_potentiometer_pins);
@@ -95,7 +95,7 @@ bool t_head_controller::setup(char* error_string)
 		if (head_arduino_controller.query_for_event(STEPPER_MOTORS_CONTROLLER_CREATED_EVENT, 0))  // have we received the event from Serial ?
 			motors_controller_created = true;
 
-		if (head_arduino_controller.query_for_event(SONARS_CONTROLLER_CREATED_EVENT, 0))  // have we received the event from Serial ?
+		if (head_arduino_controller.query_for_event(ULTRASONICS_CONTROLLER_CREATED_EVENT, 0))  // have we received the event from Serial ?
 			sonars_controller_created = true;
 
 		if (head_arduino_controller.query_for_event(POTENTIOMETERS_CONTROLLER_CREATED_EVENT, 0))  // have we received the event from Serial ?
@@ -186,7 +186,7 @@ void t_head_controller::send_get_sensors_value(void)
 {
 	head_arduino_controller.send_get_potentiometer_position(HEAD_POTENTIOMETER_NECK_INDEX);
 	head_arduino_controller.send_get_potentiometer_position(HEAD_POTENTIOMETER_FACE_INDEX);
-	head_arduino_controller.send_get_sonar_distance(HEAD_ULTRASONIC_FACE_INDEX);
+	head_arduino_controller.send_get_ultrasonic_distance(HEAD_ULTRASONIC_FACE_INDEX);
 }
 //--------------------------------------------------------------------------
 void t_head_controller::send_home_all(void)
