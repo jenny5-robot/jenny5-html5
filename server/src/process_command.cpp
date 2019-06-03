@@ -51,10 +51,10 @@ int is_disconected(void)
 void update_commands_from_serial(void)
 {
 	left_arm_controller.arduino_controller.update_commands_from_serial();
-	left_arm_controller.arduino_controller.clear_commands_list();
+	left_arm_controller.arduino_controller.clear_events_list();
 
 	jenny5_head_controller.head_arduino_controller.update_commands_from_serial();
-	jenny5_head_controller.head_arduino_controller.clear_commands_list();
+	jenny5_head_controller.head_arduino_controller.clear_events_list();
 }
 //-----------------------------------------------------------------------
 int handle_navigate(char bx, char by)
