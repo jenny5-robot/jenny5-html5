@@ -13,7 +13,7 @@
 #include <opencv2\highgui\highgui.hpp>
 #include <opencv2\imgproc\imgproc.hpp>
 
-#include "jenny5_arduino_controller.h"
+#include "scufy_lib.h"
 
 #define LEFT_ARM_BODY_MOTOR 0
 #define LEFT_ARM_SHOULDER_UP_DOWN_MOTOR 1
@@ -81,7 +81,7 @@ class t_left_arm_controller {
 private:
 public:
 	cv::VideoCapture left_arm_cam;
-	t_jenny5_arduino_controller arduino_controller;
+	t_scufy_lib arduino_controller;
 	cv::CascadeClassifier face_classifier;
 	t_left_arm_controller(void);
 

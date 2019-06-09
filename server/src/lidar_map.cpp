@@ -15,7 +15,7 @@
 
 #include "setup_functions.h"
 #include "utils.h"
-#include "jenny5_arduino_controller.h"
+#include "scufy_lib.h"
 #include "jenny5_defs.h"
 #include "lidar_map.h"
 

@@ -10,7 +10,7 @@
 #ifndef lidar_controller_H
 #define lidar_controller_H
 
-#include "jenny5_arduino_controller.h"
+#include "scufy_lib.h"
 
 #define LIDAR_NUM_STEPS 200
 
@@ -23,7 +23,7 @@
 #define Connected_to_LIDAR_STR "Connected to LIDAR\n"
 
 struct t_lidar_controller {
-	t_jenny5_arduino_controller arduino_controller;
+	t_scufy_lib arduino_controller;
 	int lidar_distances[LIDAR_NUM_STEPS];
 
 	t_lidar_controller(void);

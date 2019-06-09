@@ -14,7 +14,7 @@
 #include <opencv2\highgui\highgui.hpp>
 #include <opencv2\imgproc\imgproc.hpp>
 
-#include "jenny5_arduino_controller.h"
+#include "scufy_lib.h"
 
 #define HEAD_MOTOR_NECK 0
 #define HEAD_MOTOR_FACE 1
@@ -64,7 +64,7 @@
 class t_head_controller {
 public:
 	cv::VideoCapture cam;
-	t_jenny5_arduino_controller head_arduino_controller;
+	t_scufy_lib head_arduino_controller;
 	t_head_controller();
 
 	int connect(const char* port);

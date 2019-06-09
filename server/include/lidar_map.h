@@ -10,7 +10,7 @@
 #ifndef lidar_map_H
 #define lidar_map_H
 
-#include "jenny5_arduino_controller.h"
+#include "scufy_lib.h"
 
 #include "lidar_controller.h"
 
