@@ -39,8 +39,8 @@ bool clear_ahead(int *lidar_distances)
 //----------------------------------------------------------------
 int follow_person(t_head_controller *jenny5_head_controller, t_lidar_controller *LIDAR_controller, t_platform_controller * platform_controller, cv::CascadeClassifier *face_classifier, f_log_callback to_log, f_stop_callback stop_function, char* head_window_name, char* LIDAR_window_name)
 {
-	LIDAR_controller->arduino_controller.send_set_LIDAR_motor_speed_and_acceleration(30, 100);
-	LIDAR_controller->arduino_controller.send_LIDAR_go();
+	LIDAR_controller->arduino_controller.send_set_LiDAR_motor_speed_and_acceleration(30, 100);
+	LIDAR_controller->arduino_controller.send_LiDAR_go();
 
 	int image_width = 600;
 	Point center(image_width / 2, image_width / 2);
@@ -245,7 +245,7 @@ int follow_person(t_head_controller *jenny5_head_controller, t_lidar_controller 
 
 	platform_controller->stop_motors();
 	
-	LIDAR_controller->arduino_controller.send_LIDAR_stop();
+	LIDAR_controller->arduino_controller.send_LiDAR_stop();
 
 	return true;
 }

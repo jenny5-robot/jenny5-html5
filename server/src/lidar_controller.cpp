@@ -58,7 +58,7 @@ int t_lidar_controller::connect(const char* port)
 //----------------------------------------------------------------
 bool t_lidar_controller::setup(char* error_string)
 {
-	arduino_controller.send_create_LIDAR(8, 9, 10, 12);// dir, step, enable, IR_pin
+	arduino_controller.send_create_LiDAR(8, 9, 10, 12);// dir, step, enable, IR_pin
 
 	clock_t start_time = clock();
 

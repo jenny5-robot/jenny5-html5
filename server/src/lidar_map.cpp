@@ -59,8 +59,8 @@ int lidar_map(t_lidar_controller &LIDAR_controller, const char* lidar_com_port, 
 	else
 		to_log("Setup LIDAR OK.\n");
 
-	LIDAR_controller.arduino_controller.send_set_LIDAR_motor_speed_and_acceleration(60, 100);
-	LIDAR_controller.arduino_controller.send_LIDAR_go();
+	LIDAR_controller.arduino_controller.send_set_LiDAR_motor_speed_and_acceleration(60, 100);
+	LIDAR_controller.arduino_controller.send_LiDAR_go();
 
 	int image_width = 600;
 	Point center(image_width / 2, image_width / 2);
@@ -97,7 +97,7 @@ int lidar_map(t_lidar_controller &LIDAR_controller, const char* lidar_com_port, 
 			active = false;
 	}
 
-	LIDAR_controller.arduino_controller.send_LIDAR_stop();
+	LIDAR_controller.arduino_controller.send_LiDAR_stop();
 
 	LIDAR_controller.arduino_controller.close_connection();
 
