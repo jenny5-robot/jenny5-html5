@@ -70,9 +70,9 @@ int head_face_follow(t_head_controller *jenny5_head_controller, CascadeClassifie
 				active = false;
 		}
 
-		if (jenny5_head_controller->head_arduino_controller.get_ultrasonic_state(0) == COMMAND_DONE) {// I ping the sonar only if no ping was sent before
-			jenny5_head_controller->head_arduino_controller.send_get_ultrasonic_distance(0);
-			jenny5_head_controller->head_arduino_controller.set_ultrasonic_state(0, COMMAND_SENT);
+		if (jenny5_head_controller->head_arduino_controller.get_ultrasonic_HC_SR04_state(0) == COMMAND_DONE) {// I ping the sonar only if no ping was sent before
+			jenny5_head_controller->head_arduino_controller.send_get_ultrasonic_HC_SR04_distance(0);
+			jenny5_head_controller->head_arduino_controller.set_ultrasonic_HC_SR04_state(0, COMMAND_SENT);
 			to_log("U0# - sent\n");
 		}
 
@@ -159,10 +159,10 @@ int head_face_follow(t_head_controller *jenny5_head_controller, CascadeClassifie
 		}
 
 		// read to see if there is any distance received from sonar
-		if (jenny5_head_controller->head_arduino_controller.get_ultrasonic_state(0) == COMMAND_SENT) {// if a command has been sent
+		if (jenny5_head_controller->head_arduino_controller.get_ultrasonic_HC_SR04_state(0) == COMMAND_SENT) {// if a command has been sent
 			intptr_t distance;
 			if (jenny5_head_controller->head_arduino_controller.query_for_event(ULTRASONIC_EVENT, 0, &distance)) { // have we received the event from Serial ?
-				jenny5_head_controller->head_arduino_controller.set_ultrasonic_state(0, COMMAND_DONE);
+				jenny5_head_controller->head_arduino_controller.set_ultrasonic_HC_SR04_state(0, COMMAND_DONE);
 				char tmp_s[100];
 				sprintf(tmp_s, "distance = %Ix cm\n", distance);
 				to_log(tmp_s);

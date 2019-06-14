@@ -78,7 +78,7 @@ bool t_head_controller::setup(char* error_string)
 	int head_sonars_trig_pins[1] = { 10 };
 	int head_sonars_echo_pins[1] = { 11 };
 
-	head_arduino_controller.send_create_ultrasonics(1, head_sonars_trig_pins, head_sonars_echo_pins);
+	head_arduino_controller.send_create_ultrasonics_HC_SR04(1, head_sonars_trig_pins, head_sonars_echo_pins);
 
 	int head_potentiometer_pins[2] = { 0, 1 };
 	head_arduino_controller.send_create_potentiometers(2, head_potentiometer_pins);
@@ -186,7 +186,7 @@ void t_head_controller::send_get_sensors_value(void)
 {
 	head_arduino_controller.send_get_potentiometer_position(HEAD_POTENTIOMETER_NECK_INDEX);
 	head_arduino_controller.send_get_potentiometer_position(HEAD_POTENTIOMETER_FACE_INDEX);
-	head_arduino_controller.send_get_ultrasonic_distance(HEAD_ULTRASONIC_FACE_INDEX);
+	head_arduino_controller.send_get_ultrasonic_HC_SR04_distance(HEAD_ULTRASONIC_FACE_INDEX);
 }
 //--------------------------------------------------------------------------
 void t_head_controller::send_home_all(void)
