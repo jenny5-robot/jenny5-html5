@@ -647,34 +647,34 @@ bool t_left_arm_controller::read_all_sensors(void)
 			Sleep(5); // no new data from serial ... we make a little pause so that we don't kill the processor
 
 		if (!position_received_LEFT_ARM_BODY_AS5147)
-			if (arduino_controller.query_for_event(AS5147_EVENT, LEFT_ARM_BODY_AS5147_INDEX, &as5147_position)) {  // have we received the event from Serial ?
+			if (arduino_controller.query_for_event(AS5147_READ_EVENT, LEFT_ARM_BODY_AS5147_INDEX, &as5147_position)) {  // have we received the event from Serial ?
 				position_received_LEFT_ARM_BODY_AS5147 = true;
 				printf("A0 = %Id\n", as5147_position);
 			}
 
 		if (!position_received_LEFT_ARM_SHOULDER_UP_DOWN_AS5147)
-			if (arduino_controller.query_for_event(AS5147_EVENT, LEFT_ARM_SHOULDER_UP_DOWN_AS5147_INDEX, &as5147_position)) {  // have we received the event from Serial ?
+			if (arduino_controller.query_for_event(AS5147_READ_EVENT, LEFT_ARM_SHOULDER_UP_DOWN_AS5147_INDEX, &as5147_position)) {  // have we received the event from Serial ?
 				position_received_LEFT_ARM_SHOULDER_UP_DOWN_AS5147 = true;
 				printf("A1 = %Id\n", as5147_position);
 			}
 
 		if (!position_received_LEFT_ARM_SHOULDER_LEFT_RIGHT_AS5147)
-			if (arduino_controller.query_for_event(AS5147_EVENT, LEFT_ARM_SHOULDER_LEFT_RIGHT_AS5147_INDEX, &as5147_position)) {  // have we received the event from Serial ?
+			if (arduino_controller.query_for_event(AS5147_READ_EVENT, LEFT_ARM_SHOULDER_LEFT_RIGHT_AS5147_INDEX, &as5147_position)) {  // have we received the event from Serial ?
 				position_received_LEFT_ARM_SHOULDER_LEFT_RIGHT_AS5147 = true;
 				printf("A2 = %Id\n", as5147_position);
 			}
 		if (!position_received_LEFT_ARM_ELBOW_AS5147)
-			if (arduino_controller.query_for_event(AS5147_EVENT, LEFT_ARM_ELBOW_AS5147_INDEX, &as5147_position)) {  // have we received the event from Serial ?
+			if (arduino_controller.query_for_event(AS5147_READ_EVENT, LEFT_ARM_ELBOW_AS5147_INDEX, &as5147_position)) {  // have we received the event from Serial ?
 				position_received_LEFT_ARM_ELBOW_AS5147 = true;
 				printf("A3 = %Id\n", as5147_position);
 			}
 		if (!position_received_LEFT_ARM_FOREARM_AS5147)
-			if (arduino_controller.query_for_event(AS5147_EVENT, LEFT_ARM_FOREARM_AS5147_INDEX, &as5147_position)) {  // have we received the event from Serial ?
+			if (arduino_controller.query_for_event(AS5147_READ_EVENT, LEFT_ARM_FOREARM_AS5147_INDEX, &as5147_position)) {  // have we received the event from Serial ?
 				position_received_LEFT_ARM_FOREARM_AS5147 = true;
 				printf("A4 = %Id\n", as5147_position);
 			}
 		if (!position_received_LEFT_ARM_WRIST_AS5147)
-			if (arduino_controller.query_for_event(AS5147_EVENT, LEFT_ARM_WRIST_AS5147_INDEX, &as5147_position)) {  // have we received the event from Serial ?
+			if (arduino_controller.query_for_event(AS5147_READ_EVENT, LEFT_ARM_WRIST_AS5147_INDEX, &as5147_position)) {  // have we received the event from Serial ?
 				position_received_LEFT_ARM_WRIST_AS5147 = true;
 				printf("A5 = %Id\n", as5147_position);
 			}

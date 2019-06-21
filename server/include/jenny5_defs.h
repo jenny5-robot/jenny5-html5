@@ -14,6 +14,6 @@
 
 #define NUM_SECONDS_TO_WAIT_FOR_CONNECTION 3
 
-#define DOES_NOTHING_SLEEP 10
+#define DOES_NOTHING_SLEEP 10 // no new data from serial ... we make a small pause so that we don't kill the processor
 
 #endif
