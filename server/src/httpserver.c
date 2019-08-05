@@ -21,7 +21,7 @@
 #include "process_command.h"
 
 
-#define SERVER_VERSION "2019.05.07.0"
+#define SERVER_VERSION "2019.08.05.0"
 
 #define port 443
 #define MAX_CONNECTIONS         1024

@@ -9,6 +9,8 @@
 
 #include "leg_controller.h"
 #include "jenny5_defs.h"
+#include "settings.h"
+// ---------------------------------------------------------------------------
 
 t_leg_controller leg_controller;
 
@@ -60,13 +62,13 @@ void t_leg_controller::send_get_roboclaw_firmware_version(void)
 // positive if expand
 void t_leg_controller::move_bottom_motor(int16_t speed, uint32_t acceleration)
 {
-	roboclaw_controller.drive_M1_with_signed_duty_and_acceleration(-speed, acceleration);
+	roboclaw_controller.drive_M1_with_signed_duty_and_acceleration(LEG_BOTTOM_DIRECTION * speed, acceleration);
 }
 //------------------------------------------------------------------------
 // positive if expand
 void t_leg_controller::move_top_motor(int16_t speed, uint32_t acceleration)
 {
-	roboclaw_controller.drive_M2_with_signed_duty_and_acceleration(-speed, acceleration);
+	roboclaw_controller.drive_M2_with_signed_duty_and_acceleration(LEG_BOTTOM_DIRECTION * speed, acceleration);
 }
 //------------------------------------------------------------------------
 // positive if expand
@@ -84,13 +86,13 @@ void t_leg_controller::contract_bottom(int16_t speed, uint32_t acceleration)
 // positive if expand
 void t_leg_controller::expand_top(int16_t speed, uint32_t acceleration)
 {
-	move_top_motor(speed, acceleration);
+	move_top_motor(-speed, acceleration);
 }
 //------------------------------------------------------------------------
 // positive if expand
 void t_leg_controller::contract_top(int16_t speed, uint32_t acceleration)
 {
-	move_top_motor(-speed, acceleration);
+	move_top_motor(speed, acceleration);
 }
 //------------------------------------------------------------------------
 // positive if expand

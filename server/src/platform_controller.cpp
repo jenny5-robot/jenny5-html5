@@ -9,7 +9,9 @@
 
 #include "platform_controller.h"
 #include "jenny5_defs.h"
+#include "settings.h"
 
+// ---------------------------------------------------------------------------
 t_platform_controller platform_controller;
 
 //------------------------------------------------------------------------
@@ -58,12 +60,12 @@ void t_platform_controller::send_get_roboclaw_firmware_version(void)
 //------------------------------------------------------------------------
 bool t_platform_controller::move_left_motor(int16_t speed, uint32_t acceleration)
 {
-	return roboclaw_controller.drive_M2_with_signed_duty_and_acceleration(-speed, acceleration);
+	return roboclaw_controller.drive_M2_with_signed_duty_and_acceleration(PLATFORM_LEFT_MOTOR_DIRECTION * speed, acceleration);
 }
 //------------------------------------------------------------------------
 bool t_platform_controller::move_right_motor(int16_t speed, uint32_t acceleration)
 {
-	return roboclaw_controller.drive_M1_with_signed_duty_and_acceleration(-speed, acceleration);
+	return roboclaw_controller.drive_M1_with_signed_duty_and_acceleration(PLATFORM_RIGHT_MOTOR_DIRECTION * speed, acceleration);
 }
 //------------------------------------------------------------------------
 int t_platform_controller::stop_motors(void)
