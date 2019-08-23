@@ -21,6 +21,9 @@
 #include "lidar_controller.h"
 #include "follow_person.h"
 #include "settings.h"
+#include "jenny5_ports.h"
+
+//--------------------------------------------------------
 
 cv::CascadeClassifier face_classifier;
 std::thread *face_tracking_thread;
