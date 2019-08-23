@@ -1,9 +1,8 @@
-// author: Mihai Oltean, 
-// email: mihai.oltean@gmail.com
-// main website: https://www.jenny5.org
-// mirror website: https://jenny5-robot.github.io
-// source code: https://github.com/jenny5-robot
-
+// Author: Mihai Oltean, https://mihaioltean.github.io, mihai.oltean@gmail.com
+// More details: https://jenny5.org, https://jenny5-robot.github.io/
+// Source code: github.com/jenny5-robot
+// License: MIT
+//------------------------------------------------------------------
 
 #ifndef SETTINGS_H
 #define SETTING_H
@@ -30,18 +29,20 @@
 #define PLATFORM_NAVIGATE_STATE 1
 #define PLATFORM_ROTATE_STATE 2
 #define LEG_MOVE_STATE 3
-#define LEFT_ARM_BODY_LEFT_RIGHT_MOVE_STATE 4
-#define LEFT_ARM_UP_DOWN_MOVE_STATE 5
-#define LEFT_ARM_ROTATE_STATE 6
-#define LEFT_ARM_ELBOW_MOVE_STATE 7
-#define LEFT_ARM_FOREARM_MOVE_STATE 8
-#define LEFT_ARM_WRIST_MOVE_STATE 9
-#define LEFT_ARM_GRIPPER_MOVE_STATE 10
+
+#define LEFT_ARM_BODY_LEFT_RIGHT_MOVE_STATE 60
+#define LEFT_ARM_UP_DOWN_MOVE_STATE 61
+#define LEFT_ARM_ROTATE_STATE 62
+#define LEFT_ARM_ELBOW_MOVE_STATE 63
+#define LEFT_ARM_FOREARM_MOVE_STATE 64
+#define LEFT_ARM_WRIST_MOVE_STATE 65
+#define LEFT_ARM_GRIPPER_MOVE_STATE 66
+#define WAVE_LEFT_ARM_STATE 68
+
 
 #define HEAD_ROTATE_STATE 20
 
 #define FACE_TRACKING_STATE 31
 #define FOLLOW_PERSON_STATE 32
-#define WAVE_LEFT_ARM_STATE 33
 
 #endif
