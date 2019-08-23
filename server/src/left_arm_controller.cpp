@@ -446,102 +446,102 @@ void t_left_arm_controller::send_disable_motors(void)
 	arduino_controller.send_disable_stepper_motor(LEFT_ARM_BODY_MOTOR);// this will disable all
 }
 //----------------------------------------------------------------
-void t_left_arm_controller::send_LEFT_ARM_BODY_MOTOR_home(void)
+void t_left_arm_controller::send_ARM_BODY_MOTOR_home(void)
 {
 	arduino_controller.send_go_home_stepper_motor(LEFT_ARM_BODY_MOTOR);
 }
 //----------------------------------------------------------------
-void t_left_arm_controller::send_LEFT_ARM_SHOULDER_UP_DOWN_MOTOR_home(void)
+void t_left_arm_controller::send_ARM_SHOULDER_UP_DOWN_MOTOR_home(void)
 {
 	arduino_controller.send_go_home_stepper_motor(LEFT_ARM_SHOULDER_UP_DOWN_MOTOR);
 }
 //----------------------------------------------------------------
-void t_left_arm_controller::send_LEFT_ARM_SHOULDER_LEFT_RIGHT_MOTOR_home(void)
+void t_left_arm_controller::send_ARM_SHOULDER_LEFT_RIGHT_MOTOR_home(void)
 {
 	arduino_controller.send_go_home_stepper_motor(LEFT_ARM_SHOULDER_LEFT_RIGHT_MOTOR);
 }
 //----------------------------------------------------------------
-void t_left_arm_controller::send_LEFT_ARM_ELBOW_MOTOR_home(void)
+void t_left_arm_controller::send_ARM_ELBOW_MOTOR_home(void)
 {
 	arduino_controller.send_go_home_stepper_motor(LEFT_ARM_ELBOW_MOTOR);
 }
 //----------------------------------------------------------------
-void t_left_arm_controller::send_LEFT_ARM_FOREARM_MOTOR_home(void)
+void t_left_arm_controller::send_ARM_FOREARM_MOTOR_home(void)
 {
 	arduino_controller.send_go_home_stepper_motor(LEFT_ARM_FOREARM_MOTOR);
 }
 //----------------------------------------------------------------
-void t_left_arm_controller::send_LEFT_ARM_WRIST_MOTOR_home(void)
+void t_left_arm_controller::send_ARM_WRIST_MOTOR_home(void)
 {
 	arduino_controller.send_go_home_stepper_motor(LEFT_ARM_WRIST_MOTOR);
 }
 //----------------------------------------------------------------
-void t_left_arm_controller::send_LEFT_ARM_BODY_MOTOR_to_sensor_position(int new_position)
+void t_left_arm_controller::send_ARM_BODY_MOTOR_to_sensor_position(int new_position)
 {
 	arduino_controller.send_stepper_motor_goto_sensor_position(LEFT_ARM_BODY_MOTOR, new_position);
 }
 //----------------------------------------------------------------
-void t_left_arm_controller::send_LEFT_ARM_SHOULDER_UP_DOWN_MOTOR_to_sensor_position(int new_position)
+void t_left_arm_controller::send_ARM_SHOULDER_UP_DOWN_MOTOR_to_sensor_position(int new_position)
 {
 	arduino_controller.send_stepper_motor_goto_sensor_position(LEFT_ARM_SHOULDER_UP_DOWN_MOTOR, new_position);
 }
 //----------------------------------------------------------------
-void t_left_arm_controller::send_LEFT_ARM_SHOULDER_LEFT_RIGHT_MOTOR_to_sensor_position(int new_position)
+void t_left_arm_controller::send_ARM_SHOULDER_LEFT_RIGHT_MOTOR_to_sensor_position(int new_position)
 {
 	arduino_controller.send_stepper_motor_goto_sensor_position(LEFT_ARM_SHOULDER_LEFT_RIGHT_MOTOR, new_position);
 }
 //----------------------------------------------------------------
-void t_left_arm_controller::send_LEFT_ARM_ELBOW_MOTOR_to_sensor_position(int new_position)
+void t_left_arm_controller::send_ARM_ELBOW_MOTOR_to_sensor_position(int new_position)
 {
 	arduino_controller.send_stepper_motor_goto_sensor_position(LEFT_ARM_ELBOW_MOTOR, new_position);
 }
 //----------------------------------------------------------------
-void t_left_arm_controller::send_LEFT_ARM_FOREARM_MOTOR_to_sensor_position(int new_position)
+void t_left_arm_controller::send_ARM_FOREARM_MOTOR_to_sensor_position(int new_position)
 {
 	arduino_controller.send_stepper_motor_goto_sensor_position(LEFT_ARM_FOREARM_MOTOR, new_position);
 }
 //----------------------------------------------------------------
-void t_left_arm_controller::send_LEFT_ARM_WRIST_MOTOR_to_sensor_position(int new_position)
+void t_left_arm_controller::send_ARM_WRIST_MOTOR_to_sensor_position(int new_position)
 {
 	arduino_controller.send_stepper_motor_goto_sensor_position(LEFT_ARM_WRIST_MOTOR, new_position);
 }
 //----------------------------------------------------------------
-void t_left_arm_controller::send_LEFT_ARM_GRIPPER_MOTOR_start_open(void)
+void t_left_arm_controller::send_ARM_GRIPPER_MOTOR_start_open(void)
 {
 	//arduino_controller.send_move_stepper_motor(LEFT_ARM_GRIPPER_MOTOR, -5000);
 }
 //----------------------------------------------------------------
-void t_left_arm_controller::send_LEFT_ARM_GRIPPER_MOTOR_stop_open(void)
+void t_left_arm_controller::send_ARM_GRIPPER_MOTOR_stop_open(void)
 {
 	//arduino_controller.send_move_stepper_motor(LEFT_ARM_GRIPPER_MOTOR, 0);
 }
 //----------------------------------------------------------------
-void t_left_arm_controller::send_LEFT_ARM_BODY_MOTOR_move(int num_steps/*, int speed, int accelleration*/)
+void t_left_arm_controller::send_ARM_BODY_MOTOR_move(int num_steps/*, int speed, int accelleration*/)
 {
 	arduino_controller.send_move_stepper_motor(LEFT_ARM_BODY_MOTOR, num_steps);
 }
 //----------------------------------------------------------------
-void t_left_arm_controller::send_LEFT_ARM_SHOULDER_UP_DOWN_MOTOR_move(int num_steps/*, int speed, int accelleration*/)
+void t_left_arm_controller::send_ARM_SHOULDER_UP_DOWN_MOTOR_move(int num_steps/*, int speed, int accelleration*/)
 {
 	arduino_controller.send_move_stepper_motor(LEFT_ARM_SHOULDER_UP_DOWN_MOTOR, num_steps);
 }
 //----------------------------------------------------------------
-void t_left_arm_controller::send_LEFT_ARM_SHOULDER_LEFT_RIGHT_MOTOR_move(int num_steps/*, int speed, int accelleration*/)
+void t_left_arm_controller::send_ARM_SHOULDER_LEFT_RIGHT_MOTOR_move(int num_steps/*, int speed, int accelleration*/)
 {
 	arduino_controller.send_move_stepper_motor(LEFT_ARM_SHOULDER_LEFT_RIGHT_MOTOR, num_steps);
 }
 //----------------------------------------------------------------
-void t_left_arm_controller::send_LEFT_ARM_ELBOW_MOTOR_move(int num_steps/*, int speed, int accelleration*/)
+void t_left_arm_controller::send_ARM_ELBOW_MOTOR_move(int num_steps/*, int speed, int accelleration*/)
 {
 	arduino_controller.send_move_stepper_motor(LEFT_ARM_ELBOW_MOTOR, num_steps);
 }
 //----------------------------------------------------------------
-void t_left_arm_controller::send_LEFT_ARM_FOREARM_MOTOR_move(int num_steps/*, int speed, int accelleration*/)
+void t_left_arm_controller::send_ARM_FOREARM_MOTOR_move(int num_steps/*, int speed, int accelleration*/)
 {
 	arduino_controller.send_move_stepper_motor(LEFT_ARM_FOREARM_MOTOR, num_steps);
 }
 //----------------------------------------------------------------
-void t_left_arm_controller::send_LEFT_ARM_WRIST_MOTOR_move(int num_steps /*, int speed, int accelleration*/)
+void t_left_arm_controller::send_ARM_WRIST_MOTOR_move(int num_steps /*, int speed, int accelleration*/)
 {
 	arduino_controller.send_move_stepper_motor(LEFT_ARM_WRIST_MOTOR, num_steps);
 }

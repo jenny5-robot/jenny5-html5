@@ -80,6 +80,7 @@ public:
 	cv::VideoCapture left_arm_cam;
 	t_scufy_lib arduino_controller;
 	cv::CascadeClassifier face_classifier;
+
 	t_left_arm_controller(void);
 
 	int connect(const char* port);
@@ -97,28 +98,28 @@ public:
 
 	void send_get_sensors_value(void);
 
-	void send_LEFT_ARM_BODY_MOTOR_home(void);
-	void send_LEFT_ARM_SHOULDER_UP_DOWN_MOTOR_home(void);
-	void send_LEFT_ARM_SHOULDER_LEFT_RIGHT_MOTOR_home(void);
-	void send_LEFT_ARM_ELBOW_MOTOR_home(void);
-	void send_LEFT_ARM_FOREARM_MOTOR_home(void);
-	void send_LEFT_ARM_WRIST_MOTOR_home(void);
+	void send_ARM_BODY_MOTOR_home(void);
+	void send_ARM_SHOULDER_UP_DOWN_MOTOR_home(void);
+	void send_ARM_SHOULDER_LEFT_RIGHT_MOTOR_home(void);
+	void send_ARM_ELBOW_MOTOR_home(void);
+	void send_ARM_FOREARM_MOTOR_home(void);
+	void send_ARM_WRIST_MOTOR_home(void);
 
-	void send_LEFT_ARM_BODY_MOTOR_to_sensor_position(int new_position);
-	void send_LEFT_ARM_SHOULDER_UP_DOWN_MOTOR_to_sensor_position(int new_position);
-	void send_LEFT_ARM_SHOULDER_LEFT_RIGHT_MOTOR_to_sensor_position(int new_position);
-	void send_LEFT_ARM_ELBOW_MOTOR_to_sensor_position(int new_position);
-	void send_LEFT_ARM_FOREARM_MOTOR_to_sensor_position(int new_position);
-	void send_LEFT_ARM_WRIST_MOTOR_to_sensor_position(int new_position);
-	void send_LEFT_ARM_GRIPPER_MOTOR_start_open(void);
-	void send_LEFT_ARM_GRIPPER_MOTOR_stop_open(void);
+	void send_ARM_BODY_MOTOR_to_sensor_position(int new_position);
+	void send_ARM_SHOULDER_UP_DOWN_MOTOR_to_sensor_position(int new_position);
+	void send_ARM_SHOULDER_LEFT_RIGHT_MOTOR_to_sensor_position(int new_position);
+	void send_ARM_ELBOW_MOTOR_to_sensor_position(int new_position);
+	void send_ARM_FOREARM_MOTOR_to_sensor_position(int new_position);
+	void send_ARM_WRIST_MOTOR_to_sensor_position(int new_position);
+	void send_ARM_GRIPPER_MOTOR_start_open(void);
+	void send_ARM_GRIPPER_MOTOR_stop_open(void);
 
-	void send_LEFT_ARM_BODY_MOTOR_move(int num_steps/*, int speed, int accelleration*/);
-	void send_LEFT_ARM_SHOULDER_UP_DOWN_MOTOR_move(int num_steps/*, int speed, int accelleration*/);
-	void send_LEFT_ARM_SHOULDER_LEFT_RIGHT_MOTOR_move(int num_steps/*, int speed, int accelleration*/);
-	void send_LEFT_ARM_ELBOW_MOTOR_move(int num_steps/*, int speed, int accelleration*/);
-	void send_LEFT_ARM_FOREARM_MOTOR_move(int num_steps/*, int speed, int accelleration*/);
-	void send_LEFT_ARM_WRIST_MOTOR_move(int num_steps/*, int speed, int accelleration*/);
+	void send_ARM_BODY_MOTOR_move(int num_steps/*, int speed, int accelleration*/);
+	void send_ARM_SHOULDER_UP_DOWN_MOTOR_move(int num_steps/*, int speed, int accelleration*/);
+	void send_ARM_SHOULDER_LEFT_RIGHT_MOTOR_move(int num_steps/*, int speed, int accelleration*/);
+	void send_ARM_ELBOW_MOTOR_move(int num_steps/*, int speed, int accelleration*/);
+	void send_ARM_FOREARM_MOTOR_move(int num_steps/*, int speed, int accelleration*/);
+	void send_ARM_WRIST_MOTOR_move(int num_steps/*, int speed, int accelleration*/);
 
 	void send_stop_motor(int motor_index);
 
