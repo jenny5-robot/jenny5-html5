@@ -21,7 +21,7 @@
 #include "process_command.h"
 
 
-#define SERVER_VERSION "2019.08.22.0"
+#define SERVER_VERSION "2019.08.24.0"
 
 #define port 443
 #define MAX_CONNECTIONS         1024
@@ -619,7 +619,10 @@ int main(int argc, char *argv[])
 	struct sockaddr_in server, client;
 
 	char log_filename[1000];
-	current_time_to_string(log_filename);
+	strcpy(log_filename, "logs\\");
+	char log_time[1000];
+	current_time_to_string(log_time);
+	strcat(log_filename, log_time);
 	strcat(log_filename, ".txt");
 
 	f_log = fopen(log_filename, "w");

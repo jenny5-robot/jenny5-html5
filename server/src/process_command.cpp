@@ -15,6 +15,7 @@
 #include "leg_controller.h"
 #include "jenny5_defs.h"
 #include "left_arm_controller.h"
+#include "right_arm_controller.h"
 #include "head_controller.h"
 #include "setup_functions.h"
 #include "head_face_follow.h"
@@ -52,6 +53,9 @@ void update_commands_from_serial(void)
 {
 	left_arm_controller.arduino_controller.update_commands_from_serial();
 	left_arm_controller.arduino_controller.clear_events_list();
+
+	right_arm_controller.arduino_controller.update_commands_from_serial();
+	right_arm_controller.arduino_controller.clear_events_list();
 
 	jenny5_head_controller.head_arduino_controller.update_commands_from_serial();
 	jenny5_head_controller.head_arduino_controller.clear_events_list();
@@ -224,6 +228,95 @@ void handle_left_arm_gripper_move(char /*bx*/, char /*by*/)
 			*/
 }
 //--------------------------------------------------------------------
+
+void handle_right_arm_body_left_right_move(char bx, char /*by*/)
+{
+	// body left-right
+	if (bx < 32 - ARM_dead_zone_length / 2) // 
+		right_arm_controller.send_ARM_BODY_MOTOR_move(ARM_MOTOR_NUM_STEPS/*, (32 - bx) * STEP_SPEED_ARM, 500*/);
+	else
+		if (bx > 32 + ARM_dead_zone_length / 2) // 
+			right_arm_controller.send_ARM_BODY_MOTOR_move(-ARM_MOTOR_NUM_STEPS/*, (bx - 32) * STEP_SPEED_ARM, 500*/);
+		else// inside dead zone - stop
+			right_arm_controller.send_stop_motor(RIGHT_ARM_BODY_MOTOR);
+}
+//--------------------------------------------------------------------
+void handle_right_arm_up_down_move(char /*bx*/, char by)
+{
+	// shoulder up-down
+	if (by < 32 - ARM_dead_zone_length / 2) // 
+		right_arm_controller.send_ARM_SHOULDER_UP_DOWN_MOTOR_move(-ARM_MOTOR_NUM_STEPS/*, (32 - by) * STEP_SPEED_ARM, 500*/);
+	else
+		if (by > 32 + ARM_dead_zone_length / 2) // 
+			right_arm_controller.send_ARM_SHOULDER_UP_DOWN_MOTOR_move(ARM_MOTOR_NUM_STEPS/*, (by - 32) * STEP_SPEED_ARM, 500*/);
+		else// inside dead zone - stop
+			right_arm_controller.send_stop_motor(RIGHT_ARM_SHOULDER_UP_DOWN_MOTOR);
+}
+//--------------------------------------------------------------------
+void handle_right_arm_rotate_move(char bx, char /*by*/)
+{
+	// shoulder left-right
+	if (bx < 32 - ARM_dead_zone_length / 2) // 
+		right_arm_controller.send_ARM_SHOULDER_LEFT_RIGHT_MOTOR_move(-ARM_MOTOR_NUM_STEPS/*, (32 - bx) * STEP_SPEED_ARM, 500*/);
+	else
+		if (bx > 32 + ARM_dead_zone_length / 2) // 
+			right_arm_controller.send_ARM_SHOULDER_LEFT_RIGHT_MOTOR_move(ARM_MOTOR_NUM_STEPS/*, (bx - 32) * STEP_SPEED_ARM, 500*/);
+		else// inside dead zone - stop
+			right_arm_controller.send_stop_motor(RIGHT_ARM_SHOULDER_LEFT_RIGHT_MOTOR);
+}
+//--------------------------------------------------------------------
+void handle_right_arm_elbow_move(char /*bx*/, char by)
+{
+	// elbow up-down
+	if (by < 32 - ARM_dead_zone_length / 2) // 
+		right_arm_controller.send_ARM_ELBOW_MOTOR_move(ARM_MOTOR_NUM_STEPS/*, (32 - by) * STEP_SPEED_ARM, 500*/);
+	else
+		if (by > 32 + ARM_dead_zone_length / 2) // 
+			right_arm_controller.send_ARM_ELBOW_MOTOR_move(-ARM_MOTOR_NUM_STEPS/*, (by - 32) * STEP_SPEED_ARM, 500*/);
+		else// inside dead zone - stop
+			right_arm_controller.send_stop_motor(RIGHT_ARM_ELBOW_MOTOR);
+}
+//--------------------------------------------------------------------
+void handle_right_arm_forearm_move(char bx, char /*by*/)
+{
+	// forearm left-right
+	if (bx < 32 - ARM_dead_zone_length / 2) // 
+		right_arm_controller.send_ARM_FOREARM_MOTOR_move(ARM_MOTOR_NUM_STEPS/*, (32 - bx) * STEP_SPEED_ARM, 500*/);
+	else
+		if (bx > 32 + ARM_dead_zone_length / 2) // 
+			right_arm_controller.send_ARM_FOREARM_MOTOR_move(-ARM_MOTOR_NUM_STEPS/*, (bx - 32) * STEP_SPEED_ARM, 500*/);
+		else// inside dead zone - sto
+			right_arm_controller.send_stop_motor(RIGHT_ARM_FOREARM_MOTOR);
+}
+//--------------------------------------------------------------------
+void handle_right_arm_wrist_move(char /*bx*/, char by)
+{
+	// wrist
+	if (by < 32 - ARM_dead_zone_length / 2) // 
+		right_arm_controller.send_ARM_WRIST_MOTOR_move(ARM_MOTOR_NUM_STEPS/*, (32 - by) * STEP_SPEED_ARM, 500*/);
+	else
+		if (by > 32 + ARM_dead_zone_length / 2) // 
+			right_arm_controller.send_ARM_WRIST_MOTOR_move(-ARM_MOTOR_NUM_STEPS/*, (by - 32) * STEP_SPEED_ARM, 500*/);
+		else// inside dead zone - stop
+			right_arm_controller.send_stop_motor(RIGHT_ARM_WRIST_MOTOR);
+}
+//--------------------------------------------------------------------
+void handle_right_arm_gripper_move(char /*bx*/, char /*by*/)
+{
+	/*
+	// gripper
+	if (by < 32 - ARM_dead_zone_length / 2) //
+		right_arm_controller.send_ARM_WRIST_MOTOR_move(ARM_MOTOR_NUM_STEPS, (32 - by) * STEP_SPEED_ARM, 500);
+	else
+		if (by > 32 + ARM_dead_zone_length / 2) //
+			right_arm_controller.send_ARM_GRIPPER_MOTOR_move(-ARM_MOTOR_NUM_STEPS, (by - 32) * STEP_SPEED_ARM, 500);
+		else// inside dead zone - stop
+			right_arm_controller.send_stop_motor(LEFT_ARM_GRIPPER_MOTOR);
+			*/
+}
+//--------------------------------------------------------------------
+
+
 void handle_head_rotate(char bx, char by)
 {
 	// head right left
@@ -265,6 +358,7 @@ void stop_robot(void)
 	leg_controller.stop_motors();
 	char error_string[1000];
 	left_arm_controller.stop_motors(error_string);
+	right_arm_controller.stop_motors(error_string);
 	jenny5_head_controller.send_stop_motors();
 
 }
@@ -274,6 +368,7 @@ void disconnect_robot(void)
 	platform_controller.disconnect();
 	leg_controller.disconnect();
 	left_arm_controller.disconnect();
+	right_arm_controller.disconnect();
 	jenny5_head_controller.disconnect();
 	LIDAR_controller.disconnect();
 }
@@ -290,6 +385,34 @@ bool connect_and_setup_left_arm(void)
 		if (error_index == E_OK) {
 
 			if (!left_arm_controller.setup(error_string)) {
+				print_message(stdout, error_string);
+				print_message(f_log, error_string);
+				return false;
+			}
+			else {
+				print_message(stdout, error_string);
+				print_message(f_log, error_string);
+				return true;
+			}
+		}
+		else
+			return false;
+	}
+	return true;
+}
+//--------------------------------------------------------------------
+bool connect_and_setup_right_arm(void)
+{
+	char error_string[1000];
+	int error_index;
+
+	if (!right_arm_controller.is_connected()) {
+		error_index = right_arm_controller.connect(RIGHT_ARM_COM_PORT);
+		print_const_message(stdout, right_arm_controller.error_to_string(error_index));
+		print_const_message(f_log, right_arm_controller.error_to_string(error_index));
+		if (error_index == E_OK) {
+
+			if (!right_arm_controller.setup(error_string)) {
 				print_message(stdout, error_string);
 				print_message(f_log, error_string);
 				return false;
@@ -394,6 +517,8 @@ int process_command(unsigned char bx, unsigned char by)
 			}
 			// LEFT ARM CONNECT
 			connect_and_setup_left_arm();
+			// RIGHT ARM CONNECT
+			connect_and_setup_right_arm();
 
 			// HEAD CONNECT
 			error_index = jenny5_head_controller.connect(HEAD_COM_PORT);
@@ -438,6 +563,7 @@ int process_command(unsigned char bx, unsigned char by)
 			stop_robot();
 			jenny5_head_controller.send_disable_motors();
 			left_arm_controller.send_disable_motors();
+			right_arm_controller.send_disable_motors();
 
 			move_mode = PAUSED_STATE;
 			print_const_message(stdout, "PAUSED STATE & DISABLE POWER\n");
@@ -502,7 +628,7 @@ int process_command(unsigned char bx, unsigned char by)
 
 			break;
 
-			// move first arm motor
+			// move first LEFT arm motor
 		case LEFT_ARM_BODY_LEFT_RIGHT_COMMAND:
 			connect_and_setup_left_arm();
 
@@ -582,6 +708,92 @@ int process_command(unsigned char bx, unsigned char by)
 			//print_message(stdout, "LEFT_ARM_GRIPPER_MOVE_STATE\n");
 			//print_message(f_log, "LEFT_ARM_GRIPPER_MOVE_STATE\n");
 			break;
+
+
+
+			// move first RIGHT arm motor
+		case RIGHT_ARM_BODY_LEFT_RIGHT_COMMAND:
+			connect_and_setup_right_arm();
+
+			stop_robot();
+			move_mode = RIGHT_ARM_BODY_LEFT_RIGHT_MOVE_STATE;
+			print_const_message(stdout, "RIGHT_ARM_BODY_LEFT_RIGHT_MOVE_STATE\n");
+			print_const_message(f_log, "RIGHT_ARM_BODY_LEFT_RIGHT_MOVE_STATE\n");
+
+			break;
+		case RIGHT_ARM_UP_DOWN_COMMAND:
+			// move second arm motor
+			connect_and_setup_right_arm();
+
+			stop_robot();
+			move_mode = RIGHT_ARM_UP_DOWN_MOVE_STATE;
+			print_const_message(stdout, "RIGHT_ARM_UP_DOWN_MOVE_STATE\n");
+			print_const_message(f_log, "RIGHT_ARM_UP_DOWN_MOVE_STATE\n");
+
+			break;
+		case RIGHT_ARM_ROTATE_COMMAND:
+			// move rotate motor
+			connect_and_setup_right_arm();
+
+			stop_robot();
+			move_mode = RIGHT_ARM_ROTATE_STATE;
+			print_const_message(stdout, "RIGHT_ARM_ROTATE_STATE\n");
+			print_const_message(f_log, "RIGHT_ARM_ROTATE_STATE\n");
+
+			break;
+
+		case RIGHT_ARM_ELBOW_MOVE_COMMAND:
+			// move elbow motor
+			connect_and_setup_right_arm();
+
+			stop_robot();
+			move_mode = RIGHT_ARM_ELBOW_MOVE_STATE;
+			print_const_message(stdout, "RIGHT_ARM_ELBOW_MOVE_STATE\n");
+			print_const_message(f_log, "RIGHT_ARM_ELBOW_MOVE_STATE\n");
+
+			break;
+		case RIGHT_ARM_FOREARM_MOVE_COMMAND:
+			// move forearm motor
+			connect_and_setup_right_arm();
+
+			stop_robot();
+			move_mode = RIGHT_ARM_FOREARM_MOVE_STATE;
+			print_const_message(stdout, "RIGHT_ARM_FOREARM_MOVE_STATE\n");
+			print_const_message(f_log, "RIGHT_ARM_FOREARM_MOVE_STATE\n");
+
+			break;
+		case RIGHT_ARM_WRIST_MOVE_COMMAND:
+			// move wrist motor
+			connect_and_setup_right_arm();
+
+			stop_robot();
+			move_mode = RIGHT_ARM_WRIST_MOVE_STATE;
+			print_const_message(stdout, "RIGHT_ARM_WRIST_MOVE_STATE\n");
+			print_const_message(f_log, "RIGHT_ARM_WRIST_MOVE_STATE\n");
+
+			break;
+		case RIGHT_ARM_GRIPPER_MOVE_COMMAND:
+			// move gripper motor
+
+			connect_and_setup_right_arm();
+
+			stop_robot();
+			move_mode = RIGHT_ARM_GRIPPER_MOVE_STATE;
+			print_const_message(stdout, "RIGHT_ARM_GRIPPER_MOVE_STATE\n");
+			print_const_message(f_log, "RIGHT_ARM_GRIPPER_MOVE_STATE\n");
+
+			break;
+		case RIGHT_ARM_READ_SENSORS_COMMAND:
+			connect_and_setup_right_arm();
+			right_arm_controller.read_all_sensors();
+			//	stop_robot();
+				//move_mode = RIGHT_ARM_GRIPPER_MOVE_STATE;
+				//print_message(stdout, "RIGHT_ARM_GRIPPER_MOVE_STATE\n");
+				//print_message(f_log, "RIGHT_ARM_GRIPPER_MOVE_STATE\n");
+			break;
+
+
+
 		case HEAD_ROTATE_COMMAND:
 			// head rotate
 
@@ -730,6 +942,12 @@ int process_command(unsigned char bx, unsigned char by)
 			//if (!capture_camera(LEFT_ARM_CAMERA_INDEX))
 				//return 0;
 			break;
+
+		case CAPTURE_RIGHT_ARM_CAMERA:
+			//if (!capture_camera(RIGHT_ARM_CAMERA_INDEX))
+				//return 0;
+			break;
+
 		case LEFT_ARM_WAVE_COMMAND:
 			// move gripper motor
 
@@ -750,6 +968,25 @@ int process_command(unsigned char bx, unsigned char by)
 
 			break;
 
+		case RIGHT_ARM_WAVE_COMMAND:
+			// move gripper motor
+
+			stop_robot();
+			connect_and_setup_right_arm();
+
+			move_mode = WAVE_RIGHT_ARM_STATE;
+			print_const_message(stdout, "WAVING RIGHT ARM STATE\n");
+			print_const_message(f_log, "WAVING RIGHT ARM STATE\n");
+
+			if (!right_arm_controller.wave_hand(error_string)) {
+				print_message(stdout, error_string);
+				print_message(f_log, error_string);
+			}
+
+			print_const_message(stdout, "WAVING RIGHT ARM DONE\n");
+			print_const_message(f_log, "WAVING RIGHT ARM DONE\n");
+
+			break;
 		}// end switch commands
 	}
 	else { // movement data
@@ -867,6 +1104,48 @@ int process_command(unsigned char bx, unsigned char by)
 		case LEFT_ARM_GRIPPER_MOVE_STATE:
 			if (left_arm_controller.is_connected()) {
 				handle_left_arm_gripper_move(sensor_bx, sensor_by);
+			}
+			break;
+
+
+		case RIGHT_ARM_BODY_LEFT_RIGHT_MOVE_STATE:
+			if (right_arm_controller.is_connected()) {
+				handle_right_arm_body_left_right_move(sensor_bx, sensor_by);
+			}
+
+			break;
+
+		case RIGHT_ARM_UP_DOWN_MOVE_STATE:
+			if (right_arm_controller.is_connected()) {
+				handle_right_arm_up_down_move(sensor_bx, sensor_by);
+			}
+			break;
+
+		case RIGHT_ARM_ROTATE_STATE:
+			if (right_arm_controller.is_connected()) {
+				handle_right_arm_rotate_move(sensor_bx, sensor_by);
+			}
+			break;
+		case RIGHT_ARM_ELBOW_MOVE_STATE:
+			if (right_arm_controller.is_connected()) {
+				handle_right_arm_elbow_move(sensor_bx, sensor_by);
+			}
+			break;
+		case RIGHT_ARM_FOREARM_MOVE_STATE:
+			if (right_arm_controller.is_connected()) {
+				handle_right_arm_forearm_move(sensor_bx, sensor_by);
+			}
+			break;
+
+		case RIGHT_ARM_WRIST_MOVE_STATE:
+			if (right_arm_controller.is_connected()) {
+				handle_right_arm_wrist_move(sensor_bx, sensor_by);
+			}
+			break;
+
+		case RIGHT_ARM_GRIPPER_MOVE_STATE:
+			if (right_arm_controller.is_connected()) {
+				handle_right_arm_gripper_move(sensor_bx, sensor_by);
 			}
 			break;
 

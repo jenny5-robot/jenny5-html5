@@ -1,3 +1,8 @@
+// Author: Mihai Oltean, https://mihaioltean.github.io, mihai.oltean@gmail.com
+// More details: https://jenny5.org, https://jenny5-robot.github.io/
+// Source code: github.com/jenny5-robot
+// License: MIT
+//--------------------------------------------
 "use strict";
 
 var arrayBuffer;
@@ -10,25 +15,47 @@ var websocket;
     const NAVIGATE_COMMAND = 4;
     const ROTATE_PLATFORM_COMMAND = 5;
     const LEG_MOVE_COMMAND = 6;
-    const LEFT_ARM_BODY_LEFT_RIGHT_COMMAND = 7;
-    const LEFT_ARM_UP_DOWN_COMMAND = 8;
-    const LEFT_ARM_ROTATE_COMMAND = 9;
-    const LEFT_ARM_ELBOW_MOVE_COMMAND = 10;
-    const LEFT_ARM_FOREARM_MOVE_COMMAND = 11;
-    const LEFT_ARM_WRIST_MOVE_COMMAND = 12;
-	
-	const LEFT_ARM_GRIPPER_MOVE_COMMAND = 13;
-	const LEFT_ARM_READ_SENSORS_COMMAND = 14;
-	
-	const LEFT_ARM_WAVE_COMMAND = 21;
-	const DISABLE_POWER_COMMAND = 22;
-	
-    const HEAD_ROTATE_COMMAND = 31;
-    const FACE_TRACKING_COMMAND = 41;
-    const FOLLOW_PERSON_COMMAND = 42;
 
-	const CAPTURE_HEAD_CAMERA = 51;
-	const CAPTURE_LEFT_ARM_CAMERA = 52;
+	const DISABLE_POWER_COMMAND = 7;
+	
+    const HEAD_ROTATE_COMMAND = 8;
+	
+    const FACE_TRACKING_COMMAND = 9;
+    const FOLLOW_PERSON_COMMAND = 10;
+
+	const CAPTURE_HEAD_CAMERA = 11;
+	const CAPTURE_LEFT_ARM_CAMERA = 12;
+	const CAPTURE_RIGHT_ARM_CAMERA = 13;
+//--------------------------------------------------------------------
+	
+    const LEFT_ARM_BODY_LEFT_RIGHT_COMMAND = 40;
+    const LEFT_ARM_UP_DOWN_COMMAND = 41;
+    const LEFT_ARM_ROTATE_COMMAND = 42;
+    const LEFT_ARM_ELBOW_MOVE_COMMAND = 43;
+    const LEFT_ARM_FOREARM_MOVE_COMMAND = 44;
+    const LEFT_ARM_WRIST_MOVE_COMMAND = 45;
+	
+	const LEFT_ARM_GRIPPER_MOVE_COMMAND = 46;
+	const LEFT_ARM_READ_SENSORS_COMMAND = 47;
+	
+	const LEFT_ARM_WAVE_COMMAND = 48;
+//--------------------------------------------------------------------
+
+
+    const RIGHT_ARM_BODY_LEFT_RIGHT_COMMAND = 50;
+    const RIGHT_ARM_UP_DOWN_COMMAND = 51;
+    const RIGHT_ARM_ROTATE_COMMAND = 52;
+    const RIGHT_ARM_ELBOW_MOVE_COMMAND = 53;
+    const RIGHT_ARM_FOREARM_MOVE_COMMAND = 54;
+    const RIGHT_ARM_WRIST_MOVE_COMMAND = 55;
+	
+	const RIGHT_ARM_GRIPPER_MOVE_COMMAND = 56;
+	const RIGHT_ARM_READ_SENSORS_COMMAND = 57;
+	
+	const RIGHT_ARM_WAVE_COMMAND = 58;
+//--------------------------------------------------------------------
+
+
 	
 	const ERROR = 100;
 
@@ -148,46 +175,51 @@ function send_capture_left_arm_camera()
 	send_command_to_robot(1 << 7, CAPTURE_LEFT_ARM_CAMERA);	
 }
 //--------------------------------------------------------------------
-function send_body_motor_move()
+function send_capture_right_arm_camera()
+{
+	send_command_to_robot(1 << 7, CAPTURE_RIGHT_ARM_CAMERA);	
+}
+//--------------------------------------------------------------------
+function send_left_body_motor_move()
 {
 	send_command_to_robot(1 << 7, LEFT_ARM_BODY_LEFT_RIGHT_COMMAND);
 	set_all_up();
-	document.getElementById("body_button").style.fontWeight = "bold";	
+	document.getElementById("body_button_left").style.fontWeight = "bold";	
 }
 //--------------------------------------------------------------------
-function send_arm_motor_move()
+function send_left_arm_motor_move()
 {
 	send_command_to_robot(1 << 7, LEFT_ARM_UP_DOWN_COMMAND);
 	set_all_up();
-	document.getElementById("arm_button").style.fontWeight = "bold";
+	document.getElementById("arm_button_left").style.fontWeight = "bold";
 }
 //--------------------------------------------------------------------
-function send_shoulder_motor_move()
+function send_left_shoulder_motor_move()
 {
 	send_command_to_robot(1 << 7, LEFT_ARM_ROTATE_COMMAND);
 	set_all_up();
-	document.getElementById("shoulder_button").style.fontWeight = "bold";
+	document.getElementById("shoulder_button_left").style.fontWeight = "bold";
 }
 //--------------------------------------------------------------------
-function send_elbow_motor_move()
+function send_left_elbow_motor_move()
 {
 	send_command_to_robot(1 << 7, LEFT_ARM_ELBOW_MOVE_COMMAND);
 	set_all_up();
-	document.getElementById("elbow_button").style.fontWeight = "bold";
+	document.getElementById("elbow_button_left").style.fontWeight = "bold";
 }
 //--------------------------------------------------------------------
-function send_forearm_motor_move()
+function send_left_forearm_motor_move()
 {
 	send_command_to_robot(1 << 7, LEFT_ARM_FOREARM_MOVE_COMMAND);
 	set_all_up();
-	document.getElementById("forearm_button").style.fontWeight = "bold";
+	document.getElementById("forearm_button_left").style.fontWeight = "bold";
 }
 //--------------------------------------------------------------------
-function send_wrist_motor_move()
+function send_left_wrist_motor_move()
 {
 	send_command_to_robot(1 << 7, LEFT_ARM_WRIST_MOVE_COMMAND);
 	set_all_up();
-	document.getElementById("wrist_button").style.fontWeight = "bold";
+	document.getElementById("wrist_button_left").style.fontWeight = "bold";
 }
 //--------------------------------------------------------------------
 function send_wave_left_arm()
@@ -197,6 +229,59 @@ function send_wave_left_arm()
 	document.getElementById("wave_left_arm_id").style.fontWeight = "bold";
 }
 //--------------------------------------------------------------------
+
+//--------------------------------------------------------------------
+function send_right_body_motor_move()
+{
+	send_command_to_robot(1 << 7, RIGHT_ARM_BODY_LEFT_RIGHT_COMMAND);
+	set_all_up();
+	document.getElementById("body_button_right").style.fontWeight = "bold";	
+}
+//--------------------------------------------------------------------
+function send_right_arm_motor_move()
+{
+	send_command_to_robot(1 << 7, RIGHT_ARM_UP_DOWN_COMMAND);
+	set_all_up();
+	document.getElementById("arm_button_right").style.fontWeight = "bold";
+}
+//--------------------------------------------------------------------
+function send_right_shoulder_motor_move()
+{
+	send_command_to_robot(1 << 7, RIGHT_ARM_ROTATE_COMMAND);
+	set_all_up();
+	document.getElementById("shoulder_button_right").style.fontWeight = "bold";
+}
+//--------------------------------------------------------------------
+function send_right_elbow_motor_move()
+{
+	send_command_to_robot(1 << 7, RIGHT_ARM_ELBOW_MOVE_COMMAND);
+	set_all_up();
+	document.getElementById("elbow_button_right").style.fontWeight = "bold";
+}
+//--------------------------------------------------------------------
+function send_right_forearm_motor_move()
+{
+	send_command_to_robot(1 << 7, RIGHT_ARM_FOREARM_MOVE_COMMAND);
+	set_all_up();
+	document.getElementById("forearm_button_right").style.fontWeight = "bold";
+}
+//--------------------------------------------------------------------
+function send_right_wrist_motor_move()
+{
+	send_command_to_robot(1 << 7, RIGHT_ARM_WRIST_MOVE_COMMAND);
+	set_all_up();
+	document.getElementById("wrist_button_right").style.fontWeight = "bold";
+}
+//--------------------------------------------------------------------
+function send_wave_right_arm()
+{
+	send_command_to_robot(1 << 7, RIGHT_ARM_WAVE_COMMAND);
+	set_all_up();
+	document.getElementById("wave_right_arm_id").style.fontWeight = "bold";
+}
+//--------------------------------------------------------------------
+
+
 function send_rotate_head()
 {
 	send_command_to_robot(1 << 7, HEAD_ROTATE_COMMAND);
@@ -227,6 +312,12 @@ function send_disable_power()
 function send_read_sensors_left_arm()
 {
 	send_command_to_robot(1 << 7, LEFT_ARM_READ_SENSORS_COMMAND);
+	send_pause_robot();
+}
+//--------------------------------------------------------------------
+function send_read_sensors_right_arm()
+{
+	send_command_to_robot(1 << 7, RIGHT_ARM_READ_SENSORS_COMMAND);
 	send_pause_robot();
 }
 //--------------------------------------------------------------------

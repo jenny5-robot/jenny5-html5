@@ -1,4 +1,8 @@
-//----------------------------------------------------------------
+// Author: Mihai Oltean, https://mihaioltean.github.io, mihai.oltean@gmail.com
+// More details: https://jenny5.org, https://jenny5-robot.github.io/
+// Source code: github.com/jenny5-robot
+// License: MIT
+//--------------------------------------------------------------
 var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
 var recognition = new SpeechRecognition();
 recognition.lang = 'en-US';
@@ -76,42 +80,81 @@ function on_speech_recognition_result(event)
 			utterThis.text = "picture";
 			send_capture_head_camera();
 			break;
-		case "body":
-			utterThis.text = "body";
-			send_body_motor_move();
+			
+		case "left body":
+			utterThis.text = "left body";
+			send_left_body_motor_move();
 			break;
-		case "arm":
-			utterThis.text = "arm";
-			send_arm_motor_move();
+		case "left arm":
+			utterThis.text = "left arm";
+			send_left_arm_motor_move();
 			break;
-		case "shoulder":
-			utterThis.text = "shoulder";
-			send_shoulder_motor_move();
+		case "left shoulder":
+			utterThis.text = "left shoulder";
+			send_left_shoulder_motor_move();
 			break;
-		case "elbow":
-			utterThis.text = "elbow";
-			send_elbow_motor_move();
+		case "left elbow":
+			utterThis.text = "left elbow";
+			send_left_elbow_motor_move();
 			break;
-		case "forearm":
-			utterThis.text = "forearm";
-			send_forearm_motor_move();
+		case "left forearm":
+			utterThis.text = "left forearm";
+			send_left_forearm_motor_move();
 			break;
-		case "wrist":
-			utterThis.text = "wrist";
-			send_wrist_motor_move();
+		case "left wrist":
+			utterThis.text = "left wrist";
+			send_left_wrist_motor_move();
 			break;
-		case "gripper":
-			utterThis.text = "gripper";
-			send_gripper_motor_move();
+		case "left gripper":
+			utterThis.text = "left gripper";
+			send_left_gripper_motor_move();
 			break;
-		case "wave hand":
-			utterThis.text = "waving hand";
+		case "wave left hand":
+			utterThis.text = "waving left hand";
 			send_wave_left_arm();
 			break;
-		case "read sensors":
-			utterThis.text = "read sensors";
+		case "read left sensors":
+			utterThis.text = "read left sensors";
 			send_read_sensors_left_arm();
 			break;
+
+		case "right body":
+			utterThis.text = "right body";
+			send_right_body_motor_move();
+			break;
+		case "right arm":
+			utterThis.text = "right arm";
+			send_right_arm_motor_move();
+			break;
+		case "right shoulder":
+			utterThis.text = "right shoulder";
+			send_right_shoulder_motor_move();
+			break;
+		case "right elbow":
+			utterThis.text = "right elbow";
+			send_right_elbow_motor_move();
+			break;
+		case "right forearm":
+			utterThis.text = "right forearm";
+			send_right_forearm_motor_move();
+			break;
+		case "right wrist":
+			utterThis.text = "right wrist";
+			send_right_wrist_motor_move();
+			break;
+		case "right gripper":
+			utterThis.text = "right gripper";
+			send_right_gripper_motor_move();
+			break;
+		case "wave right hand":
+			utterThis.text = "waving right hand";
+			send_wave_right_arm();
+			break;
+		case "read right sensors":
+			utterThis.text = "read right sensors";
+			send_read_sensors_right_arm();
+			break;
+			
 		case "Hello":
 			utterThis.text = "Hello God!";			
 			break;

@@ -19,7 +19,7 @@
 	<button type = "button" onclick="send_pause_robot()" id = "pause_robot_button">Pause</button>
 	<button type = "button" onclick="send_disable_power()" disabled id = "disable_power_button">Disable</button>
 	<button type = "button" onclick="on_speak_button_clicked()" disabled id = "speak_button">Speak</button>
-	2019.05.07.0
+	2019.08.24.0
 	</p>
 	<p>Platform
 	<button type = "button" onclick="send_start_platform_navigate()" disabled id = "navigate_platform_button">Navigate</button>
@@ -27,17 +27,28 @@
 	<button type = "button" onclick="send_leg_move()" disabled id = "leg_button">Leg</button>
 	</p>	
 	<p>Left arm
-	<button type = "button" onclick="send_body_motor_move()" disabled id = "body_button">Body</button>
-	<button type = "button" onclick="send_arm_motor_move()" disabled id = "arm_button">Arm</button>
-	<button type = "button" onclick="send_shoulder_motor_move()" disabled id = "shoulder_button">Shoulder</button>
-	<button type = "button" onclick="send_elbow_motor_move()" disabled id = "elbow_button">Elbow</button>
-	<button type = "button" onclick="send_forearm_motor_move()" disabled id = "forearm_button">Forearm</button>
-	<button type = "button" onclick="send_wrist_motor_move()" disabled id = "wrist_button">Wrist</button>
+	<button type = "button" onclick="send_left_body_motor_move()" disabled id = "body_button_left">Body</button>
+	<button type = "button" onclick="send_left_arm_motor_move()" disabled id = "arm_button_left">Arm</button>
+	<button type = "button" onclick="send_left_shoulder_motor_move()" disabled id = "shoulder_button_left">Shoulder</button>
+	<button type = "button" onclick="send_left_elbow_motor_move()" disabled id = "elbow_button_left">Elbow</button>
+	<button type = "button" onclick="send_left_forearm_motor_move()" disabled id = "forearm_button_left">Forearm</button>
+	<button type = "button" onclick="send_left_wrist_motor_move()" disabled id = "wrist_button_left">Wrist</button>
 	<button type = "button" onclick="send_read_sensors_left_arm()" disabled id = "id_read_sensors_left_arm">Read sensors</button>
+	</p>
+
+	<p>Right arm
+	<button type = "button" onclick="send_right_body_motor_move()" disabled id = "body_button_right">Body</button>
+	<button type = "button" onclick="send_right_arm_motor_move()" disabled id = "arm_button_right">Arm</button>
+	<button type = "button" onclick="send_right_shoulder_motor_move()" disabled id = "shoulder_button_right">Shoulder</button>
+	<button type = "button" onclick="send_right_elbow_motor_move()" disabled id = "elbow_button_right">Elbow</button>
+	<button type = "button" onclick="send_right_forearm_motor_move()" disabled id = "forearm_button_right">Forearm</button>
+	<button type = "button" onclick="send_right_wrist_motor_move()" disabled id = "wrist_button_right">Wrist</button>
+	<button type = "button" onclick="send_read_sensors_right_arm()" disabled id = "id_read_sensors_right_arm">Read sensors</button>
 	</p>
 
 	<p>Complex moves
 	<button type = "button" onclick="send_wave_left_arm()" disabled id = "id_wave_left_arm">Wave left arm</button>
+	<button type = "button" onclick="send_wave_right_arm()" disabled id = "id_wave_right_arm">Wave right arm</button>
 	</p>
 
 	<p>Head
@@ -54,6 +65,7 @@
 	<p>Camera
 	<button type = "button" onclick="send_capture_head_camera()" disabled id = "capture_head_camera_button">Head</button>
 	<button type = "button" onclick="send_capture_left_arm_camera()" disabled id = "capture_left_arm_camera_button">Left arm</button>
+	<button type = "button" onclick="send_capture_right_arm_camera()" disabled id = "capture_right_arm_camera_button">Right arm</button>
 	</p>
 	<img src = "" width = "352" height = "240" border = "1" id = "img_camera"></img>
 	<br>

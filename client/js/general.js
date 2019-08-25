@@ -1,3 +1,8 @@
+// Author: Mihai Oltean, https://mihaioltean.github.io, mihai.oltean@gmail.com
+// More details: https://jenny5.org, https://jenny5-robot.github.io/
+// Source code: github.com/jenny5-robot
+// License: MIT
+//--------------------------------------------
 "use strict";
 
 var sensor_bbox_width;
@@ -30,15 +35,24 @@ function set_disable_state(state)
 	document.getElementById("rotate_platform_button").disabled = state;
 	document.getElementById("leg_button").disabled = state;
 
-	document.getElementById("body_button").disabled = state;
-	document.getElementById("arm_button").disabled = state;
-	document.getElementById("shoulder_button").disabled = state;
-	document.getElementById("elbow_button").disabled = state;
-	document.getElementById("forearm_button").disabled = state;
-	document.getElementById("wrist_button").disabled = state;
+	document.getElementById("body_button_left").disabled = state;
+	document.getElementById("arm_button_left").disabled = state;
+	document.getElementById("shoulder_button_left").disabled = state;
+	document.getElementById("elbow_button_left").disabled = state;
+	document.getElementById("forearm_button_left").disabled = state;
+	document.getElementById("wrist_button_left").disabled = state;
 	document.getElementById("id_wave_left_arm").disabled = state;
 	document.getElementById("id_read_sensors_left_arm").disabled = state;
 	
+	document.getElementById("body_button_right").disabled = state;
+	document.getElementById("arm_button_right").disabled = state;
+	document.getElementById("shoulder_button_right").disabled = state;
+	document.getElementById("elbow_button_right").disabled = state;
+	document.getElementById("forearm_button_right").disabled = state;
+	document.getElementById("wrist_button_right").disabled = state;
+	document.getElementById("id_wave_right_arm").disabled = state;
+	document.getElementById("id_read_sensors_right_arm").disabled = state;
+
 	document.getElementById("rotate_head_button").disabled = state;
 
 	document.getElementById("track_head_button").disabled = state;
@@ -46,6 +60,7 @@ function set_disable_state(state)
 
 	document.getElementById("capture_head_camera_button").disabled = state;
 	document.getElementById("capture_left_arm_camera_button").disabled = state;
+	document.getElementById("capture_right_arm_camera_button").disabled = state;
 	document.getElementById("speak_button").style.color = "";
 	document.getElementById("speak_button").disabled = state;
 }
@@ -60,15 +75,24 @@ function set_all_up()
 	document.getElementById("rotate_platform_button").style.fontWeight = "normal";
 	document.getElementById("leg_button").style.fontWeight = "normal";
 
-	document.getElementById("body_button").style.fontWeight = "normal";
-	document.getElementById("arm_button").style.fontWeight = "normal";
-	document.getElementById("shoulder_button").style.fontWeight = "normal";
-	document.getElementById("elbow_button").style.fontWeight = "normal";
-	document.getElementById("forearm_button").style.fontWeight = "normal";
-	document.getElementById("wrist_button").style.fontWeight = "normal";
+	document.getElementById("body_button_left").style.fontWeight = "normal";
+	document.getElementById("arm_button_left").style.fontWeight = "normal";
+	document.getElementById("shoulder_button_left").style.fontWeight = "normal";
+	document.getElementById("elbow_button_left").style.fontWeight = "normal";
+	document.getElementById("forearm_button_left").style.fontWeight = "normal";
+	document.getElementById("wrist_button_left").style.fontWeight = "normal";
 	document.getElementById("id_wave_left_arm").style.fontWeight = "normal";
 	document.getElementById("id_read_sensors_left_arm").style.fontWeight = "normal";
 	
+	document.getElementById("body_button_right").style.fontWeight = "normal";
+	document.getElementById("arm_button_right").style.fontWeight = "normal";
+	document.getElementById("shoulder_button_right").style.fontWeight = "normal";
+	document.getElementById("elbow_button_right").style.fontWeight = "normal";
+	document.getElementById("forearm_button_right").style.fontWeight = "normal";
+	document.getElementById("wrist_button_right").style.fontWeight = "normal";
+	document.getElementById("id_wave_right_arm").style.fontWeight = "normal";
+	document.getElementById("id_read_sensors_right_arm").style.fontWeight = "normal";
+
 	document.getElementById("rotate_head_button").style.fontWeight = "normal";
 
 	document.getElementById("track_head_button").style.fontWeight = "normal";
@@ -76,6 +100,7 @@ function set_all_up()
 
 	document.getElementById("capture_head_camera_button").style.fontWeight = "normal";
 	document.getElementById("capture_left_arm_camera_button").style.fontWeight = "normal";
+	document.getElementById("capture_right_arm_camera_button").style.fontWeight = "normal";
 	
 }
 //----------------------------------------------------------------
