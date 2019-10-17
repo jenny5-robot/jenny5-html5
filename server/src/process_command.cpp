@@ -354,12 +354,21 @@ void stop_robot(void)
 		follow_person_thread = NULL;
 	}
 
-	platform_controller.stop_motors();
-	leg_controller.stop_motors();
+	if (platform_controller.is_connected()) {
+		platform_controller.stop_motors();
+		//platform_controller.disconnect();
+	}
+	if (leg_controller.is_connected())
+		leg_controller.stop_motors();
+
 	char error_string[1000];
-	left_arm_controller.stop_motors(error_string);
-	right_arm_controller.stop_motors(error_string);
-	jenny5_head_controller.send_stop_motors();
+	
+	if (left_arm_controller.is_connected())
+		left_arm_controller.stop_motors(error_string);
+	if (right_arm_controller.is_connected())
+		right_arm_controller.stop_motors(error_string);
+	if (jenny5_head_controller.is_connected())
+		jenny5_head_controller.send_stop_motors();
 
 }
 //--------------------------------------------------------------------
@@ -590,6 +599,7 @@ int process_command(unsigned char bx, unsigned char by)
 			break;
 		case ROTATE_COMMAND:
 			// rotate
+			platform_controller.disconnect();
 			if (!platform_controller.is_connected()) { // not connected ; try to connect now
 				if (platform_controller.connect(PLATFORM_COM_PORT) != E_OK) {
 					print_const_message(stdout, CANNOT_CONNECT_TO_JENNY5_PLATFORM_STR);
@@ -610,6 +620,7 @@ int process_command(unsigned char bx, unsigned char by)
 			break;
 		case NAVIGATE_COMMAND:
 			// navigate
+			platform_controller.disconnect();
 			if (!platform_controller.is_connected()) { // not connected ; try to connect now
 				if (platform_controller.connect(PLATFORM_COM_PORT) != E_OK) {
 					print_const_message(stdout, CANNOT_CONNECT_TO_JENNY5_PLATFORM_STR);
@@ -621,7 +632,6 @@ int process_command(unsigned char bx, unsigned char by)
 					print_message(f_log, message);
 				}
 			}
-			stop_robot();
 			move_mode = PLATFORM_NAVIGATE_STATE;
 			print_const_message(stdout, "PLATFORM_NAVIGATE STATE\n");
 			print_const_message(f_log, "PLATFORM_NAVIGATE STATE\n");
@@ -1007,7 +1017,7 @@ int process_command(unsigned char bx, unsigned char by)
 					print_message(stdout, message);
 					print_message(f_log, message);
 				}
-
+				
 				double motor1_amps, motor2_amps;
 				platform_controller.roboclaw_controller.get_motors_current_consumption(motor1_amps, motor2_amps);
 				sprintf(message, "platform motor1 amps = %lf; motor2 amps = %lf\n", motor1_amps, motor2_amps);
@@ -1019,6 +1029,7 @@ int process_command(unsigned char bx, unsigned char by)
 				sprintf(message, "platform board temperature = %lf\n", board_temperature);
 				print_message(stdout, message);
 				print_message(f_log, message);
+				
 			}
 
 			break;
@@ -1031,7 +1042,7 @@ int process_command(unsigned char bx, unsigned char by)
 					print_message(stdout, message);
 					print_message(f_log, message);
 				}
-
+				
 				double motor1_amps, motor2_amps;
 				platform_controller.roboclaw_controller.get_motors_current_consumption(motor1_amps, motor2_amps);
 				sprintf(message, "platform motor1 amps = %lf; motor2 amps = %lf\n", motor1_amps, motor2_amps);
@@ -1043,6 +1054,7 @@ int process_command(unsigned char bx, unsigned char by)
 				sprintf(message, "platform board temperature = %lf\n", board_temperature);
 				print_message(stdout, message);
 				print_message(f_log, message);
+				
 			}
 			break;
 
